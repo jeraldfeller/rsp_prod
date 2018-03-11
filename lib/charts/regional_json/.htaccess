@@ -1,0 +1,9 @@
+AddType application/json .json
+<FilesMatch "\.(json)$">
+Header set Cache-Control "max-age=2592000, public, must-revalidate"
+</FilesMatch>
+<IfModule mod_deflate.c>
+    <FilesMatch "\.(json)$">
+        SetOutputFilter DEFLATE
+    </FilesMatch>
+</IfModule>

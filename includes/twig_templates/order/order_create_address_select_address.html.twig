@@ -1,0 +1,41 @@
+{% extends '/order/order_layout.html.twig' %}
+{% block order %}
+
+<form class="order_form form-horizontal" action="{{ constant('PAGE_URL') }}?page_action=submit" method="post">
+<div class="alert alert-warning">
+		{{ vars.form.text }}
+</div>
+
+<div class="col-md-8">
+
+
+
+
+{% for result in vars.form['result'] %}
+
+	<div class="form-group">
+		<div class="col-sm-10">
+			<input type="radio" name="address_id" value="{{ result.address_id }}" {{ result.checked }} />{{ result.name }}
+		</div>
+	 </div>
+
+
+{% endfor %}
+
+
+</div>
+
+{% endblock order %}
+
+
+{% block next_button %}
+	
+	<input type="hidden" name="submit_string_y" id="submit_string_y" value="1">
+	
+	{% if vars.order_type != constant('ORDER_TYPE_REMOVAL') %}
+		<button name="proceed_to_special_instructions_and_extras" style="float:right" type="submit" class="btn btn-info">Proceed to Special Instructions and Extras</button>
+	{% else %}
+		<button name="submit_string" type="submit" class="btn btn-info" style="float:right">Proceed to Change Removal Date</button>
+	{% endif %}
+	
+{% endblock next_button %}	

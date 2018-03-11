@@ -1,0 +1,515 @@
+/* CSS Document */
+TD.pageHeader {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:16px;
+	font-weight:bold;
+	color:#000066;
+}
+
+TD.pageSubHeading {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:13px;
+	font-weight:bold;
+	color:#999999;
+}
+
+H1 {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:20px;
+	font-weight:bold;
+	color:#000066;
+}
+
+TD.pageSearch {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	color:#999999;
+}
+
+TD.main {
+	color: #000000;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+TD.mainGrey, SPAN.mainGrey {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:1.7;
+	color:#CCCCCC;
+}
+
+TD.mediumGrey, SPAN.mediumGrey {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:14px;
+	line-height:1.7;
+	color:#CCCCCC;
+	font-weight:bold;
+}
+
+TD.mainSmall {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+}
+
+TD.mainError {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:1.7;
+	color:#FF0000;
+}
+
+TD.mainSuccess {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:1.7;
+	color:#00FF00;
+}
+
+TD.mainWarning {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:1.7;
+	color:#FFFF00;
+}
+
+div.ccWarning {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:1.5;
+	color:#a00;
+	background-color:#fffcd8;
+	padding: 0.3em 0.5em;
+	border: 1px solid black;
+	width:335px;
+}
+
+TD.mainGrey {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:1.7;
+	color:#999999;
+}
+
+TD.mainLarge {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:1.7;
+	color:#666666;
+}
+
+TD.subHeading {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:13px;
+	line-height:1.7;
+	font-weight:bold;
+	color:#000000;
+}
+
+TD.columnBoxLeftHeader {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:15px;
+	line-height:1.7;
+	color:#333333;
+	font-weight: bold;
+}
+
+TD.columnBoxLeftFooter {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+}
+
+A.columnBoxLeftFooter {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+	text-decoration:none;
+}
+
+A.columnBoxLeftFooter:hover {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+	text-decoration:underline;
+}
+
+A.columnBoxLeftFooter:visited {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+	text-decoration:none;
+}
+
+A.columnBoxLeftFooterRed {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#FE0201;
+	text-decoration:none;
+}
+
+A.columnBoxLeftFooterRed:hover {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#FE0201;
+	text-decoration:underline;
+}
+
+A.columnBoxLeftFooterRed:visited {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#FE0201;
+	text-decoration:none;
+}
+
+A.columnBoxMainFooterRed {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:16px;
+	line-height:1.7;
+	color:#FE0201;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+A.columnBoxMainFooterRed:hover {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:16px;
+	line-height:1.7;
+	color:#FE0201;
+	text-decoration:underline;
+	font-weight:bold;
+}
+
+A.columnBoxMainFooterRed:visited {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:16px;
+	line-height:1.7;
+	color:#FE0201;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+A.columnBoxTopFooterRed {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:1.7;
+	color:#FE0201;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+A.columnBoxTopFooterRed:hover {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:1.7;
+	color:#FE0201;
+	text-decoration:underline;
+	font-weight:bold;
+}
+
+A.columnBoxTopFooterRed:visited {
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:1.7;
+	color:#FE0201;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+TD.columnBoxLeftBody {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:1.7;
+	color:#000000;
+}
+
+A.columnBoxLeftBody {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:1.7;
+	color:#000000;
+	text-decoration:none;
+}
+
+A.columnBoxLeftBody:hover {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:1.7;
+	color:#000000;
+	text-decoration:underline;
+}
+
+A.columnBoxLeftBody:visited {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:1.7;
+	color:#000000;
+	text-decoration:none;
+}
+
+form { 
+	margin: 0;
+	padding: 0;
+}
+
+TD.pageBoxContent {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+
+}
+
+TD.pageBoxHeading {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+	background:#91B8D7;
+}
+
+TABLE.pageBox {
+
+	
+
+}
+
+/*Callender*/
+TABLE.callenderBox {
+	border-color:#000000;
+	border: 1px;
+    border-style: solid;
+    border-spacing: 1px;
+	background: #EBF3F9;
+}
+
+TD.callenderCurrentDay {
+	background: #FFFFFF;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+}
+
+A.callenderCurrentDay {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+}
+
+TD.callenderGreyDay {
+	background: #FFFFFF;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#CCCCCC;
+}
+
+TD.callenderSelectedDay {
+	background: #D4E5FE;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+}
+
+TD.callenderSpecialDay {
+	background:#CC99FF;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+}
+
+TD.callenderThisDay {
+	background: #FFFF99;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+}
+
+TD.callenderHeader {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	line-height:1.7;
+	color:#000000;
+	font-weight:bold;
+}
+
+A.headerMenu {
+	color: #000000;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-decoration:none;
+}
+
+A.headerMenu:hover {
+	color: #000000;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-decoration:underline;
+}
+
+A.headerMenu:visited {
+	color: #000000;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-decoration:none;
+}
+
+TD.mediumError {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:1.2;
+	color:#FF0000;
+	font-weight:bold;
+}
+
+TD.installationAreaAvailable {
+	font-family:Ta, Arial, Helvetica, sans-serif;
+	font-size:13px;
+	line-height:1.2;
+	color:#FFFF00;
+	font-weight:bold;
+}
+
+TD.installationAreaNotAvailable {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:13px;
+	line-height:1.2;
+	color:#FF0000;
+	font-weight:bold;
+}
+
+TD.columnBoxBack {
+	background-color:#DDEDFA;
+}
+
+TD.mainLarge {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:1.7;
+	color:#666666;
+	font-weight:bold;
+}
+
+A.footerMenu {
+	color: #000000;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+}
+
+A.footerMenu:visited {
+	color: #000000;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+}
+
+A.footerMenu:hover {
+	color: #000000;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: underline;
+}
+
+.style4 {
+	
+}
+
+SPAN.headerFirstWord {
+	font-size: 17px;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
+SPAN.headerOtherWords {
+	font-size: 17px;
+	color: #0099FF;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
+SPAN.requiredItem {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:9px;
+	line-height:1.2;
+	color:#FF0000;
+}
+
+TD.columnBox {
+	background-color:#F8F9F3;	
+	background-image:url(../images/body_r5_c9.jpg);
+	background-repeat:repeat-x;
+}
+
+A.helpLink {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:1.2;
+	font-weight:bold;
+	color:#FFFFFF;
+	text-decoration:none;
+}
+
+A.helpLink:visited {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:1.2;
+	font-weight:bold;
+	color:#FFFFFF;
+	text-decoration:none;
+}
+
+A.helpLink:hover {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:1.2;
+	font-weight:bold;
+	color:#FFFFFF;
+	text-decoration:underline;
+}
+
+A.StatLink {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:1.2;
+	font-weight:normal;
+	color:#000000;
+	text-decoration:underline;
+}
+
+A.StatLink:visited {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:1.2;
+	font-weight:normal;
+	color:#000000;
+	text-decoration:underline;
+}
+
+A.StatLink:hover {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height:1.2;
+	font-weight:normal;
+	color:#000000;
+	text-decoration:underline;
+}

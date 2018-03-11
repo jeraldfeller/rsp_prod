@@ -1,0 +1,83 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css"/>
+
+
+
+
+{% endblock %}
+
+{% block content_body %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group">
+			<form action="aom_active_addresses.php?page_action=view_agent_all" method="POST">
+				<label for="house_number">Select an Agent:  All Active Agents</label>
+				{{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['agents']}) }}
+			</div>
+			</form>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group">
+			<form action="aom_active_addresses.php?page_action=view_agent_pending_installs" method="POST">
+				<label for="house_number">Select an Agent: Pending Installs</label>
+				{{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['agents_pending_installs']}) }}
+			</div>
+			</form>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group">
+			<form action="aom_active_addresses.php?page_action=view_agent_pending_service_calls" method="POST">
+				<label for="house_number">Select an Agent: Pending Service Calls</label>
+				{{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['agents_pending_service_calls']}) }}
+			</div>
+			</form>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group">
+			<form action="aom_active_addresses.php?page_action=view_agent_pending_removals" method="POST">
+				<label for="house_number">Select an Agent: Pending Removals</label>
+				{{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['agents_pending_removals']}) }}
+			</div>
+			</form>
+	</div>
+</div>
+{% endblock content_body %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.1/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.1/js/responsive.bootstrap.min.js"></script>
+
+
+
+
+<script>
+$(document).ready(function() {
+    $('#datatableAddress').DataTable(
+	{
+        "order": [[ 2, "desc" ]]
+    }
+	);
+} );
+</script>
+
+{% endblock %}

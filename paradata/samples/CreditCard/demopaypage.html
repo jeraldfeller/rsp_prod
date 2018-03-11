@@ -1,0 +1,1309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Sample Credit Card Transaction Page</title>
+		<link rel="STYLESHEET" type="text/css" href="main.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+		<script type="text/javascript">
+
+			function showRequiredFields( chargeType ) {
+
+				var htmlReqTag = "<font color=\"#cc0000\" face=\"arial\" size=\"2\">*</font>";
+
+				if( chargeType.value == "AUTH"){
+
+					document.getElementById('req_credit_card').innerHTML 			= htmlReqTag;
+					document.getElementById('req_expiry_date').innerHTML 			= htmlReqTag;
+					document.getElementById('req_bank_approval_code').innerHTML 	= "";
+					document.getElementById('req_order_id').innerHTML 				= "";
+					document.getElementById('req_reference_id').innerHTML 			= "";
+					document.getElementById('req_charge_total').innerHTML 			= htmlReqTag;
+
+				}else if( chargeType.value == "CAPTURE"){
+
+					document.getElementById('req_credit_card').innerHTML 			= htmlReqTag;
+					document.getElementById('req_expiry_date').innerHTML 			= htmlReqTag;
+					document.getElementById('req_bank_approval_code').innerHTML 	= "";
+					document.getElementById('req_order_id').innerHTML 				= htmlReqTag;
+					document.getElementById('req_reference_id').innerHTML 			= htmlReqTag;
+					document.getElementById('req_charge_total').innerHTML 			= htmlReqTag;
+
+				}else if( chargeType.value == "SALE"){
+
+					document.getElementById('req_credit_card').innerHTML 			= htmlReqTag;
+					document.getElementById('req_expiry_date').innerHTML 			= htmlReqTag;
+					document.getElementById('req_bank_approval_code').innerHTML 	= "";
+					document.getElementById('req_order_id').innerHTML 				= "";
+					document.getElementById('req_reference_id').innerHTML 			= "";
+					document.getElementById('req_charge_total').innerHTML 			= htmlReqTag;
+
+				}else if( chargeType.value == "CREDIT"){
+
+					document.getElementById('req_credit_card').innerHTML 			= htmlReqTag;
+					document.getElementById('req_expiry_date').innerHTML 			= htmlReqTag;
+					document.getElementById('req_bank_approval_code').innerHTML 	= "";
+					document.getElementById('req_order_id').innerHTML 				= "";
+					document.getElementById('req_reference_id').innerHTML 			= "";
+					document.getElementById('req_charge_total').innerHTML 			= htmlReqTag;
+
+				}else if( chargeType.value == "VOID"){
+
+					document.getElementById('req_credit_card').innerHTML 			= htmlReqTag;
+					document.getElementById('req_expiry_date').innerHTML 			= htmlReqTag;
+					document.getElementById('req_bank_approval_code').innerHTML 	= "";
+					document.getElementById('req_order_id').innerHTML 				= htmlReqTag;
+					document.getElementById('req_reference_id').innerHTML 			= htmlReqTag;
+					document.getElementById('req_charge_total').innerHTML 			= "";
+
+				}else if( chargeType.value == "FORCE_AUTH"){
+
+					document.getElementById('req_credit_card').innerHTML 			= htmlReqTag;
+					document.getElementById('req_expiry_date').innerHTML 			= htmlReqTag;
+					document.getElementById('req_bank_approval_code').innerHTML 	= htmlReqTag;
+					document.getElementById('req_order_id').innerHTML 				= "";
+					document.getElementById('req_reference_id').innerHTML 			= "";
+					document.getElementById('req_charge_total').innerHTML 			= htmlReqTag;
+
+				}else if( chargeType.value == "FORCE_SALE"){
+
+					document.getElementById('req_credit_card').innerHTML 			= htmlReqTag;
+					document.getElementById('req_expiry_date').innerHTML 			= htmlReqTag;
+					document.getElementById('req_bank_approval_code').innerHTML 	= htmlReqTag;
+					document.getElementById('req_order_id').innerHTML 				= "";
+					document.getElementById('req_reference_id').innerHTML 			= "";
+					document.getElementById('req_charge_total').innerHTML 			= htmlReqTag;
+
+				}else if( chargeType.value == "QUERY_PAYMENT"){
+
+					document.getElementById('req_credit_card').innerHTML 			= "";
+					document.getElementById('req_expiry_date').innerHTML 			= "";
+					document.getElementById('req_bank_approval_code').innerHTML 	= "";
+					document.getElementById('req_order_id').innerHTML 				= htmlReqTag;
+					document.getElementById('req_reference_id').innerHTML 			= htmlReqTag;
+					document.getElementById('req_charge_total').innerHTML 			= "";
+
+				}else if( chargeType.value == "QUERY_CREDIT"){
+
+					document.getElementById('req_credit_card').innerHTML 			= "";
+					document.getElementById('req_expiry_date').innerHTML 			= "";
+					document.getElementById('req_bank_approval_code').innerHTML 	= "";
+					document.getElementById('req_order_id').innerHTML 				= htmlReqTag;
+					document.getElementById('req_reference_id').innerHTML 			= htmlReqTag;
+					document.getElementById('req_charge_total').innerHTML 			= "";
+
+				}else if( chargeType.value == "ADJUSTMENT"){
+
+					document.getElementById('req_credit_card').innerHTML 			= htmlReqTag;
+					document.getElementById('req_expiry_date').innerHTML 			= htmlReqTag;
+					document.getElementById('req_bank_approval_code').innerHTML 	= "";
+					document.getElementById('req_order_id').innerHTML 				= htmlReqTag;
+					document.getElementById('req_reference_id').innerHTML 			= htmlReqTag;
+					document.getElementById('req_charge_total').innerHTML 			= htmlReqTag;
+
+				}
+			}
+
+
+		</script>
+
+	</head>
+	<body topmargin="5" leftmargin="0" alink="#cc0000" bgcolor="#ffffff" link="#cc0000" text="#000000"
+		vlink="#cc0000" onload="showRequiredFields( document.getElementById('charge_type') )">
+		<form action="doTransaction.php" method="post" name="payment_info">
+			<table align="center" border="1" cellpadding="0" cellspacing="0">
+				<tbody>
+					<tr>
+						<td>
+							<table align="center" border="0" cellpadding="0" cellspacing="0" width="800">
+								<tbody>
+									<tr>
+										<td height="20"></td>
+									</tr>
+									<tr>
+										<td colspan="3">
+											<table border="0" cellpadding="0" cellspacing="0" width="100%">
+												<tbody>
+													<tr>
+														<td align="left" width="150"></td>
+														<td align="center" height="54"><h3><u>Sample Credit Card Transaction Page</u></h3>
+															<p><font color="#ff0000" size="1">This page is for testing purposes only.
+																	<br>
+																	Do not submit real credit card information.</font></p>
+														</td>
+														<td align="right" width="150">
+														</td>
+													</tr>
+												</tbody></table>
+										</td>
+									</tr>
+									<tr valign="top">
+										<td colspan="2">
+											<table align="center" border="0" cellpadding="2" cellspacing="0">
+												<tbody>
+													<tr>
+														<td height="10"></td>
+													</tr>
+													<tr>
+														<td colspan="2">
+															<table border="1" cellpadding="0" cellspacing="0" width="375">
+																<tbody>
+																	<tr class="header">
+																		<td>&nbsp;Order Details</td>
+																	</tr>
+																</tbody></table>
+														</td>
+													</tr>
+													<tr>
+														<td align="right"><span id="req_order_id"></span>&nbsp;Order ID:</td>
+														<td align="left">
+															<input name="order_id" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Purchase Order Number:</td>
+														<td align="left">
+															<input name="purchase_order_number" id="purchase_order_number" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Order User ID:</td>
+														<td align="left">
+															<input name="order_user_id" id="order_user_id" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Invoice Number:</td>
+														<td align="left">
+															<input name="invoice_number" id="invoice_number" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right"><span id="req_bank_approval_code"></span>&nbsp;Bank Approval Code:</td>
+														<td align="left">
+															<input name="bank_approval_code" id="bank_approval_code" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right" valign="top"><span id="req_reference_id"></span>&nbsp;Reference ID:</td>
+														<td align="left"><input name="reference_id" id="reference_id" type="text"></td>
+													</tr>
+													<tr>
+														<td height="10"></td>
+													</tr>
+												</tbody></table>
+										</td>
+										<td colspan="2">
+											<table align="center" border="0" cellpadding="2" cellspacing="0">
+												<tbody>
+													<tr>
+														<td height="10"></td>
+													</tr>
+													<tr>
+														<td colspan="2">
+															<table border="1" cellpadding="0" cellspacing="0" width="375">
+																<tbody>
+																	<tr class="header">
+																		<td>&nbsp;Credit Card Details &nbsp;&nbsp;&nbsp;<font color="#cc0000" face="arial" size="2"><b>*</b>&nbsp;</font><font face="arial" size="1">(required
+																				field)</font></td>
+																	</tr>
+																</tbody></table>
+														</td>
+													</tr>
+													<tr>
+														<td align="right"><span id="req_credit_card"></span>&nbsp;Card
+															Number:</td>
+														<td align="left">
+															<input name="credit_card_number" value="4242424242424242" maxlength="16">
+														</td>
+													</tr>
+													<tr>
+														<td align="right"><span id="req_expiry_date"></span>&nbsp;Expiry:</td>
+														<td align="left">
+															<table border="0" cellpadding="0" cellspacing="0">
+																<tbody>
+																	<tr>
+																		<td>
+																			<select name="expire_month">
+																				<option value="">--Month--</option>
+																				<option value="1" selected="selected">01</option>
+																				<option value="2">02</option>
+																				<option value="3">03</option>
+																				<option value="4">04</option>
+																				<option value="5">05</option>
+																				<option value="6">06</option>
+																				<option value="7">07</option>
+																				<option value="8">08</option>
+																				<option value="9">09</option>
+																				<option value="10">10</option>
+																				<option value="11">11</option>
+																				<option value="12">12</option>
+																			</select>
+																		</td>
+																		<td>&nbsp;&nbsp;/&nbsp;&nbsp;</td>
+																		<td>
+																			<select name="expire_year">
+																				<option value="">--Year--</option>
+																				<option value="2005">2005</option>
+																				<option value="2006" selected="selected">2006</option>
+																				<option value="2007">2007</option>
+																				<option value="2008">2008</option>
+																				<option value="2009">2009</option>
+																				<option value="2010">2010</option>
+																				<option value="2011">2011</option>
+																				<option value="2012">2012</option>
+																			</select>
+																		</td>
+																	</tr>
+																</tbody></table>
+														</td>
+													</tr>
+													<tr>
+														<td align="right">CVV:</td>
+														<td align="left">
+															<input name="credit_card_verification_number" maxlength="4">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Duplicate Check:</td>
+														<td align="left">
+															<select name="duplicate_check">
+																<option value="" selected="selected"></option>
+																<option value="CHECK">CHECK</option>
+																<option value="OVERRIDE">OVERRIDE</option>
+																<option value="NO_CHECK">NO_CHECK</option>
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<td colspan="2" height="10"></td>
+													</tr>
+												</tbody></table>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" valign="top">
+											<table align="center" border="0" cellpadding="2" cellspacing="0">
+												<tbody>
+													<tr>
+														<td height="10"></td>
+													</tr>
+													<tr>
+														<td colspan="2">
+															<table border="1" cellpadding="0" cellspacing="0" width="375">
+																<tbody>
+																	<tr class="header">
+																		<td>&nbsp;Purchase Details&nbsp;&nbsp;&nbsp;<font color="#cc0000" face="arial" size="2"><b>*</b>&nbsp;</font><font face="arial" size="1">(required
+																				field)</font></td>
+																	</tr>
+																</tbody></table>
+														</td>
+													</tr>
+													<tr>
+														<td align="right"><span id="req_charge_total"></span>&nbsp;Total:
+															$</td>
+														<td align="left">
+															<input name="charge_total" style="height: 22px; width: 200px;" value="1.01" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right" valign="top"><font color="#cc0000" face="arial" size="2">*</font>&nbsp;Charge
+															Type:</td>
+														<td align="left">
+															<select name="charge_type" id="charge_type" onchange="showRequiredFields(this)">
+																<option value="TYPE">-- Charge Type --
+																</option>
+																<option value="AUTH" selected="selected">Auth</option>
+																<option value="CAPTURE">Capture</option>
+																<option value="SALE">Sale</option>
+																<option value="CREDIT">Credit</option>
+																<option value="VOID">Void</option>
+																<option value="FORCE_AUTH">Force Auth</option>
+																<option value="FORCE_SALE">Force Sale</option>
+																<option value="QUERY_PAYMENT">Query Payment</option>
+																<option value="QUERY_CREDIT">Query Credit</option>
+																<option value="ADJUSTMENT">Adjustment</option>
+															</select></td>
+													</tr>
+													<tr>
+														<td height="10"></td>
+													</tr>
+													<tr>
+														<td align="right">Tax Amount: $</td>
+														<td align="left">
+															<input name="tax_amount" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">State Tax: $</td>
+														<td align="left">
+															<input name="state_tax" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Tax Exempt:</td>
+														<td align="left"><input name="tax_exempt" type="checkbox" value="true"></td>
+													</tr>
+													<tr>
+														<td height="10"></td>
+													</tr>
+													<tr>
+														<td align="right">Shipping Charge: $</td>
+														<td align="left">
+															<input name="shipping_charge" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td height="10"></td>
+													</tr>
+													<tr>
+														<td align="right">Transaction Condition Code:</td>
+														<td align="left"><select name="transaction_condition_code" id="transaction_condition_code"><option value="" selected="selected"></option>
+																<option value="1">Mail or Fax Order</option>
+																<option value="2">Telephone Order</option>
+																<option value="3">Installment</option>
+																<option value="5">Secure Ecommerce</option>
+																<option value="6">Recurring Payment</option>
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Buyer Code:</td>
+														<td align="left"><input name="buyer_code" id="buyer_code" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right" valign="top">Description:</td>
+														<td align="left">
+															<textarea cols="22" name="order_description" rows="3">Test transaction.</textarea>
+														</td>
+													</tr>
+												</tbody></table>
+										</td>
+										<td colspan="2">
+											<table align="center" border="0" cellpadding="2" cellspacing="0">
+												<tbody>
+													<tr>
+														<td height="10"></td>
+													</tr>
+													<tr>
+														<td colspan="2">
+															<table border="1" cellpadding="0" cellspacing="0" width="375">
+																<tbody>
+																	<tr class="header">
+																		<td>&nbsp;Service Details</td>
+																	</tr>
+																</tbody></table>
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Industry:</td>
+														<td align="left"><select name="industry" id="SelectIndustry"><option value="" selected="selected"></option>
+																<option value="DIRECT_MARKETING">Direct Marketing</option>
+																<option value="RETAIL">Retail</option>
+																<option value="LODGING">Lodging</option>
+																<option value="RESTAURANT">Restaurant</option>
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<td height="10"></td>
+													</tr>
+													<tr>
+														<td align="right">Folio Number:</td>
+														<td align="left">
+															<input name="folio_number" type="text"></td>
+													</tr>
+													<tr>
+														<td height="10"></td>
+													</tr>
+													<tr>
+														<td align="right">Charge Total Includes:</td>
+														<td align="left"><input name="charge_total_incl_restaurant" value="true" id="Checkbox1" align="center" type="checkbox">Restaurant</td>
+													</tr>
+													<tr>
+														<td align="right"></td>
+														<td align="left"><input name="charge_total_incl_giftshop" value="true" id="Checkbox2" align="center" type="checkbox">Gift
+															shop</td>
+													</tr>
+													<tr>
+														<td align="right"></td>
+														<td align="left"><input name="charge_total_incl_minibar" value="true" id="Checkbox3" type="checkbox">Minibar</td>
+													</tr>
+													<tr>
+														<td align="right"></td>
+														<td align="left"><input name="charge_total_incl_phone" value="true" id="Checkbox4" type="checkbox">Phone</td>
+													</tr>
+													<tr>
+														<td align="right"></td>
+														<td align="left"><input name="charge_total_incl_laundry" value="true" id="Checkbox5" type="checkbox">Laundry</td>
+													</tr>
+													<tr>
+														<td align="right"></td>
+														<td align="left"><input name="charge_total_incl_other" value="true" id="Checkbox6" type="checkbox">Other</td>
+													</tr>
+													<tr>
+														<td height="10"></td>
+													</tr>
+													<tr>
+														<td align="right">Service Rate:</td>
+														<td align="left">$&nbsp;<input name="service_rate" type="text"></td>
+													</tr>
+													<tr>
+														<td align="right">Service No Show:</td>
+														<td colspan="3" align="left"><input name="service_no_show" value="true" type="checkbox"></td>
+													</tr>
+													<tr>
+														<td align="right">Service Start Date:</td>
+														<td align="left">
+															<table border="0" cellpadding="0" cellspacing="0">
+																<tbody>
+																	<tr>
+																		<td><select name="service_start_day"><option value="" selected="selected">--Day--</option>
+																				<option value="1">01</option>
+																				<option value="2">02</option>
+																				<option value="3">03</option>
+																				<option value="4">04</option>
+																				<option value="5">05</option>
+																				<option value="6">06</option>
+																				<option value="7">07</option>
+																				<option value="8">08</option>
+																				<option value="9">09</option>
+																				<option value="10">10</option>
+																				<option value="11">11</option>
+																				<option value="12">12</option>
+																				<option value="13">13</option>
+																				<option value="14">14</option>
+																				<option value="15">15</option>
+																				<option value="16">16</option>
+																				<option value="17">17</option>
+																				<option value="18">18</option>
+																				<option value="19">19</option>
+																				<option value="20">20</option>
+																				<option value="21">21</option>
+																				<option value="22">22</option>
+																				<option value="23">23</option>
+																				<option value="24">24</option>
+																				<option value="25">25</option>
+																				<option value="26">26</option>
+																				<option value="27">27</option>
+																				<option value="28">28</option>
+																				<option value="29">29</option>
+																				<option value="30">30</option>
+																				<option value="31">31</option>
+																			</select></td>
+																		<td>&nbsp;/&nbsp;</td>
+																		<td><select name="service_start_month"><option value="" selected="selected">--Month--</option>
+																				<option value="1">01</option>
+																				<option value="2">02</option>
+																				<option value="3">03</option>
+																				<option value="4">04</option>
+																				<option value="5">05</option>
+																				<option value="6">06</option>
+																				<option value="7">07</option>
+																				<option value="8">08</option>
+																				<option value="9">09</option>
+																				<option value="10">10</option>
+																				<option value="11">11</option>
+																				<option value="12">12</option>
+																			</select></td>
+																		<td>&nbsp;/&nbsp;</td>
+																		<td><select name="service_start_year"><option value="" selected="selected">--Year--</option>
+																				<option value="2004">2004</option>
+																				<option value="2005">2005</option>
+																				<option value="2006">2006</option>
+																				<option value="2007">2007</option>
+																				<option value="2008">2008</option>
+																				<option value="2009">2009</option>
+																				<option value="2010">2010</option>
+																				<option value="2011">2011</option>
+																				<option value="2012">2012</option>
+																			</select></td>
+																	</tr>
+																</tbody></table>
+														</td>
+													</tr>
+													<tr>
+													</tr>
+													<tr>
+														<td align="right">Service End Date:</td>
+														<td align="left">
+															<table border="0" cellpadding="0" cellspacing="0">
+																<tbody>
+																	<tr>
+																		<td><select name="service_end_day"><option value="" selected="selected">--Day--</option>
+																				<option value="1">01</option>
+																				<option value="2">02</option>
+																				<option value="3">03</option>
+																				<option value="4">04</option>
+																				<option value="5">05</option>
+																				<option value="6">06</option>
+																				<option value="7">07</option>
+																				<option value="8">08</option>
+																				<option value="9">09</option>
+																				<option value="10">10</option>
+																				<option value="11">11</option>
+																				<option value="12">12</option>
+																				<option value="13">13</option>
+																				<option value="14">14</option>
+																				<option value="15">15</option>
+																				<option value="16">16</option>
+																				<option value="17">17</option>
+																				<option value="18">18</option>
+																				<option value="19">19</option>
+																				<option value="20">20</option>
+																				<option value="21">21</option>
+																				<option value="22">22</option>
+																				<option value="23">23</option>
+																				<option value="24">24</option>
+																				<option value="25">25</option>
+																				<option value="26">26</option>
+																				<option value="27">27</option>
+																				<option value="28">28</option>
+																				<option value="29">29</option>
+																				<option value="30">30</option>
+																				<option value="31">31</option>
+																			</select></td>
+																		<td>&nbsp;/&nbsp;</td>
+																		<td><select name="service_end_month"><option value="" selected="selected">--Month--</option>
+																				<option value="1">01</option>
+																				<option value="2">02</option>
+																				<option value="3">03</option>
+																				<option value="4">04</option>
+																				<option value="5">05</option>
+																				<option value="6">06</option>
+																				<option value="7">07</option>
+																				<option value="8">08</option>
+																				<option value="9">09</option>
+																				<option value="10">10</option>
+																				<option value="11">11</option>
+																				<option value="12">12</option>
+																			</select></td>
+																		<td>&nbsp;/&nbsp;</td>
+																		<td><select name="service_end_year"><option value="" selected="selected">--Year--</option>
+																				<option value="2004">2004</option>
+																				<option value="2005">2005</option>
+																				<option value="2006">2006</option>
+																				<option value="2007">2007</option>
+																				<option value="2008">2008</option>
+																				<option value="2009">2009</option>
+																				<option value="2010">2010</option>
+																				<option value="2011">2011</option>
+																				<option value="2012">2012</option>
+																			</select></td>
+																	</tr>
+																</tbody></table>
+														</td>
+													</tr>
+													<tr>
+														<td colspan="2" height="10"></td>
+													</tr>
+												</tbody></table>
+										</td>
+									</tr>
+									<tr valign="top">
+										<td colspan="2">
+											<table align="center" border="0" cellpadding="2" cellspacing="0">
+												<tbody>
+													<tr>
+														<td height="10"></td>
+													</tr>
+													<tr>
+														<td colspan="2">
+															<table border="1" cellpadding="0" cellspacing="0" width="375">
+																<tbody>
+																	<tr class="header">
+																		<td>&nbsp;Billing Information</td>
+																	</tr>
+																</tbody></table>
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Customer Title:</td>
+														<td align="left">
+															<input name="bill_customer_title" style="height: 22px; width: 200px;" value="Dr." type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">First Name:</td>
+														<td align="left">
+															<input name="bill_first_name" style="height: 22px; width: 200px;" value="Bill" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Middle Name:</td>
+														<td align="left">
+															<input name="bill_middle_name" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Last Name:</td>
+														<td align="left">
+															<input name="bill_last_name" style="height: 22px; width: 200px;" value="Smith" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Company:</td>
+														<td align="left">
+															<input name="bill_company" style="height: 22px; width: 200px;" value="Acme Sprockets, Ltd."
+																type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Address One:</td>
+														<td align="left">
+															<input name="bill_address_one" style="height: 22px; width: 200px;" value="1234 Weigh Way"
+																type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Address Two:</td>
+														<td align="left">
+															<input name="bill_address_two" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">City:</td>
+														<td align="left">
+															<input name="bill_city" style="height: 22px; width: 200px;" value="Springfield" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">State or Province:</td>
+														<td align="left">
+															<input name="bill_state_or_province" style="height: 22px; width: 200px;" value="Illinois"
+																type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Country:</td>
+														<td align="left">
+															<select name="bill_country_code" style="height: 22px; width: 200px;">
+																<option value="AF">Afghanistan</option>
+																<option value="AL">Albania</option>
+																<option value="DZ">Algeria</option>
+																<option value="AS">American Samoa</option>
+																<option value="AD">Andorra</option>
+																<option value="AI">Anguilla</option>
+																<option value="AQ">Antarctica</option>
+																<option value="AG">Antigua and Barbuda</option>
+																<option value="AR">Argentina</option>
+																<option value="AM">Armenia</option>
+																<option value="AW">Aruba</option>
+																<option value="AU">Australia</option>
+																<option value="AT">Austria</option>
+																<option value="AZ">Azerbaijan</option>
+																<option value="BS">Bahamas</option>
+																<option value="BH">Bahrain</option>
+																<option value="BD">Bangladesh</option>
+																<option value="BB">Barbados</option>
+																<option value="BY">Belarus</option>
+																<option value="BE">Belgium</option>
+																<option value="BZ">Belize</option>
+																<option value="BJ">Benin</option>
+																<option value="BM">Bermuda</option>
+																<option value="BT">Bhutan</option>
+																<option value="BO">Bolivia</option>
+																<option value="BW">Botswana</option>
+																<option value="BV">Bouver Islands</option>
+																<option value="BR">Brazil</option>
+																<option value="IO">British Indian Ocean Territory</option>
+																<option value="BN">Brunei</option>
+																<option value="BG">Bulgaria</option>
+																<option value="BF">Burkina Faso</option>
+																<option value="BI">Burundi</option>
+																<option value="CM">Cambodia</option>
+																<option value="CM">Cameroon</option>
+																<option value="CA">Canada</option>
+																<option value="CV">Cape Verde</option>
+																<option value="KY">Cayman Islands</option>
+																<option value="CF">Central African Republic</option>
+																<option value="TD">Chad</option>
+																<option value="CL">Chile</option>
+																<option value="CN">China</option>
+																<option value="CX">Christmas Islands</option>
+																<option value="CC">Cocos Keeling Islands</option>
+																<option value="CO">Columbia</option>
+																<option value="KM">Comoros</option>
+																<option value="CG">Congo</option>
+																<option value="CK">Cook Island</option>
+																<option value="CR">Costa Rica</option>
+																<option value="CI">Cote Divoire</option>
+																<option value="HR">Croatia</option>
+																<option value="CY">Cyprus</option>
+																<option value="CZ">Czech Republic</option>
+																<option value="DK">Denmark</option>
+																<option value="DJ">Djibouti</option>
+																<option value="DM">Dominica</option>
+																<option value="DO">Dominican Republic</option>
+																<option value="TP">East Timor</option>
+																<option value="EG">Egypt</option>
+																<option value="SV">El Salvador</option>
+																<option value="EC">Equador</option>
+																<option value="GQ">Equatorial Guinea</option>
+																<option value="ER">Eritrea</option>
+																<option value="EE">Estonia</option>
+																<option value="ET">Ethopia</option>
+																<option value="FK">Falkland Islands</option>
+																<option value="FO">Faroe Islands</option>
+																<option value="FM">Federated States of Micronesia</option>
+																<option value="FJ">Fiji</option>
+																<option value="FI">Finland</option>
+																<option value="FR">France</option>
+																<option value="GF">French Guiana</option>
+																<option value="PF">French Polynesia</option>
+																<option value="TF">French Southern Territories</option>
+																<option value="GA">Gabon</option>
+																<option value="GM">Gambia</option>
+																<option value="GE">Georgia</option>
+																<option value="DE">Germany</option>
+																<option value="GA">Ghana</option>
+																<option value="BI">Gibraltar</option>
+																<option value="GR">Greece</option>
+																<option value="GL">Greenland</option>
+																<option value="GD">Grenada</option>
+																<option value="GP">Guadeloupe</option>
+																<option value="GU">Guam</option>
+																<option value="GT">Guatemala</option>
+																<option value="GN">Guinea</option>
+																<option value="GW">Guinea Bissau</option>
+																<option value="GY">Guyana</option>
+																<option value="HT">Haiti</option>
+																<option value="HM">Heard and McDonald Islands</option>
+																<option value="HN">Honduras</option>
+																<option value="HK">Hong Kong</option>
+																<option value="HU">Hungary</option>
+																<option value="IS">Iceland</option>
+																<option value="IN">India</option>
+																<option value="ID">Indonesia</option>
+																<option value="IE">Ireland</option>
+																<option value="IL">Israel</option>
+																<option value="IT">Italy</option>
+																<option value="JM">Jamaica</option>
+																<option value="JP">Japan</option>
+																<option value="JO">Jordan</option>
+																<option value="KZ">Kazakhstan</option>
+																<option value="KE">Kenya</option>
+																<option value="KI">Kiribati</option>
+																<option value="KW">Kuwait</option>
+																<option value="KG">Kyrgyzstan</option>
+																<option value="LA">Laos</option>
+																<option value="LV">Latvia</option>
+																<option value="LB">Lebanon
+																</option>
+																<option value="LS">Lesthoto</option>
+																<option value="LR">Liberia</option>
+																<option value="LI">Liechtenstein</option>
+																<option value="LT">Lithuania</option>
+																<option value="LU">Luxembourg</option>
+																<option value="MO">Macau</option>
+																<option value="MG">Madagascar</option>
+																<option value="MW">Malawi</option>
+																<option value="MY">Malaysia</option>
+																<option value="MV">Maldives</option>
+																<option value="ML">Mali</option>
+																<option value="MT">Malta</option>
+																<option value="MH">Marshall Islands</option>
+																<option value="MQ">Martinique</option>
+																<option value="MR">Mauritania</option>
+																<option value="MU">Mauritius</option>
+																<option value="YT">Mayotte</option>
+																<option value="FX">Metropolitan France</option>
+																<option value="MX">Mexico</option>
+																<option value="MD">Moldova</option>
+																<option value="MC">Monaco</option>
+																<option value="MN">Mongolia</option>
+																<option value="MS">Montserrat</option>
+																<option value="MA">Morocco</option>
+																<option value="MZ">Mozambique</option>
+																<option value="MM">Myanmar</option>
+																<option value="NA">Namibia</option>
+																<option value="NR">Nauru</option>
+																<option value="NP">Nepal</option>
+																<option value="NL">Netherlands</option>
+																<option value="AN">Netherlands Antilles</option>
+																<option value="NC">New Caledonia</option>
+																<option value="NZ">New Zealand</option>
+																<option value="NI">Nicaragua</option>
+																<option value="NE">Niger</option>
+																<option value="NG">Nigeria</option>
+																<option value="NU">Niue</option>
+																<option value="NF">Norfolk Island</option>
+																<option value="MP">Northern Mariana Islands</option>
+																<option value="NO">Norway</option>
+																<option value="OM">Oman</option>
+																<option value="PK">Pakistan</option>
+																<option value="PW">Palau</option>
+																<option value="PA">Panama</option>
+																<option value="PG">Papua New Guinea</option>
+																<option value="PY">Paraguay</option>
+																<option value="PE">Peru</option>
+																<option value="PH">Philoppines</option>
+																<option value="PN">Pitcairn</option>
+																<option value="PL">Poland</option>
+																<option value="PT">Portugal</option>
+																<option value="PR">Puerto Rico</option>
+																<option value="QA">Qatar</option>
+																<option value="KR">Republic of Korea</option>
+																<option value="MK">Republic of Macedonia</option>
+																<option value="RE">Reunion</option>
+																<option value="RO">Romania</option>
+																<option value="RU">Russia</option>
+																<option value="WS">Samoa</option>
+																<option value="SM">San Marino</option>
+																<option value="ST">Sao Tome and Principe</option>
+																<option value="SA">Saudi Arabia</option>
+																<option value="SN">Senegal</option>
+																<option value="SC">Seychelles</option>
+																<option value="SL">Sierra Leone</option>
+																<option value="SG">Singapore</option>
+																<option value="DK">Slovakia</option>
+																<option value="SI">Slovenia</option>
+																<option value="SB">Solomon Islands</option>
+																<option value="SO">Somalia</option>
+																<option value="ZA">South Africa</option>
+																<option value="ES">Spain</option>
+																<option value="LK">Sri Lanka</option>
+																<option value="SH">St Helena</option>
+																<option value="KN">St Kitts and Nevis</option>
+																<option value="LC">St Lucia</option>
+																<option value="PM">St Pierre and Miquelon</option>
+																<option value="VC">St Vincent and the Grenadines</option>
+																<option value="SD">Sudan</option>
+																<option value="SR">Suriname</option>
+																<option value="SJ">Svalbard and Jan Mayen Islands</option>
+																<option value="SZ">Swaziland</option>
+																<option value="SE">Sweden</option>
+																<option value="CH">Switzerland</option>
+																<option value="SY">Syria</option>
+																<option value="TW">Taiwan</option>
+																<option value="TJ">Tajikistan</option>
+																<option value="TZ">Tanzania</option>
+																<option value="TH">Thailand</option>
+																<option value="TG">Togo</option>
+																<option value="TK">Tokelau</option>
+																<option value="TO">Tonga</option>
+																<option value="TT">Trinidad and Tobago</option>
+																<option value="TN">Tunisia</option>
+																<option value="TR">Turkey</option>
+																<option value="TM">Turkmenistan</option>
+																<option value="TC">Turks and Caicos Islands</option>
+																<option value="TV">Tuvalu</option>
+																<option value="UG">Uganda</option>
+																<option value="UA">Ukraine</option>
+																<option value="AE">United Arab Emirates</option>
+																<option value="GB">United Kingdom</option>
+																<option value="US" selected="selected">United States</option>
+																<option value="UM">United States Minor Outlying Islands</option>
+																<option value="UY">Uruguay</option>
+																<option value="UZ">Uzbekistan</option>
+																<option value="VU">Vanuatu</option>
+																<option value="VA">Vatican City</option>
+																<option value="VE">Venezuela</option>
+																<option value="VN">Vietnam</option>
+																<option value="VG">Virgin Islands British</option>
+																<option value="VI">Virgin Islands USA</option>
+																<option value="WF">Wallis and Futuna Islands</option>
+																<option value="EH">Western Sahara</option>
+																<option value="YE">Yemen</option>
+																<option value="YU">Yugoslavia</option>
+																<option value="ZR">Zaire</option>
+																<option value="ZM">Zambia</option>
+																<option value="ZW">Zimbabwe</option>
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Zip or Postal Code:</td>
+														<td align="left">
+															<input name="bill_zip_or_postal_code" id="bill_postal_code" style="height: 22px; width: 200px;"
+																value="96730" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Phone:</td>
+														<td align="left">
+															<input name="bill_phone" style="height: 22px; width: 200px;" value="(555) 555-1212" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Fax:</td>
+														<td align="left"><input name="bill_fax" id="bill_fax" style="height: 22px; width: 200px;" type="text"></td>
+													</tr>
+													<tr>
+														<td align="right">
+															Email:</td>
+														<td align="left">
+															<input name="bill_email" style="height: 22px; width: 200px;" value="customer@example.com"
+																type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Note:</td>
+														<td align="left">
+															<input name="bill_note" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td colspan="2" height="10"></td>
+													</tr>
+												</tbody></table>
+										</td>
+										<td colspan="2">
+											<table align="center" border="0" cellpadding="2" cellspacing="0">
+												<tbody>
+													<tr>
+														<td height="10"></td>
+													</tr>
+													<tr>
+														<td colspan="2">
+															<table border="1" cellpadding="0" cellspacing="0" width="375">
+																<tbody>
+																	<tr class="header">
+																		<td>&nbsp;Shipping Information</td>
+																	</tr>
+																</tbody></table>
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Customer Title:</td>
+														<td align="left">
+															<input name="ship_customer_title" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">First Name:</td>
+														<td align="left">
+															<input name="ship_first_name" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Middle Name:</td>
+														<td align="left">
+															<input name="ship_middle_name" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Last Name:</td>
+														<td align="left">
+															<input name="ship_last_name" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Company:</td>
+														<td align="left">
+															<input name="ship_company" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Address One:</td>
+														<td align="left">
+															<input name="ship_address_one" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Address Two:</td>
+														<td align="left">
+															<input name="ship_address_two" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">City:</td>
+														<td align="left">
+															<input name="ship_city" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">State or Province:</td>
+														<td align="left">
+															<input name="ship_state_or_province" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Country:</td>
+														<td align="left">
+															<select name="ship_country_code" style="height: 22px; width: 200px;">
+																<option value="AF">Afghanistan</option>
+																<option value="AL">Albania</option>
+																<option value="DZ">Algeria</option>
+																<option value="AS">American Samoa</option>
+																<option value="AD">Andorra</option>
+																<option value="AI">Anguilla</option>
+																<option value="AQ">Antarctica</option>
+																<option value="AG">Antigua and Barbuda</option>
+																<option value="AR">Argentina</option>
+																<option value="AM">Armenia</option>
+																<option value="AW">Aruba</option>
+																<option value="AU">Australia</option>
+																<option value="AT">Austria</option>
+																<option value="AZ">Azerbaijan</option>
+																<option value="BS">Bahamas</option>
+																<option value="BH">Bahrain</option>
+																<option value="BD">Bangladesh</option>
+																<option value="BB">Barbados</option>
+																<option value="BY">Belarus</option>
+																<option value="BE">Belgium</option>
+																<option value="BZ">Belize</option>
+																<option value="BJ">Benin</option>
+																<option value="BM">Bermuda</option>
+																<option value="BT">Bhutan</option>
+																<option value="BO">Bolivia</option>
+																<option value="BW">Botswana</option>
+																<option value="BV">Bouver Islands</option>
+																<option value="BR">Brazil</option>
+																<option value="IO">British Indian Ocean Territory</option>
+																<option value="BN">Brunei</option>
+																<option value="BG">Bulgaria</option>
+																<option value="BF">Burkina Faso</option>
+																<option value="BI">Burundi</option>
+																<option value="CM">Cambodia</option>
+																<option value="CM">Cameroon</option>
+																<option value="CA">Canada</option>
+																<option value="CV">Cape Verde</option>
+																<option value="KY">Cayman Islands</option>
+																<option value="CF">Central African Republic</option>
+																<option value="TD">Chad</option>
+																<option value="CL">Chile</option>
+																<option value="CN">China</option>
+																<option value="CX">Christmas Islands</option>
+																<option value="CC">Cocos Keeling Islands</option>
+																<option value="CO">Columbia</option>
+																<option value="KM">Comoros</option>
+																<option value="CG">Congo</option>
+																<option value="CK">Cook Island</option>
+																<option value="CR">Costa Rica</option>
+																<option value="CI">Cote Divoire</option>
+																<option value="HR">Croatia</option>
+																<option value="CY">Cyprus</option>
+																<option value="CZ">Czech Republic</option>
+																<option value="DK">Denmark</option>
+																<option value="DJ">Djibouti</option>
+																<option value="DM">Dominica</option>
+																<option value="DO">Dominican Republic</option>
+																<option value="TP">East Timor</option>
+																<option value="EG">Egypt</option>
+																<option value="SV">El Salvador</option>
+																<option value="EC">Equador</option>
+																<option value="GQ">Equatorial Guinea</option>
+																<option value="ER">Eritrea</option>
+																<option value="EE">Estonia</option>
+																<option value="ET">Ethopia</option>
+																<option value="FK">Falkland Islands</option>
+																<option value="FO">Faroe Islands</option>
+																<option value="FM">Federated States of Micronesia</option>
+																<option value="FJ">Fiji</option>
+																<option value="FI">Finland</option>
+																<option value="FR">France</option>
+																<option value="GF">French Guiana</option>
+																<option value="PF">French Polynesia</option>
+																<option value="TF">French Southern Territories</option>
+																<option value="GA">Gabon</option>
+																<option value="GM">Gambia</option>
+																<option value="GE">Georgia</option>
+																<option value="DE">Germany</option>
+																<option value="GA">Ghana</option>
+																<option value="BI">Gibraltar</option>
+																<option value="GR">Greece</option>
+																<option value="GL">Greenland</option>
+																<option value="GD">Grenada</option>
+																<option value="GP">Guadeloupe</option>
+																<option value="GU">Guam</option>
+																<option value="GT">Guatemala</option>
+																<option value="GN">Guinea</option>
+																<option value="GW">Guinea Bissau</option>
+																<option value="GY">Guyana</option>
+																<option value="HT">Haiti</option>
+																<option value="HM">Heard and McDonald Islands</option>
+																<option value="HN">Honduras</option>
+																<option value="HK">Hong Kong</option>
+																<option value="HU">Hungary</option>
+																<option value="IS">Iceland</option>
+																<option value="IN">India</option>
+																<option value="ID">Indonesia</option>
+																<option value="IE">Ireland</option>
+																<option value="IL">Israel</option>
+																<option value="IT">Italy</option>
+																<option value="JM">Jamaica</option>
+																<option value="JP">Japan</option>
+																<option value="JO">Jordan</option>
+																<option value="KZ">Kazakhstan</option>
+																<option value="KE">Kenya</option>
+																<option value="KI">Kiribati</option>
+																<option value="KW">Kuwait</option>
+																<option value="KG">Kyrgyzstan</option>
+																<option value="LA">Laos</option>
+																<option value="LV">Latvia</option>
+																<option value="LB">Lebanon
+																</option>
+																<option value="LS">Lesthoto</option>
+																<option value="LR">Liberia</option>
+																<option value="LI">Liechtenstein</option>
+																<option value="LT">Lithuania</option>
+																<option value="LU">Luxembourg</option>
+																<option value="MO">Macau</option>
+																<option value="MG">Madagascar</option>
+																<option value="MW">Malawi</option>
+																<option value="MY">Malaysia</option>
+																<option value="MV">Maldives</option>
+																<option value="ML">Mali</option>
+																<option value="MT">Malta</option>
+																<option value="MH">Marshall Islands</option>
+																<option value="MQ">Martinique</option>
+																<option value="MR">Mauritania</option>
+																<option value="MU">Mauritius</option>
+																<option value="YT">Mayotte</option>
+																<option value="FX">Metropolitan France</option>
+																<option value="MX">Mexico</option>
+																<option value="MD">Moldova</option>
+																<option value="MC">Monaco</option>
+																<option value="MN">Mongolia</option>
+																<option value="MS">Montserrat</option>
+																<option value="MA">Morocco</option>
+																<option value="MZ">Mozambique</option>
+																<option value="MM">Myanmar</option>
+																<option value="NA">Namibia</option>
+																<option value="NR">Nauru</option>
+																<option value="NP">Nepal</option>
+																<option value="NL">Netherlands</option>
+																<option value="AN">Netherlands Antilles</option>
+																<option value="NC">New Caledonia</option>
+																<option value="NZ">New Zealand</option>
+																<option value="NI">Nicaragua</option>
+																<option value="NE">Niger</option>
+																<option value="NG">Nigeria</option>
+																<option value="NU">Niue</option>
+																<option value="NF">Norfolk Island</option>
+																<option value="MP">Northern Mariana Islands</option>
+																<option value="NO">Norway</option>
+																<option value="OM">Oman</option>
+																<option value="PK">Pakistan</option>
+																<option value="PW">Palau</option>
+																<option value="PA">Panama</option>
+																<option value="PG">Papua New Guinea</option>
+																<option value="PY">Paraguay</option>
+																<option value="PE">Peru</option>
+																<option value="PH">Philoppines</option>
+																<option value="PN">Pitcairn</option>
+																<option value="PL">Poland</option>
+																<option value="PT">Portugal</option>
+																<option value="PR">Puerto Rico</option>
+																<option value="QA">Qatar</option>
+																<option value="KR">Republic of Korea</option>
+																<option value="MK">Republic of Macedonia</option>
+																<option value="RE">Reunion</option>
+																<option value="RO">Romania</option>
+																<option value="RU">Russia</option>
+																<option value="WS">Samoa</option>
+																<option value="SM">San Marino</option>
+																<option value="ST">Sao Tome and Principe</option>
+																<option value="SA">Saudi Arabia</option>
+																<option value="SN">Senegal</option>
+																<option value="SC">Seychelles</option>
+																<option value="SL">Sierra Leone</option>
+																<option value="SG">Singapore</option>
+																<option value="DK">Slovakia</option>
+																<option value="SI">Slovenia</option>
+																<option value="SB">Solomon Islands</option>
+																<option value="SO">Somalia</option>
+																<option value="ZA">South Africa</option>
+																<option value="ES">Spain</option>
+																<option value="LK">Sri Lanka</option>
+																<option value="SH">St Helena</option>
+																<option value="KN">St Kitts and Nevis</option>
+																<option value="LC">St Lucia</option>
+																<option value="PM">St Pierre and Miquelon</option>
+																<option value="VC">St Vincent and the Grenadines</option>
+																<option value="SD">Sudan</option>
+																<option value="SR">Suriname</option>
+																<option value="SJ">Svalbard and Jan Mayen Islands</option>
+																<option value="SZ">Swaziland</option>
+																<option value="SE">Sweden</option>
+																<option value="CH">Switzerland</option>
+																<option value="SY">Syria</option>
+																<option value="TW">Taiwan</option>
+																<option value="TJ">Tajikistan</option>
+																<option value="TZ">Tanzania</option>
+																<option value="TH">Thailand</option>
+																<option value="TG">Togo</option>
+																<option value="TK">Tokelau</option>
+																<option value="TO">Tonga</option>
+																<option value="TT">Trinidad and Tobago</option>
+																<option value="TN">Tunisia</option>
+																<option value="TR">Turkey</option>
+																<option value="TM">Turkmenistan</option>
+																<option value="TC">Turks and Caicos Islands</option>
+																<option value="TV">Tuvalu</option>
+																<option value="UG">Uganda</option>
+																<option value="UA">Ukraine</option>
+																<option value="AE">United Arab Emirates</option>
+																<option value="GB">United Kingdom</option>
+																<option value="US" selected>United States</option>
+																<option value="UM">United States Minor Outlying Islands</option>
+																<option value="UY">Uruguay</option>
+																<option value="UZ">Uzbekistan</option>
+																<option value="VU">Vanuatu</option>
+																<option value="VA">Vatican City</option>
+																<option value="VE">Venezuela</option>
+																<option value="VN">Vietnam</option>
+																<option value="VG">Virgin Islands British</option>
+																<option value="VI">Virgin Islands USA</option>
+																<option value="WF">Wallis and Futuna Islands</option>
+																<option value="EH">Western Sahara</option>
+																<option value="YE">Yemen</option>
+																<option value="YU">Yugoslavia</option>
+																<option value="ZR">Zaire</option>
+																<option value="ZM">Zambia</option>
+																<option value="ZW">Zimbabwe</option>
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Zip or Postal Code:</td>
+														<td align="left">
+															<input name="ship_zip_or_postal_code" id="ship_postal_code" style="height: 22px; width: 200px;"
+																type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Phone:</td>
+														<td align="left">
+															<input name="ship_phone" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Fax:</td>
+														<td align="left"><input name="ship_fax" id="ship_fax" style="height: 22px; width: 200px;" type="text"></td>
+													</tr>
+													<tr>
+														<td align="right">Email:</td>
+														<td align="left">
+															<input name="ship_email" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td align="right">Note:</td>
+														<td align="left">
+															<input name="ship_note" style="height: 22px; width: 200px;" type="text">
+														</td>
+													</tr>
+													<tr>
+														<td colspan="2" height="90"></td>
+													</tr>
+													<tr>
+														<td colspan="2" align="center">
+															<input name="button" value="Submit" type="submit"> <input name="button" value="Reset" type="reset">
+														</td>
+													</tr>
+													<tr>
+														<td height="30"></td>
+													</tr>
+												</tbody></table>
+										</td>
+									</tr>
+								</tbody></table>
+						</td>
+					</tr>
+				</tbody></table>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,52 @@
+			<div class="panel panel-default panel-menu sidebar-panel">
+                            <div id="header-my-orders"></div>
+							<div class="panel-body">
+								<li>
+									<a href="aom_order_create_address.php?order_type=1&clear=true"><span class="fa arrow fa-arrow-right"></span>Request Sign Post Install</a>
+								</li>
+								<li>
+									<a href="aom_active_addresses.php" data-toggle="tooltip" data-placement="left" title="Use to Request Service Call or Change Removal Date"><span class="fa arrow fa-arrow-right"></span>Active Address List</a>
+								</li>
+								<li>
+									<!-- -- if (($active_orders = tep_get_active_orders()) > 0) { ?order_view=closed }-->
+									<a href="aom_orders.php"><span class="fa arrow fa-arrow-right"></span>Search Order History</a>
+								</li>
+								<li>
+									<a href="end_year_reports.php"><span class="fa arrow fa-arrow-right"></span>End Of Year Reports</a>
+								</li>
+								<li>
+									<a href="aom_export_order_info.php"><span class="fa arrow fa-arrow-right"></span>Export Order Information</a>
+								</li>
+										
+							</div>
+						</div>
+                       <div class="panel panel-default panel-menu sidebar-panel">
+                            <div id="header-agents-management"></div>
+							<div class="panel-body">
+								<li>
+									<a href="aom_manage_agents.php"><span class="fa arrow fa-arrow-right"></span>Manage Agents</a>
+								</li>
+							</div>
+						</div>
+                        <div class="panel panel-default panel-menu sidebar-panel">
+                            <div id="header-my-account"></div>
+							<div class="panel-body sidebar-panel-body">
+								<li>
+									<a href="aom_update_account.php"><span class="fa arrow fa-arrow-right"></span>Update Account Information</a>
+								</li>
+								<li>
+									<a href="agent_account_change_password.php"><span class="fa arrow fa-arrow-right"></span>Change Password</a>
+								</li>
+								<li>
+									<a href="agent_account_overview.php"><span class="fa arrow fa-arrow-right"></span>Account Overview</a>
+								</li>
+								<li>
+									<a href="{{ constant('PAGE_URL') }}?action=logout"><span class="fa arrow fa-arrow-right"></span>Logoff</a>
+								</li>
+
+							</div>
+						</div>
+<script>
+$('[data-toggle="tooltip"]').tooltip();
+
+</script>	

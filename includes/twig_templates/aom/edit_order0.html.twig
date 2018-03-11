@@ -1,0 +1,276 @@
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+
+<div class="col-md-8">
+{% if error.get_error_status('order_view') %}
+	<div class="alert alert-danger">
+		{{ error.get_error_string('order_view')|raw }}
+	</div>
+{% endif %}
+{% if error.get_error_status('order_view', 'warning') %}
+	<div class="alert alert-warning">
+		{{ error.get_error_string('order_view', 'warning')|raw }}
+	</div>
+{% endif %}
+
+<form action="aom_active_addresses.php?page_action=edit_confirm&oID={{ vars.order_data['oID'] }}" method="post">
+{% if(vars.card_request|length>0) %}
+
+<h4 class="title-panel">Credit Card Details</h4>
+<div class="panel-library">
+
+<div class="row-mg">
+	<div class="form-group">
+				<label for="cc_type" class="control-label">Card Type:</label>
+				<div>
+					{{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['cc_type']}) }}
+				</div>
+			</div>
+	</div>
+
+	<div class="row-mg">
+		<div class="form-group">
+			<label for="house_number" class="control-label">Name on Card:</label>
+			<div>
+				<input class="form-control" name="cc_name" id="cc_name" value="{{ vars.cc['cc_name'] }}">
+			</div>
+		</div>
+	</div>
+	<div class="row-mg">
+		<div class="form-group">
+				<label for="cc_number" class="control-label">Expiry Date:</label>
+				<div class="controls row">
+					<div class="col-md-6">
+						<select class="form-control" name="cc_month">
+							{% for j in 1..12 %}
+								<option value="{{ j }}">{{ j |date('2012-' ~ j ~ '-01') |date('M') }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="col-md-6">
+						<select class="form-control" name="cc_year">
+							{% for year in "now"|date("Y").."now"|date("Y")+6 %}
+								<option value="{{ year }}">{{ year }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+			</div>
+	</div>
+
+	<div class="row-mg">
+		<div class="form-group">
+			<label for="house_number" class="control-label">Security Code:</label>
+			<div>
+				<input class="form-control" name="cc_verification_number" id="cc_verification_number" value="{{ vars.cc['cc_verification_number'] }}">
+			</div>
+		</div>
+	</div>
+
+<hr>
+	<b>Billing Address</b>
+<hr>
+	<div class="row-mg">
+		<div class="form-group">
+			<label for="house_number" class="control-label">Street:</label>
+			<div>
+				<input class="form-control" name="cc_billing_street" id="cc_billing_street" value="{{ vars.cc['cc_billing_street'] }}">
+			</div>
+		</div>
+	</div>
+
+	<div class="row-mg">
+		<div class="form-group">
+			<label for="house_number" class="control-label">City:</label>
+			<div>
+				<input class="form-control" name="cc_billing_city" id="cc_billing_city" value="{{ vars.cc['cc_billing_city'] }}">
+			</div>
+		</div>
+	</div>
+
+	<div class="row-mg">
+		<div class="form-group">
+			<label for="house_number" class="control-label">Zip:</label>
+			<div>
+				<input class="form-control" name="cc_billing_zip" id="cc_billing_zip" value="{{ vars.cc['cc_billing_zip'] }}">
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" name="card_submit" value="true" />
+
+</div>
+
+{% endif %}
+
+{% if(vars.order_data['order_type_id'] == 1) %}
+
+<h4 class="title-panel">Address Information</h4>
+<div class="panel-library">
+	{% if(vars.order_data['order_status_id'] == 2) %}
+		<div class='alert alert-warning' style='margin: 0.5em 2em 0.5em 0;'>
+			<button type='button' class='close' data-dismiss='alert'>&times;</button>
+			<i class='icon-4x pull-left icon-exclamation-sign'></i>
+			This order has been accepted by our installer, and may be already be completed. Please contact us, at 202 256-0107 or at <a href='mailto:"{{constant("INFO_EMAIL")}}"'>{{constant("INFO_EMAIL")}}</a>, to see if we can reach our installer and potentially make changes to or cancel the order.
+		</div>
+	{% endif %}
+
+	<div class="row-mg">
+		<div class="form-group">
+			<label for="house_number" class="control-label">House Number:</label>
+			<div>
+				<input class="form-control" name="house_number" id="house_number" value="{{ vars.order_data['house_number'] }}">
+			</div>
+		</div>
+	</div>
+
+	<div class="row-mg">
+		<div class="form-group">
+			<label for="street_name" class="control-label">Street Name:</label>
+			<div>
+				<input class="form-control" name="street_name" id="street_name" value="{{ vars.order_data['street_name'] }}">
+			</div>
+		</div>
+	</div>
+
+	<div class="row-mg">
+		<div class="form-group">
+			<label for="city" class="control-label">City:</label>
+			<div>
+				<input class="form-control" name="city" id="city" value="{{ vars.order_data['city'] }}">
+			</div>
+		</div>
+	</div>
+
+	<div class="row-mg">
+		<div class="form-group">
+			<label for="city" class="control-label">County:</label>
+			<div>
+				{{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['county']}) }}
+			</div>
+		</div>
+	</div>
+
+<div class="row-mg">
+		<div class="form-group">
+			<label for="city" class="control-label">States:</label>
+			<div>
+				{{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['state']}) }}
+			</div>
+		</div>
+	</div>
+
+
+<div class="row-mg">
+		<div class="form-group">
+			<label for="zip" class="control-label">Zip:</label>
+			<div>
+				<input class="form-control" name="zip" id="zip" value="{{ vars.order_data['zip'] }}">
+			</div>
+		</div>
+	</div>
+
+<div class="row-mg">
+		<div class="form-group">
+			<label for="zip4" class="control-label">Zip4 Code:</label>
+			<div>
+				<input class="form-control" name="zip4" id="zip4" value="{{ vars.order_data['zip4'] }}"> (remove to have the system try and auto find)
+			</div>
+		</div>
+	</div>
+
+<div class="row-mg">
+		<div class="form-group">
+			<label for="cross_street_directions" class="control-label">Cross Street/Directions:</label>
+			<div>
+				<textarea class="form-control" name="cross_street_directions" id="cross_street_directions">{{ vars.order_data['cross_street_directions'] }}</textarea>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endif %}
+<h4 class="title-panel">Job Description</h4>
+<div class="panel-library">
+	<div class="row-mg">
+			<div class="form-group">
+				<label for="job_start_date" class="control-label">Order Type:</label>
+				<div>
+					<span>{{ vars.order_data['order_type_name'] }}</span>
+				</div>
+			</div>
+		</div>
+	<div class="row-mg">
+			<div class="form-group">
+				<label for="job_start_date" class="control-label">Date Scheduled:</label>
+				<div>
+					<input class="form-control" name="job_start_date" id="job_start_date" value='{{ vars.order_data["date_schedualed"]|date("n/d/Y") }}'>
+				</div>
+			</div>
+		</div>
+
+
+
+{% if(vars.order_data['order_status_id'] == 1) %}
+
+<div class="row-mg">
+		<div class="form-group">
+			<label for="number_of_posts" class="control-label">Number of Posts:</label>
+			<div>
+				{% if vars.order_data['order_type_id'] == 1 %}
+					<input class="form-control" name="number_of_posts" id="number_of_posts" value='{{ vars.order_data["number_of_posts"] }}'>
+				{% else %}
+					<input type="hidden" name="number_of_posts" value="{{ vars.order_data['number_of_posts'] }}">{{ vars.order_data["number_of_posts"] }}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+	<div class="row-mg">
+		<div class="form-group">
+			<label for="special_instructions" class="control-label">Special Instructions:</label>
+			<div>
+				<textarea class="form-control" name="special_instructions" id="special_instructions">{{ vars.order_data['special_instructions'] }}</textarea>
+			</div>
+		</div>
+	</div>
+</div>
+
+<h4 class="title-panel">Equipment</h4>
+<div class="panel-library">
+	<div class="row-mg">
+			<div class="form-group">
+				<div class="ftable">
+					<table>
+					{{ vars.k|raw }}
+					</table>
+				</div>
+			</div>
+		</div>
+</div>
+{% endif %}
+
+
+</div>
+
+<div class="col-md-4">
+
+<button class="btn btn-success btn-midsize" type="submit">Update Order</button>
+</form>
+	<form action="{{ vars.return_page }}?page_action=view&oID={{ vars.order_data['oID'] }}" class="top-mg-10" method="post">
+			<button class="btn btn-info btn-midsize" type="submit">Back</button>
+	</form>
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+	<script language="javascript" data-cfasync="false">
+                $(document).ready(function () {
+                    $("#job_start_date").datepicker({startDate: "+1d"});
+                });
+            </script>
+{% endblock %}

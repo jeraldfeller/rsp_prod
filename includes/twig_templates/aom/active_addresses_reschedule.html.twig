@@ -1,0 +1,86 @@
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+
+<div class="col-md-8">
+
+{% if error.get_error_status('aom_active_addresses') %}
+	<div class="alert alert-danger">
+		{{ error.get_error_string('aom_active_addresses')|raw }}
+	</div>
+{% endif %}
+
+	<form id="reschedule_form" action="{{ constant('FILENAME_AOM_ACTIVE_ADDRESSES') }}?page_action=reschedule_removal_success&aID={{ vars.aID }}" method="post">
+	<div class="alert alert-warning">
+		Press cancel to go back to the previous page or fill in the New Removal Date below to reschedule the removal.
+	</div>
+	<div class="row">
+			<div class="form-group">
+				<label class="control-label">Address</label>
+				<div class="controls">
+					{{ vars.house_number }} {{ vars.street_name }}, {{ vars.city }} {{ vars.state_name }}
+				</div>
+			</div>
+	</div>
+	<div class="row">
+		<div class="form-group">
+			<label class="control-label">Current Removal Date:</label>
+			<div class="controls">
+				{{ vars.dt|date('n/d/Y') }}
+			</div>
+		 </div>
+	 </div>
+	 <div class="row">
+		<div class="form-group">
+			<label class="control-label">New Removal Date:</label>
+			<div class="controls">
+				{% set tomorrow = "+0 day"|date("m/d/Y") %}
+				<input class="form-control" name="job_start_date" id="job_start_date" value="{{ tomorrow }}">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="form-group">
+			<label class="control-label"><p>Please provide any special directions or requirements for this order in the box below.</p>
+				<p style="color:#FF0000;">If there are any underground hazards (e.g. sprinklers, electric fences), please have their location marked and describe the markings in the box below.</p></label>
+			<div class="controls">
+				<textarea class="form-control" name="special_instructions">{{ vars.special_instructions }}</textarea>
+			</div>
+
+		</div>
+	</div>
+	<button class="btn btn-info" name="submit_string" style="float:right;" type="submit">Update Removal Date</button>
+
+		<button class="btn btn-danger" style="float:right; margin-right:20px;"  type="button" onClick="returnToAOM()">Cancel</button>
+
+
+	</form>
+
+
+
+
+
+</div>
+
+{% endblock content_body %}
+
+{% block javascripts %}
+
+  {{ parent() }}
+
+ <script language="javascript" data-cfasync="false">
+                $(document).ready(function () {
+					//alert();
+                    $("#job_start_date").datepicker();
+                });
+
+								function returnToAOM() {
+								document.getElementById("reschedule_form").action = "aom_active_addresses.php";
+								document.getElementById("reschedule_form").submit();
+						//		alert("asd");
+
+								//Window.location.href = "/aom_active_addresses.php";
+								}
+            </script>
+
+
+{% endblock %}

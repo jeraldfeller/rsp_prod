@@ -1,0 +1,5 @@
+<select required class="form-control {{ args.params }}" name="{{ args.name }}" {% if args.params is not empty %} {% endif %}>
+	{% for value in args['contents'] %}
+		<option value="{{ value.id }}" {% if value.id == args.selected %} selected {% endif %}> {{ value.name }} </options>
+	{% endfor %}
+</select>

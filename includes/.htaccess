@@ -1,0 +1,5 @@
+RewriteEngine on
+
+# Force all requests to .com (or anything else) to redirect to .net
+RewriteCond %{HTTP_HOST}  !^www.testdnx.net
+RewriteRule (.*)          http://www.testdnx.net/realtysignpost/index.php [R=permanent,L]

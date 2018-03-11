@@ -1,0 +1,44 @@
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+
+<div class="row">
+                <div class="col-lg-6 col-md-6">
+				<a href="/order_create.php?order_type=1">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-map-signs fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9" style="vertical-align:bottom;">
+                                    <div class="huge inst">Request Signpost Install</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+				</a>
+                </div>
+                <div class="col-lg-6 col-md-6">
+				<a href="/agent_active_addresses.php">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-list-alt fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="huge adrlist">Active Address List - Use to Request Service Call or Change Removal Date</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        
+                    </div>
+				</a>	
+                </div>
+</div>
+<div style="height:350px;"></div>
+
+{% endblock content_body %}

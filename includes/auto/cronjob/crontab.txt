@@ -1,0 +1,5 @@
+# cron job can be setup for the autoresponder in the following manner
+# this example runs the autoresponder every 2 hours
+# p.s: point to the exact path in your system
+
+00 */2  * * * /home/vedanta/cronjob/reply_mails.php

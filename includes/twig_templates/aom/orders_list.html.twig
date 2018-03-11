@@ -1,0 +1,84 @@
+
+{% extends 'layout.html.twig' %}
+
+
+
+{% block stylesheets %}
+{{ parent() }}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css"/>
+ 
+
+
+ 
+{% endblock %}
+
+{% block content_body %}
+<div class="row">
+	<div class="col-md-12">
+
+
+		  <table id="datatableHistory" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+		  <thead>
+								<tr>
+									<th>Order Type</th>
+									<th>Agent</th>
+									<th>Address</th>
+									<th>Order Status</th>
+									<th>Action</th>
+								</tr>
+			</thead>
+				
+			{% if vars.listing_split.number_of_rows > 0  %}
+			<tbody>
+								{% for result in vars.split_result %}
+								<tr>
+									<td class="pageBoxContent">{{ result['order_type_name'] }}</td>
+									<td class="pageBoxContent">{{ result['firstname'] }} {{ result['lastname'] }}</td>
+									<td class="pageBoxContent">{{ result['house_number'] }} <br> {{ result['street_name'] }}, <br> {{ result['city'] }} </td>
+									<td class="pageBoxContent">{{ result['order_status_name'] }}</td>
+									<td class="pageBoxContent"><a class="btn btn-sm btn-success" href="{{ constant('FILENAME_AOM_ORDERS') }}?oID={{ result['order_id'] }}&page_action=view'">View</a></td>
+								</tr>
+								{% endfor %}
+			</tbody>
+			{% else %} 
+			<tbody>
+				Sorry no orders could be found.  Please either schedule a new one or change the options on the right.
+			</tbody>
+
+			{% endif %}
+
+		  </table>
+
+</div>
+
+</div>
+{% endblock content_body %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.1/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.1/js/responsive.bootstrap.min.js"></script>
+
+
+
+
+<script>
+$(document).ready(function() {
+    $('#datatableHistory').DataTable(
+    {
+        "order": [[ 2, "desc" ]]
+    }
+    );
+} );
+</script>
+
+{% endblock %}
+
+

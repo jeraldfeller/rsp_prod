@@ -1,0 +1,287 @@
+{% extends '/order/aom_order_layout.html.twig' %}
+{% block order %}
+
+<form class="order_form" action="{{ constant('PAGE_URL') }}?page_action=submit" method="post">
+
+<div class="col-md-8">
+
+<form class="order_form form-horizontal" action="{{ constant('PAGE_URL') }}?page_action=submit" method="post" name="special">
+
+
+<h4 class="title-panel address-title">{{ vars.form.house_number }} {{ vars.form.street_name }}, {{ vars.form.city }} {{ vars.form.state_name }} {{ vars.form.zip4_code }}</h4>
+
+{% if error.get_error_status('account_create_special') %}
+	<div class="alert alert-danger">
+		{{ error.get_error_string('account_create_special') }}
+	</div>
+{% endif %}
+
+<h4 class="title-panel">
+	Reason and Details
+</h4>
+<div class="alert alert-warning">
+	Please select a reason from the list below. Once you have selected a reason either wait till the page reloads or press the Proceed to Payment Information button.  Then enter the details.
+</div>	
+
+			<div class="form-group">
+				<label for="number_of_posts" class="control-label">Reason:</label>
+				<div class="controls">
+					{{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['sc_reason']}) }}
+				</div>
+			 </div>
+
+		
+		
+{% if vars.sc_reason is not empty %}
+
+	{% if vars.sc_reason == 1 %}
+	
+		
+			<div class="form-group">
+				<label for="special_instructions" class="control-label">Rider to Remove:</label>
+				<div class="controls">
+					{% for rider in vars.form['remove_riders'] %}
+					<div>
+						<input type="checkbox" class="remove-equipment" name="remove_equipment[]" value="{{ rider.equipment_id }}" {% if rider.checked==true %} checked {% endif %}> {{ rider.equipment_name }}
+					</div>	
+					{% endfor %}
+				</div>
+			 </div>
+		
+	
+
+		
+			<div class="form-group">
+				<label for="special_instructions" class="control-label">Rider to Install:</label>
+				<div class="controls">
+					{% for rider in vars.form['isntall_riders'] %}
+					<div>	
+						<input type="checkbox" class="install-equipment" name="install_equipment[]" value="{{ rider.equipment_id }}" {% if rider.checked==true %} checked {% endif %}> {{ rider.equipment_name }}
+					</div>	
+					{% endfor %}
+				</div>
+			 </div>
+	
+	 
+	
+	{% elseif vars.sc_reason == 2 %}	
+	 
+		{% for equipment_block in vars.equipment_array %}
+
+		{% if equipment_block['has_items'] == 1 %}
+			<div class="col-md-12">
+				
+					<p><u>{{ equipment_block['name'] }}</u></p>
+					
+			</div>
+			{% endif %}
+			 
+			 <!-- cost tep_create_special_payment_string -->
+				{% set pricetag = 0 %}
+				{% if equipment_block['cost'] > 0 %}
+					{% set pricetag = 'Cost: $' ~ equipment_block.cost %}
+				{% else %}
+					{% set pricetag = '- No Charge' %}
+				{% endif %}
+				
+				{% if equipment_block['discount'] is not empty %}
+					
+				{% endif %}
+			<!-- end -->
+			 
+				<h4 class="title-panel"><u>{{ equipment_block['name'] }}</u> {{ pricetag }}</h4>
+				<div class="panel-library">
+					
+						<p {% if equipment_block['color'] is not empty %} class="color-red" {% endif %}>{{ equipment_block['description'] }}</p>
+						
+						{% for optional_equipment in equipment_block['optional_result'] %}
+						
+							{% if equipment_block['selectable'] == 1 and optional_equipment|length>0 %}
+							
+							<div {% if optional_equipment.disabled %} class="color-red" {% endif %}>
+								<input type="radio" name="optional[{{ equipment_block.equipment_group_id }}][]" value=" {{optional_equipment.equipment_group_answer_id}}" {% if optional_equipment.checked %} checked {% endif %} {% if optional_equipment.disabled %} disabled {% endif %}> {{ optional_equipment.name }} {% if optional_equipment.out_of_stock %} - Currently out of stock {% endif %}
+							</div>
+							
+							{% else %}
+							
+							<div {% if optional_equipment.disabled %} class="color-red" {% endif %}>
+								<input type="checkbox" class="install-equipment" name="optional[{{ equipment_block.equipment_group_id }}][]" value=" {{optional_equipment.equipment_group_answer_id}}" {% if optional_equipment.checked %} checked {% endif %} {% if optional_equipment.disabled %} disabled {% endif %}> {{ optional_equipment.name }} {% if optional_equipment.out_of_stock %} - Currently out of stock {% endif %}
+							</div>
+							{% endif %}	
+						
+						{% endfor %}
+						
+						{% if equipment_block['selectable'] == 1 and equipment_block['optional_result']|length>0 %}
+						
+							<input type="radio" name="optional[{{ equipment_block.equipment_group_id }}][]" value="0" {% if equipment_block.none_selected %} checked {% endif %}> None
+						
+						{% endif %}
+						
+				</div>
+
+			{% endfor %}
+			
+		{% elseif vars.sc_reason == 3 %}	
+			
+			{% for equipment in vars['equipment_array'] %}
+
+			
+				<div class="form-group">
+					<label for="special_instructions" class="control-label">{{equipment.equipment_type_name}}</label>
+					<div class="controls">
+						{% for item in equipment['items'] %}
+							<input name="equipment[]" type="checkbox" {% if item.checked %} checked {% endif %} value="{{item.equipment_id}}">{{item.name}}
+						{% endfor %}
+					</div>
+				 </div>
+			
+			
+			{% endfor %}	
+
+	 {% elseif vars.sc_reason == 4 %}	
+			
+				<div class="form-group">
+					<label for="special_instructions" class="control-label">Leaning due to:</label>
+					<div class="controls">
+						{{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['leaning_reason']}) }}
+					</div>
+				 </div>
+			
+			
+		{% elseif vars.sc_reason == 5 %}		
+			
+			<div class="alert alert-warning">
+						<input type="hidden" name="sc_reason_5" value="true" />
+						Please make sure to properly mark where the new post is to go or provide exact details below.
+			</div>
+	 
+	 {% elseif vars.sc_reason == 6 %}	
+	 
+		{% for equipment_block in vars.equipment_array %}
+
+		{% if equipment_block['has_items'] == 1 %}
+			<div class="col-md-12">
+				
+					<p><u>{{ equipment_block['name'] }}</u></p>
+					
+			</div>
+			{% endif %}
+			 
+			 <!-- cost tep_create_special_payment_string -->
+				{% set pricetag = 0 %}
+				{% if equipment_block['cost'] > 0 %}
+					{% set pricetag = 'Cost: $' ~ equipment_block.cost %}
+				{% else %}
+					{% set pricetag = '- No Charge' %}
+				{% endif %}
+				
+				{% if equipment_block['discount'] is not empty %}
+					
+				{% endif %}
+			<!-- end -->
+			 
+				<h4 class="title-panel"><u>{{ equipment_block['name'] }}</u> {{ pricetag }}</h4>
+				<div class="panel-library">
+					
+						<p {% if equipment_block['color'] is not empty %} class="color-red" {% endif %}>{{ equipment_block['description'] }}</p>
+						
+						{% for optional_equipment in equipment_block['optional_result'] %}
+						
+							{% if equipment_block['selectable'] == 1 and optional_equipment|length>0 %}
+							
+							<div {% if optional_equipment.disabled %} class="color-red" {% endif %}>
+								<input type="radio" name="optional[{{ equipment_block.equipment_group_id }}][]" value=" {{optional_equipment.equipment_group_answer_id}}" {% if optional_equipment.checked %} checked {% endif %} {% if optional_equipment.disabled %} disabled {% endif %}> {{ optional_equipment.name }} {% if optional_equipment.out_of_stock %} - Currently out of stock {% endif %}
+							</div>
+							
+							{% else %}
+							
+							<div {% if optional_equipment.disabled %} class="color-red" {% endif %}>
+								<input type="checkbox" class="install-equipment" name="optional[{{ equipment_block.equipment_group_id }}][]" value=" {{optional_equipment.equipment_group_answer_id}}" {% if optional_equipment.checked %} checked {% endif %} {% if optional_equipment.disabled %} disabled {% endif %}> {{ optional_equipment.name }} {% if optional_equipment.out_of_stock %} - Currently out of stock {% endif %}
+							</div>
+							{% endif %}	
+						
+						{% endfor %}
+						
+						{% if equipment_block['selectable'] == 1 and equipment_block['optional_result']|length>0 %}
+						
+							<input type="radio" name="optional[{{ equipment_block.equipment_group_id }}][]" value="0" {% if equipment_block.none_selected %} checked {% endif %}> None
+						
+						{% endif %}
+						
+				</div>
+
+			{% endfor %}
+			
+			
+		{% elseif vars.sc_reason == 7 %}		
+			
+			<div class="alert alert-warning">
+						<input type="hidden" name="sc_reason_7" value="true" />
+						Please describe the issue fully below.
+					</div>
+
+			
+			
+	
+	{% endif %}
+	
+	
+	
+{% endif %}	
+	
+		
+		
+			<div class="form-group">
+				<label for="special_instructions" class="control-label">Please provide any special directions or requirements for this order in the box below. If there are any underground  hazards (e.g. sprinklers, electric fences), please have their location marked and describe the markings in the box below.</label>
+				<div class="controls">
+					<textarea class="form-control" name="special_instructions" id="special_instructions">{{ vars.form['special_instructions'] }}</textarea>
+				</div>
+			 </div>
+	
+
+	{% if constant('SHOW_PROMO_CODE_AREA') == true %}
+		
+			<div class="form-group">
+				<label for="house_number" class="control-label">Promotional Code:</label>
+				<div class="controls">
+					<input type="text" class="form-control" name="promo_code" id="promo_code" value="{{ vars.form['promo_code'] }}">
+				</div>
+			 </div>
+	
+	{% else %}	
+		<input type="hidden" name="promo_code" value="" />
+	{% endif %}
+
+</div>
+{% endblock order %}
+
+
+{% block next_button %}
+	
+	<input type="hidden" name="submit_string_y" id="submit_string_y" value="1">
+	
+	{% if vars.order_type != constant('ORDER_TYPE_REMOVAL') %}
+		<button name="reset_button" style="float:left" type="reset" class="btn btn-danger">Reset</button>
+		<button name="submit_button" style="float:right" type="submit" class="btn btn-info">Proceed to Payment Information</button>
+	{% else %}
+		<button name="submit_string" type="submit" class="btn btn-info" style="float:right">Proceed to Change Removal Date</button>
+	{% endif %}
+	
+{% endblock next_button %}	
+
+{% block javascripts %}
+
+{{ parent() }}
+
+<script language="javascript">
+    $(document).ready(function () {
+        $(".install-equipment").change(function () {
+            var count = $(".install-equipment:checked").length;
+            if (count > 2) {
+                $(this).attr("checked", false);
+                alert("You may only select a maximum of two (2) riders");
+            }
+        });
+    });
+</script>
+{% endblock %}

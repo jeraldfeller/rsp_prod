@@ -1,0 +1,539 @@
+<?php
+// mjp 20120404 improve service call reason equipment validation
+// mjp 20120423 allow none to be shown if no equipment in current warehouse.
+// Updated 1/10/13 brad@brgr2.com
+
+	$page_action = tep_fill_variable('page_action', 'get');
+	$order_type = tep_fill_variable('order_type_id', 'session');
+	$sc_reason = tep_fill_variable('sc_reason', 'post', tep_fill_variable('sc_reason', 'session'));
+	$sc_reason_4  = tep_fill_variable('sc_reason_4', 'post', tep_fill_variable('sc_reason_4', 'session'));
+	$sc_reason_5  = tep_fill_variable('sc_reason_5', 'post', tep_fill_variable('sc_reason_5', 'session'));
+	$sc_reason_7  = tep_fill_variable('sc_reason_7', 'post', tep_fill_variable('sc_reason_7', 'session'));
+	$equipment  = tep_fill_variable('equipment', 'post', tep_fill_variable('equipment', 'session', array()));
+	$install_equipment = tep_fill_variable('install_equipment', 'post', tep_fill_variable('install_equipment', 'session', array()));
+	$remove_equipment = tep_fill_variable('remove_equipment', 'post', tep_fill_variable('remove_equipment', 'session', array()));
+	$submit_button = tep_fill_variable('submit_button_y', 'post', tep_fill_variable('submit_button'));
+	
+	if (empty($order_type)) {
+		tep_redirect(FILENAME_ORDER_CREATE);
+	}
+	if($order_type == ORDER_TYPE_INSTALL) {
+		$shipping_address = tep_fill_variable('street_name', 'session');
+	} else {
+		$shipping_address = tep_fill_variable('address_id', 'session');
+		
+	}
+	if (empty($shipping_address)) {
+		tep_redirect(FILENAME_ORDER_CREATE_ADDRESS);
+    }
+    if (!is_array($remove_equipment)) {
+        $remove_equipment = array();
+    }
+    if (!is_array($install_equipment)) {
+        $install_equipment = array();
+    }
+	
+	$payment_method = tep_fill_variable('payment_method_id', 'session');
+	$special_instructions = tep_fill_variable('special_instructions', 'post', tep_fill_variable('special_instructions', 'session'));
+	$promo_code = tep_fill_variable('promo_code');
+	$number_of_posts = tep_fill_variable('number_of_posts', 'post', tep_fill_variable('number_of_posts', 'session', '1'));
+	$optional = tep_fill_variable('optional', 'post', tep_fill_variable('optional_with_nones', 'session', tep_fill_variable('optional', 'session', array())));
+    $optional = parse_equipment_array2($optional);
+    if ($order_type != ORDER_TYPE_INSTALL) {
+        $address_id = tep_fill_variable('address_id', 'session');
+        $address_information = tep_fetch_address_information($address_id);
+        $house_number = $address_information['house_number'];
+        $street_name = $address_information['street_name'];
+        $city = $address_information['city'];
+        $county_name = $address_information['county_name'];
+        $zip = $address_information['zip'];
+        $zip4_code = $address_information['zip4'];
+        $state_name = $address_information['state_name'];
+    } else {
+        $house_number = tep_fill_variable('house_number', 'session'); 
+        $street_name = tep_fill_variable('street_name', 'session'); 
+        $city = tep_fill_variable('city', 'session'); 
+        $county = tep_fill_variable('county', 'session'); 
+        $zip = tep_fill_variable('zip', 'session'); 
+        $zip4_code = tep_fill_variable('zip4', 'session'); 
+        $state_id = tep_fill_variable('state', 'session'); 
+        $state_name = tep_get_state_name($state_id);
+    }
+    $personal = tep_is_personal_equipment($user->fetch_user_id(), $user->agency_id);
+
+	if (empty($submit_button)) {
+		$page_action = '';
+	}
+	if (($order_type == ORDER_TYPE_SERVICE) && ($page_action == 'submit')) {
+		//Check if one of the options are done and some result is done.
+		$error_status = false;
+		if (!empty($sc_reason)) {
+			if ($sc_reason == '1') {
+				if (empty($install_equipment) || empty($remove_equipment)) {
+					$error_status = true;
+					$error->add_error('account_create_special', 'You must select both a rider to be installed and a rider to be removed.');
+				}
+			} elseif ($sc_reason == '2') {
+				if (empty($optional)) {
+					$error_status = true;
+					$equipment = array();
+					$error->add_error('account_create_special', 'You must select at least one item to be installed.');
+				}
+			} elseif ($sc_reason == '3') {
+				if (empty($equipment)) {
+					$error_status = true;
+					$equipment = array();
+					$error->add_error('account_create_special', 'You must select at least one item to be installed.');
+				}
+			} elseif ($sc_reason == '4') {
+				if (empty($sc_reason_4)) {
+					$error_status = true;
+					$optional = array();
+					$equipment = array();
+					$error->add_error('account_create_special', 'Please select the reason from the pulldown list.');
+				}
+			} elseif ($sc_reason == '5') {
+				if (empty($sc_reason_5)) {
+					$error_status = true;
+					$optional = array();
+					$equipment = array();
+				}
+			} elseif ($sc_reason == '6') {
+				if (empty($optional)) {
+					$error_status = true;
+					$equipment = array();
+					$error->add_error('account_create_special', 'You must select at least one item that was missing from the install.');
+				}
+			} elseif ($sc_reason == '7') {
+				if (empty($sc_reason_7)) {
+					$optional = array();
+					$equipment = array();
+					$error_status = true;
+				}
+			}
+		} else {
+			$error_status = true;
+			$error->add_error('account_create_special', 'You must select a reason for this service call.');
+		}
+		if ($error_status) {
+			$page_action = '';
+		}
+	}
+	
+	if (!empty($page_action) && ($page_action == 'submit')) {
+			
+		if (empty($number_of_posts) && ($order_type == ORDER_TYPE_INSTALL)) {
+			$error->add_error('account_create_special', 'Please enter the number of posts that you require.');
+		}
+
+
+    if ($order_type == ORDER_TYPE_INSTALL) { // mjp 20120404 improve service call reason equipment validation
+            if ($personal > 0) {
+                if (!isset($optional["5"])) {
+                $error->add_error('account_create_special', 'Please select which personal equipment to install, or NONE if all of your panels are out of stock or you don\'t want a panel installed.');
+                }
+            }
+        }
+        
+		if (!$error->get_error_status('account_create_special')) {
+			
+			$session->php_session_register('special_instructions', $special_instructions);
+            $session->php_session_register('optional', $optional);
+            $session->php_session_register('optional_with_nones', $optional);
+			$session->php_session_register('promo_code', $promo_code);
+			$session->php_session_register('number_of_posts', $number_of_posts);
+			$session->php_session_register('sc_reason', $sc_reason);
+			$session->php_session_register('sc_reason_4', $sc_reason_4);
+			$session->php_session_register('sc_reason_5', $sc_reason_5);
+			$session->php_session_register('sc_reason_7', $sc_reason_7);
+			$session->php_session_register('equipment', $equipment);
+			$session->php_session_register('install_equipment', $install_equipment);
+			$session->php_session_register('remove_equipment', $remove_equipment);
+
+			tep_redirect(FILENAME_ORDER_CREATE_PAYMENT);
+		}
+	}
+
+?>
+<script data-cfasync="false" language="javascript">
+    $(document).ready(function () {
+        $(".install-equipment").change(function () {
+            var count = $(".install-equipment:checked").length;
+            if (count > 2) {
+                $(this).attr("checked", false);
+                alert("You may only select a maximum of two (2) riders");
+            }
+        });
+    });
+</script>
+
+<div class="alert alert-info alert-block">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <i class="icon-4x pull-left icon-warning-sign badge badge-info" style="padding: 6px;"></i>
+    <h4>IMPORTANT!</h4> You must receive the Order Confirmation e-mail to be certain we have received your install order. 
+    Be sure to complete the order process until you see a CONGRATULATIONS page.
+</div> 
+
+<form class="order_form" action="<?php echo PAGE_URL; ?>?page_action=submit" method="post" name="special">
+<table width="100%" cellspacing="0" cellpadding="0">
+	<tr>
+		<td width="100%">
+			<table width="100%" cellspacing="0" cellpadding="2" class="pageBox">
+				<tr>
+					<td class="pageBoxHeading" colspan="2"><b><?php echo "$house_number $street_name, $city, $state_name &nbsp;$zip4_code"; ?></b></td>
+				</tr>
+				<tr>
+					<td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+				</tr>
+				<?php
+				if ($error->get_error_status('account_create_special')) {
+				?>
+				<tr>
+					<td class="mainError" colspan="2"><?php echo $error->get_error_string('account_create_special'); ?></td>
+				</tr>
+				<tr>
+					<td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+				</tr>
+				<?php
+					}
+					if (($order_type == ORDER_TYPE_INSTALL)) {
+						//Install.
+				?>
+				<tr>
+					<td width="100%">
+						<table cellspacing="0" cellpadding="0">
+							<tr>
+								<td class="main"><b>Optional Extras</b></td>
+							</tr>
+							<tr>
+								<td height="3"><img src="images/pixel_trans.gif" height="3" width="1" /></td>
+							</tr>
+							<?php echo tep_generate_available_equipment_string($order_type, $user->fetch_service_level_id(), $user->fetch_user_id(), $optional, tep_fill_variable('zip4', 'session'), tep_fill_variable('address_id', 'session'));?>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td height="5"><img src="images/pixel_trans.gif" height="10" width="1" /></td>
+				</tr>
+				<?php
+					} elseif ($order_type == ORDER_TYPE_SERVICE) {
+						//Service call.  Need to make some more complex questions here.
+						
+						?>
+						<tr>
+							<td width="100%">
+								<table cellspacing="0" cellpadding="0">
+									<tr>
+										<td class="main"><b>Reason and Details</b></td>
+									</tr>
+									<tr>
+										<td height="3"><img src="images/pixel_trans.gif" height="3" width="1" /></td>
+									</tr>
+									<tr>
+										<td class="main">Please select a reason from the list below. Once you have selected a reason either wait till the page reloads or press the Proceed to Payment Information button.  Then enter the details.</td>
+									</tr>
+									<tr>
+										<td height="5"><img src="images/pixel_trans.gif" height="5" width="1" /></td>
+									</tr>
+									<tr>
+										<td width="100%">
+											<table width="100%" cellspacing="0" cellpadding="0">
+												<tr>
+													<td width="100"><img src="images/pixel_trans.gif" height="5" width="5" /></td>
+													<td width="560"></td>
+												</tr>
+												<tr>
+													<td width="100" class="main">Reason: </td>
+													<td width="560"><?php echo tep_generate_service_call_pulldown_menu('sc_reason', $sc_reason, $user->fetch_user_id(), tep_fill_variable('address_id', 'session'), ' onchange="this.form.submit();"'); ?></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<?php
+										if (!empty($sc_reason)) {
+											if ($sc_reason == '1') {
+												//Rider Exchange.
+												//First need to list all the installed.
+												?>
+												<tr>
+													<td width="100%">
+														<table width="100%" cellspacing="0" cellpadding="0">
+															<tr>
+																<td width="100"><img src="images/pixel_trans.gif" height="5" width="5" /></td>
+																<td width="560"></td>
+															</tr>
+															<tr>
+																<td width="100" class="main" valign="top">Rider to Remove: </td>
+																<td width="560"><?php
+																		$query = $database->query("select eita.equipment_id, e.name as equipment_name from " . TABLE_EQUIPMENT_ITEMS_TO_ADDRESSES . " eita, " . TABLE_EQUIPMENT . " e where eita.equipment_id = e.equipment_id and eita.equipment_status_id = '2' and e.equipment_type_id = '2' and eita.address_id = '" . tep_fill_variable('address_id', 'session') . "'");
+																		$loop = 0;
+																		$exclude_array = array();
+																			while($result = $database->fetch_array($query)) {
+																					if ($loop > 0) {
+																						echo '<br>';
+																					}
+																				$exclude_array[] = $result['equipment_id'];
+																					if (in_array($result['equipment_id'], $remove_equipment)) {
+																						$checked = ' CHECKED';
+																					} else {
+																						$checked = '';
+																					}
+																				echo '<input type="checkbox" class="remove-equipment" name="remove_equipment[]" value="'.$result['equipment_id'].'"'.$checked.'>&nbsp;&nbsp;&nbsp;'.$result['equipment_name'];
+																				$loop++;
+																			}
+																?></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+												<tr>
+													<td height="5"><img src="images/pixel_trans.gif" height="5" width="1" /></td>
+												</tr>
+												<tr>
+													<td width="100%">
+														<table width="100%" cellspacing="0" cellpadding="0">
+															<tr>
+                                                                <td width="100"><img src="images/pixel_trans.gif" height="5" width="5" /></td>
+																<td width="560"></td>
+															</tr>
+															<tr>
+																<td width="100" class="main" valign="top">Rider to Install: </td>
+																<td width="560"><?php
+																		$warehouses = tep_get_sevicing_warehouse(fetch_address_zip4(tep_fill_variable('address_id', 'session')));
+																		$query = $database->query("select e.equipment_id, e.name as equipment_name from " . TABLE_EQUIPMENT . " e where e.equipment_type_id = '2'");
+																		$loop = 0;
+																			while($result = $database->fetch_array($query)) {
+																					if (tep_fetch_available_equipment_count($result['equipment_id'], $warehouses, $user->fetch_user_id()) < 1) {
+																						continue;
+																					}
+																					if (in_array($result['equipment_id'], $exclude_array)) {
+																						continue;
+																					}
+																					if ($loop > 0) {
+																						echo '<br>';
+																					}
+																					if (in_array($result['equipment_id'], $install_equipment)) {
+																						$checked = ' CHECKED';
+																					} else {
+																						$checked = '';
+																					}
+																				echo '<input type="checkbox" class="install-equipment" name="install_equipment[]" value="'.$result['equipment_id'].'"'.$checked.'>&nbsp;&nbsp;&nbsp;'.$result['equipment_name'];
+																				$loop++;
+																			}
+																?></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+												
+												
+												<?php
+											} elseif ($sc_reason == '2') {
+												//Install new bb or rider.
+												?>
+																	<tr>
+																		<td height="10"><img src="images/pixel_trans.gif" height="10" width="1" /></td>
+																	</tr>
+														
+												<?php echo tep_generate_available_equipment_string('1', $user->fetch_service_level_id(), $user->fetch_user_id(), $optional, fetch_address_zip4(tep_fill_variable('address_id', 'session')), tep_fill_variable('address_id', 'session'), false, true, array(), false); ?>
+
+																<?php
+													
+														
+		
+											} elseif ($sc_reason == '3') {
+												//Replace/Exchange Agent SignPanel
+												$warehouses = tep_get_sevicing_warehouse(fetch_address_zip4(tep_fill_variable('address_id', 'session')));
+												$query = $database->query("select equipment_type_id, equipment_type_name from " . TABLE_EQUIPMENT_TYPES . " where equipment_type_id = '4' order by equipment_type_name");
+												$loop = 0;
+													while($result = $database->fetch_array($query)) {
+														$string = '';
+														$exclude_array = tep_fetch_installed_equipment_array($result['equipment_type_id'], tep_fill_variable('address_id', 'session'));
+														$sub_query = $database->query("select equipment_id, name from " . TABLE_EQUIPMENT . " where equipment_type_id = '" . $result['equipment_type_id'] . "'");
+															while($sub_result = $database->fetch_array($sub_query)) {
+																	if (tep_fetch_available_equipment_count($sub_result['equipment_id'], $warehouses, $user->fetch_user_id()) < 1) {
+																		continue;
+																	}
+																	if (in_array($sub_result['equipment_id'], $exclude_array)) {
+																		continue;
+																	}
+																	if (in_array($sub_result['equipment_id'], $equipment)) {
+																		$checked = ' CHECKED';
+																	} else {
+																		$checked = '';
+																	}
+																	if (!empty($string)) {
+																		$string .= '<br>';
+																	}
+																$string .= '<input name="equipment[]" type="checkbox"'.$checked.' value="'.$sub_result['equipment_id'].'">'.$sub_result['name'];
+															}
+															if (!empty($string)) {
+																if ($loop > 0) {
+																	?>
+																	<tr>
+																		<td height="10"><img src="images/pixel_trans.gif" height="10" width="1" /></td>
+																	</tr>
+																	<?php
+																}
+																?>
+																<tr>
+																	<td class="main"><b><?php echo $result['equipment_type_name']; ?></b></td>
+																</tr>
+																<tr>
+																	<td height="3"><img src="images/pixel_trans.gif" height="3" width="1" /></td>
+																</tr>
+																<tr>
+																	<td width="100%">
+																		<table width="100%" cellspacing="0" cellpadding="0">
+																			<tr>
+																				<td width="100"><img src="images/pixel_trans.gif" height="5" width="5" /></td>
+																				<td width="560"><?php echo $string; ?></td>
+																			</tr>
+																		</table>
+																	</td>
+																</tr>
+																<?php
+																$loop++;
+															}
+														
+													}
+											
+											} elseif ($sc_reason == '4') {
+												//Post Leaning/Straighten Post
+												?>
+												<tr>
+													<td height="3"><img src="images/pixel_trans.gif" height="3" width="1" /></td>
+												</tr>
+												<tr>
+													<td width="100%">
+														<table width="100%" cellspacing="0" cellpadding="0">
+															<tr>
+																<td width="100"><img src="images/pixel_trans.gif" height="1" width="100" /></td>
+																<td width="560"></td>
+															</tr>
+															<tr>
+																<td width="100" class="main">Leaning due to: </td>
+																<td width="560"><?php echo tep_generate_post_leaning_reason_pulldown_menu('sc_reason_4', $sc_reason_4); ?></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+												<?php
+											} elseif ($sc_reason == '5') {
+												//Move Post
+												?>
+												<input type="hidden" name="sc_reason_5" value="true" />
+												<tr>
+													<td height="3"><img src="images/pixel_trans.gif" height="3" width="1" /></td>
+												</tr>
+												<tr>
+													<td class="main"><i>Please make sure to properly mark where the new post is to go or provide exact details below.</i></td>
+												</tr>
+												<?php
+											} elseif ($sc_reason == '6') {
+											//Forgotten Equipment.
+												?>
+												<tr>
+													<td height="3"><img src="images/pixel_trans.gif" height="3" width="1" /></td>
+												</tr>
+												<tr>
+													<td class="main">Please select the forgotten equipment from the list below:</td>
+												</tr>
+												<tr>
+													<td height="3"><img src="images/pixel_trans.gif" height="3" width="1" /></td>
+												</tr>
+												<?php echo tep_generate_available_equipment_string('1', $user->fetch_service_level_id(), $user->fetch_user_id(), $optional, fetch_address_zip4(tep_fill_variable('address_id', 'session')), tep_fill_variable('address_id', 'session'), false, true, array(), false); ?>
+
+												<?php
+											} elseif ($sc_reason == '7') {
+											//Other
+												?>
+												<input type="hidden" name="sc_reason_7" value="true" />
+												<tr>
+													<td height="3"><img src="images/pixel_trans.gif" height="3" width="1" /></td>
+												</tr>
+												<tr>
+													<td class="main"><i>Please describe the issue fully below.</i></td>
+												</tr>
+												<?php
+											}
+											
+										}
+									?>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="5"><img src="images/pixel_trans.gif" height="10" width="1" /></td>
+						</tr>
+						<?php
+					} elseif ($order_type == ORDER_TYPE_REMOVAL) {
+					//Removal.
+				?>
+				
+				<?php
+					}
+				?>
+				<?php
+					if ($order_type == ORDER_TYPE_INSTALL) {
+				?>
+				<tr>
+					<td class="main">Number of posts requested: <input type="text" name="number_of_posts" value="<?php echo $number_of_posts; ?>" /></td>
+				</tr>
+				<?php
+					}
+				?>
+				<tr>
+					<td width="100%">
+						<table cellspacing="0" cellpadding="0">
+							<tr>
+								<td class="main">Please provide any special directions or requirements
+for this order in the box below. <br /><span style="color:#FF0000;">If there are any
+underground  hazards (e.g. sprinklers, electric
+fences), please have their location <br />marked and
+describe the markings in the box below.</span></td>
+							</tr>
+							<tr>
+								<td class="main"><textarea  cols="40" rows="8" name="special_instructions"><?php echo $special_instructions; ?></textarea></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<?php
+//echo "SHOW_PROMO_CODE_AREA ".SHOW_PROMO_CODE_AREA.".";
+					if ((SHOW_PROMO_CODE_AREA == 'true') && ($order_type == ORDER_TYPE_INSTALL)) {
+				?>
+				<tr>
+					<td class="main">Promotional Code: <input type="text" name="promo_code" value="<?php echo $promo_code; ?>" /></td>
+				</tr>
+				<?php
+					} else {
+				?>
+				<input type="hidden" name="promo_code" value="" />
+				<?php
+					}
+				?>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+	</tr>
+	<tr>
+		<td width="100%">
+			<table width="100%" cellspacing="0" cellpadding="0">
+				<tr>
+					<td align="left"><?php echo tep_create_button_link('reset', 'Reset Form', ' onclick="document.all[\'special\'].reset()"'); ?></td>
+					<td align="right"><?php echo tep_create_button_submit('proceed_to_payment_information', 'Proceed to Payment Information', ' name="submit_button"'); ?></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td height="20"><img src="images/pixel_trans.gif" height="20" width="1" /></td>
+	</tr>
+	<tr>
+		<td align="center" class="mediumGrey"><?php echo tep_show_order_footer(); ?></td>
+	</tr>
+</table>
+</form>

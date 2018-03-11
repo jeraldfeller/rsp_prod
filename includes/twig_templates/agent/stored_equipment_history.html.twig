@@ -1,0 +1,31 @@
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+<div class="col-md-8">
+	<h4>{{ vars.result_equipment['name'] }}</h4>
+	{% if(vars.result['equipment_item_id']) %}
+		<p><b>Current status:</b> {{ vars.result['equipment_status_name'] }}</p>
+		<h4 class="title-panel">History</h4>
+			
+		<div class="panel-library">
+			
+				{% for history_entry in vars.history_result %}
+				<div class="mg-20"> 
+					<p>Status: {{ history_entry['history_status_name'] }}</p>
+					<p>Date Added: {{ history_entry['date_added']|date("n/d/Y") }}</p>
+					{% if(vars.result['history_status_description'] is not empty) %}
+						<p>Details: {{ history_entry['history_status_description'] }}</p>
+					{% endif %}	
+				</div>	
+				{% endfor %}
+			
+		</div>
+	{% else %}
+	<div class="alert alert-danger">
+		Sorry that equipment item does not exist in our system.  Please go back and try again.
+	</div>
+	<a class="btn btn-info" href="{{ constant('FILENAME_AGENT_OWNED_EQUIPMENT') }}?equipment_id={{ vars.equipment_id }}&page_action=list">Back to Equipment</a>	
+		
+	{% endif %}
+</div>
+
+{% endblock content_body %}

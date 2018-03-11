@@ -1,0 +1,388 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css"/>
+
+<style>
+#datatableAddress_length {
+	display:none;
+}
+.no-left {
+	padding-left:0px;
+}
+</style>
+
+{% endblock %}
+
+{% block content_body %}
+
+<h4 class="title-panel" style="margin-top:20px;">Jobs for : {{ vars['jobs_for'] }}</h4>
+
+{% if error.get_error_status('installer_view_current') %}
+	<div class="alert alert-danger">
+		{{ error.get_error_string('installer_view_current')|raw }}
+	</div>
+{% endif %}
+
+
+
+<div class="panel-library">
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="street_name" class="control-label">Installations:</label>
+					<div>
+						<span>{{ vars['installation_pending'] }}</span> Pending and <span>{{ vars['installation_scheduled'] }} Scheduled
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="street_name" class="control-label">Service Calls:</label>
+					<div>
+						<span>{{ vars['service_call_pending'] }}</span> Pending and <span>{{ vars['service_call_scheduled'] }} Scheduled
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="street_name" class="control-label">Removals:</label>
+					<div>
+						<span>{{ vars['removal_pending'] }}</span> Pending and <span>{{ vars['removal_scheduled'] }} Scheduled
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="panel-library">
+
+	<div class="row">
+		<div class="col-md-12">
+
+			{% if (vars['page_action'] != "accept_jobs") %}
+
+			<form action="{{ constant('FILENAME_INSTALLER_VIEW_CURRENT') }}" method="get">
+				<div class="col-md-3">
+					<div class="form-group">
+						<label for="street_name" class="control-label">Job Type:</label>
+						<div>
+							<select class="form-control" name="order_type" onchange="this.form.submit();">
+								<option value="" {% if (vars['order_type'] == "") %} selected {% endif %}>Any</option>
+								<option value="1" {% if (vars['order_type'] == "1") %} selected {% endif %}>Install</option>
+								<option value="3" {% if (vars['order_type'] == "3") %} selected {% endif %}>Removal</option>
+								<option value="2" {% if (vars['order_type'] == "2") %} selected {% endif %}>Service</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="form-group">
+						<label for="street_name" class="control-label">Show View:</label>
+						<div>
+							<select class="form-control" name="display_view" onchange="this.form.submit();">
+								<option value="overview" {% if (vars['display_view'] == "overview") %} selected {% endif %}>Overview</option>
+								<option value="detailed" {% if (vars['display_view'] == "detailed") %} selected {% endif %}>Detailed</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="street_name" class="control-label">Sort by Status:</label>
+						<div>
+							{% if (vars['sort_by_status'] =='1') %}
+									<input type="checkbox" name="sort_by_status" value="1"  checked />
+								{% else %}
+									<input type="checkbox" name="sort_by_status" value="1" />
+							{% endif %}
+						</div>
+					</div>
+				</div>
+
+				{% if (vars['display_view'] == "detailed") %}
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="street_name" class="control-label">Only Scheduled:</label>
+						<div>
+							{% if (vars['show_only_scheduled'] =='1') %}
+									<input type="checkbox" name="show_only_scheduled" value="1"  checked />
+								{% else %}
+									<input type="checkbox" name="show_only_scheduled" value="1" />
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				{% endif %}
+
+				<div class="col-md-2" style="padding-top:28px">
+          <button class="btn btn-primary" type="submit" name="update">Update</button>
+					<!-- <input src="images/buttons/english/button_update.gif" alt="Update" value="Update" type="image" height="22" width="84"> -->
+				</div>
+			</form>
+
+
+
+			{% endif %}
+
+		</div>
+	</div>
+
+	{% if (vars['display_view'] == "detailed") %}
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-3"><a href="{{ constant('FILENAME_INSTALLER_VIEW_PRINTABLE') }}?display_view={{ vars['display_view'] }}&day_view=tomorrow" target="_blank">Show Printable Jobsheet</a></div>
+				<div class="col-md-3"><a href="{{ constant('FILENAME_INSTALLER_VIEW_PRINTABLE') }}?display_view={{ vars['display_view'] }}&day_view=tomorrow&test=true" target="_blank">Show Printable Jobsheet (pdf)</a></div>
+				<div class="col-md-3"><a href="{{ constant('FILENAME_INSTALLER_VIEW_PRINTABLE_EQUIPMENT') }}?display_view={{ vars['display_view'] }}&day_view=tomorrow" target="_blank">Show Printable Equipment Sheet</a></div>
+				<div class="col-md-3"><a href="{{ constant('FILENAME_INSTALLER_VIEW_CURRENT') }}?page_action=csv_export">Export as CSV</a></div>
+			</div>
+		</div>
+
+	{% endif %}
+
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+
+		{% if (vars['display_view'] == "detailed") %}
+
+			{% if (vars['page_action'] == "accept_jobs") %}
+
+				<form action="{{ constant('FILENAME_INSTALLER_VIEW_CURRENT') }}?page_action=accept_jobs_confirm&display_view={{ vars['display_view'] }}" method="post">
+
+			{% else %}
+
+				<form action="{{ constant('FILENAME_INSTALLER_VIEW_CURRENT') }}?page_action=update_order&day_view={{ vars['day_view'] }}&display_view={{ vars['display_view'] }}" method="post">
+
+			{% endif %}
+
+		{% endif %}
+
+		<table id="datatableAddress" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					{% if (vars['display_view'] == "detailed") %}
+						<th><input type="checkbox" name="all" class="check-all" /> Accept All</th>
+					{% endif %}
+
+					<th data-priority="1">Date</th>
+					<th>Type</th>
+
+					{% if (vars['display_view'] == "detailed") %}
+						<th>Job Status</th>
+						<th>Address</th>
+						<th>Service Level</th>
+
+					{% else %}
+
+						<th>House #</th>
+						<th>Street</th>
+						<th>City</th>
+
+					{% endif %}
+
+					{% if (vars['display_view'] == "detailed") %}
+
+						<th>Order</th>
+
+					{% endif %}
+
+					<th>Action</th>
+          <th>SID</th>
+				</tr>
+			</thead>
+
+			{% if vars['table']|length > 0  %}
+				<tbody>
+					{% for result in vars['table'] %}
+						<tr>
+
+							{% if (vars['display_view'] == "detailed") %}
+
+								<td>
+
+									{% if (result['accepted']) %}
+										<input type="checkbox" name="accepted_jobs[]" value="{{ result['order_id'] }}"  checked />
+									{% else %}
+										<input type="checkbox" name="accepted_jobs[]" value="{{ result['order_id'] }}" />
+									{% endif %}
+
+
+								</td>
+
+							{% endif %}
+
+							<td class="pageBoxContent">
+								{% if (result['date_schedualed'] is not null) and (result['date_schedualed']>0) %}
+									{{ result['date_schedualed']|date("m/d/Y") }}
+								{% else %}
+									Never
+								{% endif %}
+							</td>
+							<td class="pageBoxContent">{{ result['order_type_name'] }}</td>
+
+							{% if (vars['display_view'] == "detailed") %}
+
+								<td class="pageBoxContent">{{ result['order_status_name'] }}</td>
+
+								<td class="pageBoxContent">
+
+									{{ result['house_number'] }} {{ result['street_name'] }} <br />
+									{{ result['city'] }} {{ result['state_name'] }} {{ result['zip'] }}
+
+									{% if (vars['address_post_allowed'] == "0") %}
+
+										<b>Posts may not be allowed at this address.</b>
+									{% endif %}
+
+								</td>
+
+								<td class="pageBoxContent">{{ result['service_level_name'] }}</td>
+
+							{% else %}
+
+								<td class="pageBoxContent">{{ result['house_number'] }}</td>
+								<td class="pageBoxContent">{{ result['street_name'] }}</td>
+								<td class="pageBoxContent">{{ result['city'] }}</td>
+
+							{% endif %}
+
+							{% if (vars['display_view'] == "detailed") %}
+
+								<td>
+									<input type="hidden" name="order_id[]" value="{{ result['order_id'] }}" />
+									<input type="text" size="1" name="order_{{ result['order_id'] }}" value="{{ result['show_order_id'] }}" />
+								</td>
+
+							{% endif %}
+
+
+							<td class="pageBoxContent">
+								<a class="btn btn-info btn-sm" href="{{ constant('FILENAME_INSTALLER_VIEW_DETAILS') }}?oID={{ result['order_id'] }}&page={{ constant('FILENAME_INSTALLER_VIEW_CURRENT') }}">View Details</a>
+							</td>
+              <td>
+                {{ (result['show_order_id'] == 0) ? 9999 : result['show_order_id']}}
+              </td>
+
+						</tr>
+					{% endfor %}
+				</tbody>
+				{% else %}
+				<tbody>
+					There are currently no orders assigned to you for Tomorrow.
+				</tbody>
+
+			{% endif %}
+
+			</table>
+
+			{% if (vars['display_view'] == "detailed") and (vars['page_action'] != 'accept_jobs') %}
+
+				{% if (vars['is_accept_job']) %}
+
+					<!--<button class="btn btn-success" type="submit" name="accept_jobs">Accept Jobs</button>-->
+					<!-- <input class="btn btn-success" type="image" src="images/buttons/english/button_accept_jobs.gif" height="34" width="98" alt="Accept Jobs" name="accept_jobs" value="Accept Jobs" />-->
+				   <button class="btn btn-success" type="submit" name="Accept Jobs">Accep Jobs</button>
+				{% else %}
+
+					You can not accept these jobs yet, please wait till  {{ constant('INSTALLER_MARK_SCHEDUALED_TIME') }};
+
+				{% endif %}
+
+				<button class="btn btn-warning active" type="submit" name="submit_value">Update Job Order</button>
+			{% endif %}
+
+			{% if (vars['display_view'] == "detailed") %}
+
+				{% if (vars['page_action'] == "accept_jobs") %}
+
+				<div class="row" id="confirmation-box">
+					<div class="col-md-12" style="padding:12px 18px">
+						<!--Are you sure you want to accept these jobs? This action can not be undone and will schedule all unscheduled jobs for {{ vars['day_view'] }}.-->
+						Please confirm that you want to accept these jobs.
+					</div>
+
+					<div class="col-md-2"><button class="btn btn-success" type="submit" name="confirm_accept">Confirm Accept</button></div>
+					<div class="col-md-2"><a class="btn btn-danger" href="{{ constant('FILENAME_INSTALLER_VIEW_CURRENT') }}?display_view=detailed">Cancel</a></div>
+				</div>
+				<script>
+					$(document).ready(function() {
+						$('html, body').animate({
+							'scrollTop' : $("#confirmation-box").position().top
+						});
+					});
+				</script>
+				{% endif %}
+
+				</form>
+
+			{% endif %}
+
+	</div>
+</div>
+
+
+{% endblock content_body %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.1/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.1/js/responsive.bootstrap.min.js"></script>
+
+
+
+
+<script>
+
+
+$(document).ready(function() {
+  {% if vars['display_view'] == "detailed" %}
+      {% set index = 8 %}
+      {% else %}
+      {% set index = 6 %}
+  {% endif %}
+
+    var table = $('#datatableAddress').DataTable({
+        columnDefs: [
+          {
+            targets: [{{index}}],
+            visible: false
+          }
+        ],
+        "order": [[ {{index}}, "asc" ]]
+    });
+
+	$('#type').change( function() {
+        table.draw();
+    });
+
+	$('.check-all').click(function(){
+
+		$('#datatableAddress tbody input[type="checkbox"]').prop('checked', this.checked);
+		//var me = $(this).parent().parent().parent().parent().find("input[type='checkbox']").attr('checked', $(this).is(':checked'));
+
+		//$.uniform.update(me);
+	});
+
+
+
+});
+</script>
+
+{% endblock %}

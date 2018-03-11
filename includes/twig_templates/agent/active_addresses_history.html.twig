@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+<div class="col-md-9">
+		<h4 class="title-panel" style="margin-bottom:20px;">History</h4>
+
+<h4 class="title-panel">
+{{ vars.address_information['house_number'] }} {{ vars.address_information['street_name'] }}, {{ vars.address_information['city'] }}, {{ vars.address_information['state_name'] }} {{ vars.address_information['zip4'] }} 
+</h4>
+		<div class="panel-library">
+			
+				{% for history_entry in vars.history_result %}
+				<div class="mg-20"> 
+					<p><b>Type: {{ history_entry['order_type_name'] }}</b> <a class="btn btn-xs btn-info" href="{{ constant('FILENAME_ORDER_VIEW') }}?oID={{ history_entry['order_id'] }}&page_action=view&return_page=agent_active_addresses.php">full details</a></p>
+					<p>Status: {{ history_entry['order_status_name'] }}</p>
+					{% if(vars.result['order_status_id'] == 3) %}
+						<p>Date Completed: {{ history_entry['date_completed']|date("m/d/y") }}</p>
+						{% if(vars.result['order_issue'] == 1) %}
+							<p>There were issues associated with this order.  Please click on "full details" above for more information.</p>
+						{% endif %}
+					{% elseif vars.result['order_status_id'] != 4 %}
+						<p>Date Scheduled: {{ history_entry['date_schedualed']|date("m/d/y") }}</p>
+					{% endif %}	
+				</div>	
+				{% endfor %}
+			
+		</div>
+</div>
+
+<div class="col-md-3" style="padding-top: 15px;">
+<p>Press Back to go back to the previous page</p>
+<form action="{{ constant('FILENAME_AGENT_ACTIVE_ADDRESSES') }}" method="post">
+	<button class="btn btn-info" type="submit">Back</button>
+</form>
+
+</div>
+
+{% endblock content_body %}

@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div id="wrapper">
+	{% block heading %}
+        <!-- Navigation -->
+		<div style="width:100%; height:27px; background-image:url(https://realtysignpost.com/images/head_r1_c2.gif)">
+			<div class="top-nav-links">
+				<a class="top-home" href="http://realtysignpost.com">www.realtysignpost.com</a>
+				<a class="top-help" href="{{ constant('FILENAME_HELP_SYSTEM') }}?page_url={{page.page_name}}" alt="View Help Topics for this Page">Help ?</a>
+			</div>
+		</div>
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; /*height:110px;*/ height: 98px; background-image:url(https://realtysignpost.com/images/head_r2_c3.jpg)">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://realtysignpost.com"><img name="head_r2_c2" src="https://realtysignpost.com/dist/css/header-small.png" class="img-responsive" id="head_r2_c2" alt=""></a>
+				<div class="navbar-collapse collapse" id="collapse-top" aria-expanded="false">
+                    <div>
+						<ul class="nav navbar-nav">
+							<li><a href="index.php">Home</a></li>
+							<li><a href="about_us.php">About Us</a></li>
+							<li><a href="faq.php">FAQ</a></li>
+							<li><a href="terms_of_service.php">Terms of Service</a></li>
+							<li><a href="account_overview.php">My Account</a></li>
+							<li><a href="service_plans.php">Service Plans</a></li>
+							<li><a href="contact_us.php">Contact Us</a></li>
+							{% if user.user_group_id != 0 %}
+							<li><a href="index.php?action=logout">Logoff</a></li>
+							{% endif %}
+						</ul>
+					</div>
+					{% if user.user_group_id != 0 %}
+					<div class="logout-link">You are currently logged in as {{user.name}}. If this is not you please <a href="index.php?action=logout">logout here.</a></div>
+					{% endif %}
+                </div>
+            </div>
+        </nav>
+		{% endblock heading %}
+		{% block sidebar %}
+		<a href="#" onclick="return false;" id="sidebar_right_btn" class="sidebar_btn"><i class="fa fa-arrow-right"></i></a>
+		<div class="sidebar baget" role="navigation">
+                <div class="sidebar-nav">
+                    <ul class="nav" id="side-menu">
+						{% block sidemenus %}
+							{% if user.user_group_id == 0 %}
+								{% include 'menu_blocks/guest.html.twig' with {'error': error} %}
+							{% elseif user.user_group_id == 1 %}
+								{% include 'menu_blocks/agent.html.twig' %}
+							{% elseif user.user_group_id == 2 %}
+								{% include 'menu_blocks/aom.html.twig' %}
+							{% elseif user.user_group_id == 3 %}
+								{% include 'menu_blocks/aom.html.twig' %}
+							{% elseif user.user_group_id == 4 %}
+								{% include 'menu_blocks/aom.html.twig' %}
+							{% endif %}
+                        {% endblock sidemenus %}
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+			{% endblock sidebar %}
+			
+        <div id="page-wrapper" style="padding: 5px 10px;">
+			{% block content %}
+            <div class="panel panel-default" style="border-color: #388DC4;">
+                        <div class="panel-heading" style="border-color: #388DC4;">
+                            {{ page.PAGE_NAME|raw }}
+                        </div>
+                        <div class="panel-body" style="border-color: #388DC4; border-top: 1px solid;">
+							{% block content_body %}
+                            <p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</p>
+							
+							<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</p>
+							{% endblock content_body %}
+                        </div>
+                    </div>
+			{% endblock content %}
+        </div>
+        <!-- /#page-wrapper -->
+		{% block footer %}
+		<footer style="width: 100%;">
+			<div class="footer-separator"></div>
+			<div class="row footer-content" style="margin-right:0px; margin-left:0px;">
+				<div class="footer-links">
+					<ul class="nav navbar-nav navbar-bottom">
+						<li><a href="/index.php">Home</a></li>
+						<li><a href="/about_us.php">About Us</a></li>
+						<li><a href="/faq.php">FAQ</a></li>
+						<li><a href="/terms_of_service.php">Terms of Service</a></li>
+						<li><a href="/account.php">My Account</a></li>
+						<li><a href="/service_plans.php">Service Plans</a></li>
+						<li><a href="/contact_us.php">Contact Us</a></li>
+						<li><a href="/index.php?action=logout">Logoff</a></li>
+					</ul>
+				</div>
+				
+				<div class="footer-copyright">
+				<p style="margin-bottom: 3px;">{{ constant('BUSINESS_ADDRESS') }} | Email: {{ constant('INFO_EMAIL') }} | Fax to: {{ constant('FAX_VOICE') }} | Emergency Issue Resolution: {{ constant('EMERGENCY_NUMBER') }}</p>
+				<p>© Copyright {{ "now"|date("Y") }} {{ constant('BUSINESS_NAME') }}</p>
+				</div>
+			</div>
+		</footer>
+		{% endblock footer %}
+    </div>
+{% endblock body %}

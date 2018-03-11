@@ -1,0 +1,4 @@
+AddType application/json .json
+<FilesMatch "\.(json)$">
+Header set Cache-Control "max-age=2592000, public, must-revalidate"
+</FilesMatch>

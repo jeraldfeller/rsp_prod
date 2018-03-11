@@ -1,0 +1,112 @@
+
+{% extends 'layout.html.twig' %}
+
+
+
+{% block stylesheets %}
+{{ parent() }}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css"/>
+ 
+
+
+ 
+{% endblock %}
+
+{% block content_body %}
+<div class="row">
+	<div class="col-md-12">
+
+
+		  <table id="datatableHistory" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+		  <thead>
+								<tr>
+									<th>Order Type</th>
+									<th>Address</th>
+									<th>Order Status</th>
+									<th>Action</th>
+								</tr>
+			</thead>
+				
+			{% if vars.listing_split.number_of_rows > 0  %}
+			<tbody>
+								{% for result in vars.split_result %}
+								<tr>
+									<td class="pageBoxContent">{{ result['order_type_name'] }}</td>
+									<td class="pageBoxContent">{{ result['house_number'] }} {{ result['street_name'] }}, {{ result['city'] }} </td>
+									<td class="pageBoxContent">{{ result['order_status_name'] }}</td>
+									<td class="pageBoxContent"><a class="btn btn-sm btn-success" href="{{ constant('FILENAME_ORDER_VIEW') }}?oID={{ result['order_id'] }}&page_action=view'">View</a></td>
+								</tr>
+								{% endfor %}
+			</tbody>
+			{% else %} 
+			<tbody>
+				Sorry no orders could be found.  Please either schedule a new one or change the options on the right.
+			</tbody>
+
+			{% endif %}
+
+		  </table>
+
+	<!-- --
+	<div class="col-lg-3">
+		<form action="{{ constant('FILENAME_ORDER_VIEW') }}" method="get">
+			<p>Click on an order to get more details or edit it, or use the PullDown menu below to specify what orders you wish to view.</p>
+			<div class="form-group row">
+				<label class="control-label">Show only orders of type:</label>
+					{{ include('/macros/optional_pulldown.html.twig', {'args': vars.pulldowns['orderType']}) }}
+			</div>
+			<div class="form-group row">
+				<label class="control-label">Show only orders of status:</label>
+					{{ include('/macros/optional_pulldown.html.twig', {'args': vars.pulldowns['orderStatus']}) }}
+			</div>
+			<div class="form-group row">
+				<label class="control-label">House Number:</label>
+					<input class="form-control" name="show_house_number" value="{{ vars.show.house_number }}">
+			</div>
+			<div class="form-group row">
+				<label class="control-label">Street Name:</label>
+					<input class="form-control" name="show_street_name" value="{{ vars.show.street_name }}">
+			</div>
+			<div class="form-group row">
+				<label class="control-label">City:</label>
+					<input class="form-control" name="show_city" value="{{ vars.show.city }}">
+			</div>
+			<div class="form-group row smallform-table">
+				<button class="btn btn-info" name="search-submit" type="submit">Update</button>
+			</div>
+		</form>
+	</div>
+	-->
+</div>
+
+</div>
+{% endblock content_body %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.1/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.1/js/responsive.bootstrap.min.js"></script>
+
+
+
+
+<script>
+$(document).ready(function() {
+    $('#datatableHistory').DataTable(
+    {
+        "order": [[ 2, "desc" ]]
+    }
+    );
+} );
+</script>
+
+{% endblock %}
+
+

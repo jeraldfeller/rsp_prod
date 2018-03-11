@@ -1,0 +1,134 @@
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+
+<div class="col-md-8">
+
+{% if(vars.order_data['order_status_id'] == 2) %}
+
+<div class='alert alert-warning' style='margin: 0.5em 2em 0.5em 0;'>
+	<button type='button' class='close' data-dismiss='alert'>&times;</button>
+	<i class='icon-4x pull-left icon-exclamation-sign'></i>
+	This order has been accepted by our installer, and may be already be completed. Please contact us, at 202 256-0107 or at <a href='mailto:"{{constant("INFO_EMAIL")}}"'>{{constant("INFO_EMAIL")}}</a>, to see if we can reach our installer and potentially make changes to or cancel the order.
+</div>
+
+{% endif %}
+
+<h4 class="title-panel">Address Information</h4>
+	
+<div class="panel-library">
+
+<div style="margin-bottom: 10px;" class="row"> 
+		<div class="form-group">
+			<label class="col-lg-2 control-label">Activity Requested:</label>
+			<div class="col-lg-10">
+				<span>Removal</span>
+			</div>
+		</div>
+	</div>
+	
+<div style="margin-bottom: 10px;" class="row"> 
+		<div class="form-group">
+			<label class="col-lg-2 control-label">Job Start Date:</label>
+			<div class="col-lg-10">
+				<span>{{vars.form['date_schedualed']|date('m/d/Y')}}</span>
+			</div>
+		</div>
+	</div>
+
+<div style="margin-bottom: 10px;" class="row"> 
+		<div class="form-group">
+			<label class="col-lg-2 control-label">House Number:</label>
+			<div class="col-lg-10">
+				<span>{{vars.form['house_number']}} </span>
+			</div>
+		</div>
+	</div>
+	
+<div style="margin-bottom: 10px;" class="row"> 
+		<div class="form-group">
+			<label class="col-lg-2 control-label">Street Name:</label>
+			<div class="col-lg-10">
+				<span>{{vars.form['street_name']}}</span>
+			</div>
+		</div>
+	</div>	
+	
+	
+<div style="margin-bottom: 10px;" class="row"> 
+		<div class="form-group">
+			<label class="col-lg-2 control-label">Zip+4:</label>
+			<div class="col-lg-10">
+				<span>{{vars.form['zip4']}}</span>
+			</div>
+		</div>
+	</div>	
+		
+	
+	
+<div style="margin-bottom: 10px;" class="row"> 
+		<div class="form-group">
+			<label class="col-lg-2 control-label">City:</label>
+			<div class="col-lg-10">
+				<span>{{vars.form['city']}}</span>
+			</div>
+		</div>
+	</div>
+<div style="margin-bottom: 10px;" class="row"> 
+		<div class="form-group">
+			<label class="col-lg-2 control-label">Country:</label>
+			<div class="col-lg-10">
+				<span>{{vars.form['county_name']}}</span>
+			</div>
+		</div>
+	</div>
+<div style="margin-bottom: 10px;" class="row"> 
+		<div class="form-group">
+			<label class="col-lg-2 control-label">State:</label>
+			<div class="col-lg-10">
+				<span>{{vars.form['state_name']}}</span>
+			</div>
+		</div>
+	</div>		
+<div style="margin-bottom: 10px;" class="row"> 
+		<div class="form-group">
+			<label class="col-lg-2 control-label">Number of Posts:</label>
+			<div class="col-lg-10">
+				<span>{{vars.form['number_of_posts']}}</span>
+			</div>
+		</div>
+	</div>	
+<div style="margin-bottom: 10px;" class="row"> 
+		<div class="form-group">
+			<label class="col-lg-2 control-label">Cross Street/Directions:</label>
+			<div class="col-lg-10">
+				<span>{{vars.form['cross_street_directions']}}</span>
+			</div>
+		</div>
+	</div>
+<div style="margin-bottom: 10px;" class="row"> 
+		<div class="form-group">
+			<label class="col-lg-2 control-label">Special Instructions:</label>
+			<div class="col-lg-10">
+				<span>{{vars.form['special_instructions']}}</span>
+			</div>
+		</div>
+	</div>		
+{% if vars.delay_flag==1 %}
+	<div class="alert alert-info">
+    This address has a {{ vars.service_area_window }} business day installation window (excludes weekends, Federal Holidays and severe weather days).
+</div>
+		
+	{% endif %}
+
+	
+
+
+						
+
+</div>
+<a class="btn btn-info" href="aom_schedule_removal_success_print.php?aID={{vars.aID}}&order_id={{vars.oid}}" target="_blank">Print</a>
+<a class="btn btn-success" href="aom_active_addresses.php">Finished</a>
+
+</div>			
+				
+{% endblock content_body %}

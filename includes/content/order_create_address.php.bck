@@ -1,0 +1,493 @@
+<?php
+// Updated 1/28/2012 brad@brgr2.com Added shorter CURL timeout when checking address, and alert here when that's the issue.
+// Updated 1/14/2013 brad@brgr2.com Changed crossstreet box size.
+// Updated 1/10/13 brad@brgr2.com
+
+if (!$user->can_place_orders) {
+    tep_redirect(FILENAME_ORDER_CREATE_DISALLOWED);
+}
+
+$order_type = tep_fill_variable('order_type', 'get');
+
+if (empty($order_type)) { //haven't come via get link (orders box)
+    $page_action = tep_fill_variable('page_action', 'get');
+    $order_type = tep_fill_variable('order_type_id', 'session'); //could be 1, 2 or 3 at this stage
+
+    if (empty($order_type)) {
+        tep_redirect(FILENAME_ORDER_CREATE);
+    }
+
+    $noPreviousAddresses = false;
+    $post_not_allowed_error = false;
+    $address_id = tep_fill_variable('address_id', 'post', tep_fill_variable('address_id', 'session')); //will only have address id if 2 or 3
+    $house_number = tep_fill_variable('house_number', 'post', tep_fill_variable('house_number', 'session'));
+    $street_name = tep_fill_variable('street_name', 'post', tep_fill_variable('street_name', 'session'));
+    $city = tep_fill_variable('city', 'post', tep_fill_variable('city', 'session'));
+    $zip = tep_fill_variable('zip', 'post', tep_fill_variable('zip', 'session'));
+    $state = tep_fill_variable('state', 'post', tep_fill_variable('state', 'session'));
+    $county = tep_fill_variable('county', 'post', tep_fill_variable('county', 'session'));
+    $miss_utility_yes_no = tep_fill_variable('miss_utility_yes_no', 'post', tep_fill_variable('miss_utility_yes_no', 'session'));
+    $lamp_yes_no = tep_fill_variable('lamp_yes_no', 'post', tep_fill_variable('lamp_yes_no', 'session'));
+    $lamp_use_gas = tep_fill_variable('lamp_use_gas', 'post', tep_fill_variable('lamp_use_gas', 'session'));
+    $adc_page = tep_fill_variable('adc_page', 'post', tep_fill_variable('adc_page', 'session'));
+    $adc_letter = tep_fill_variable('adc_letter', 'post', tep_fill_variable('adc_letter', 'session'));
+    $adc_number = tep_fill_variable('adc_number', 'post', tep_fill_variable('adc_number', 'session'));
+    $cross_street_directions = tep_fill_variable('cross_street_directions', 'post', tep_fill_variable('cross_street_directions', 'session'));
+    $submit_string = tep_fill_variable('submit_string_y', 'post', tep_fill_variable('submit_string'));
+    $zip4_code = tep_fill_variable('zip4_code', 'post', tep_fill_variable('zip4_code', 'session'));
+    $pna = tep_fill_variable('pna', 'post', tep_fill_variable('pna', 'session'));
+
+    $request_zip4 = tep_fill_variable('request_zip4', 'post', tep_fill_variable('request_zip4', 'session', false));
+
+    if (!empty($page_action) && ($page_action == 'submit') && !empty($submit_string)) {
+
+        if ($order_type == ORDER_TYPE_INSTALL) {
+            if (!trim($house_number))
+                $error->add_error('account_create_address', 'Please enter a House Number.');
+            if (!trim($street_name))
+                $error->add_error('account_create_address', 'Please enter a Street Name.');
+            if (!trim($city))
+                $error->add_error('account_create_address', 'Please enter a City.');
+            if (!trim($zip))
+                $error->add_error('account_create_address', 'Please enter a Zip.');
+            if (!$state)
+                $error->add_error('account_create_address', 'Please select a State.');
+            if (!$county)
+                $error->add_error('account_create_address', 'Please select a County.');
+            if (!$miss_utility_yes_no)
+                $error->add_error('account_create_address', 'Please answer the question regarding Miss Utility.');
+            if ($miss_utility_yes_no != "yes" && !$lamp_yes_no)
+                $error->add_error('account_create_address', 'Please answer the question regarding the lamp.');
+            if ($miss_utility_yes_no != "yes" && $lamp_yes_no == "yes" && !$lamp_use_gas)
+                $error->add_error('account_create_address', 'Please answer whether the lamp is gas or not.');
+            if (!trim($cross_street_directions))
+                $error->add_error('account_create_address', 'Please enter Crossstreet/Directions.');
+            if ($request_zip4 && !empty($zip4_code)) {
+                if (!tep_zip4_is_valid($zip4_code))
+                    $error->add_error('account_create_address', 'Your zip+4 code is not in the correct format.  Please enter it in the format of 12345-1234.');
+            }
+        } else { //order type 2 or 3
+            if (empty($address_id)) {
+                $error->add_error('account_create_address', 'Please select an Address.');
+            } else {
+                if ($order_type == ORDER_TYPE_REMOVAL) {
+                    tep_redirect(FILENAME_AGENT_ACTIVE_ADDRESSES . '?aID=' . $address_id . '&page_action=reschedule_removal');
+                }
+            }
+        } //end if order type
+
+        if ((!$error->get_error_status('account_create_address')) && ($order_type == ORDER_TYPE_INSTALL)) {
+            //No error, try and get the zip4 code and if so then return that, otherwise spark an error.
+            if (!$request_zip4 || empty($zip4_code)) {
+                $zip4_class = new zip4($house_number . ' ' . $street_name, tep_get_state_name($state), $city, $zip);
+                if ($zip4_class->search()) {
+                    $zip4_code = $zip4_class->return_zip_code();
+                    $request_zip4 = false;
+                } else {
+                    // brad@brgr2.com
+                    if ($zip4_class->return_fail_type() == 'network') {
+                        $error->add_error('account_create_address', '<div class="alert alert-error"><i class="icon-4x pull-left icon-warning-sign"></i> <button type="button" class="close" data-dismiss="alert">&times;</button> <p><strong>Error Verifying Address</strong> We tried to look up that address via the US Postal System, but the check failed because of a network issue. Please try again or enter the zip+4 code yourself or lookup at <a href="https://tools.usps.com/go/ZipLookupAction!input.action" target="_blank">USPS</a>.  Please enter all nine digits in zip+4 field (12345-6789).  Thank you.</div>');
+                    } else {
+                        $error->add_error('account_create_address', 'We tried to look up that address via the US Postal System, but it didn\'t find a match. Please double check the address and try again or enter the zip+4 code yourself or lookup at <a href="https://tools.usps.com/go/ZipLookupAction!input.action" target="_blank">USPS</a>.  Please enter all nine digits in zip+4 field (12345-6789).  Thank you.');
+                    }
+                    $request_zip4 = true;
+                }
+            }
+        }
+
+        if ((!$error->get_error_status('account_create_address')) && ($order_type == ORDER_TYPE_INSTALL) && (!empty($zip4_code))) {
+            if (!tep_fetch_installation_availability($zip4_code)) {
+                $error->add_error('account_create_address', 'Sorry we don\'t currently service that area but please email us at info@realtysignpost.com to discuss.');
+                $request_zip4 = true;
+                //Now we can log the address.
+
+                $database->query("insert into " . TABLE_OUT_OF_SERVICE_REQUESTS . " (date_added, house_number, street_name, city, county_id, state_id, zip, zip4, user_id) values ('" . mktime() . "', '" . $house_number . "', '" . $street_name . "', '" . $city . "', '" . $county . "', '" . $state . "', '" . $zip . "', '" . $zip4_code . "', '" . $user->fetch_user_id() . "')");
+            }
+        }
+
+        $post_not_allowed_error = false;
+        if (($order_type == ORDER_TYPE_INSTALL) && (!$error->get_error_status('account_create_address'))) {
+            if (!tep_address_post_is_allowed($house_number, $street_name, $city, $county, $state)) {
+                if ($pna != '1') {
+                    $post_not_allowed_error = true;
+                }
+            }
+        }
+        if (!$error->get_error_status('account_create_address') && !$post_not_allowed_error) {
+            if ($order_type == ORDER_TYPE_INSTALL) {
+                $session->php_session_register('house_number', $house_number);
+                $session->php_session_register('street_name', $street_name);
+                $session->php_session_register('city', $city);
+                $session->php_session_register('zip', $zip);
+                $session->php_session_register('state', $state);
+                $session->php_session_register('county', $county);
+                $session->php_session_register('miss_utility_yes_no', $miss_utility_yes_no);
+                $session->php_session_register('lamp_yes_no', $lamp_yes_no);
+                $session->php_session_register('lamp_use_gas', $lamp_use_gas);
+                $session->php_session_register('cross_street_directions', $cross_street_directions);
+                $session->php_session_register('zip4', $zip4_code);
+                $session->php_session_register('adc_page', $adc_page);
+                $session->php_session_register('adc_letter', $adc_letter);
+                $session->php_session_register('adc_number', $adc_number);
+                $session->php_session_register('request_zip4', $request_zip4);
+                $session->php_session_register('pna', $pna);
+            } else {
+                $session->php_session_register('address_id', $address_id);
+                $query = $database->query("select house_number, street_name, city, zip, state_id, county_id, zip4, adc_number, cross_street_directions from " . TABLE_ADDRESSES . " where address_id = '" . $address_id . "' limit 1");
+                $result = $database->fetch_array($query);
+
+                $session->php_session_register('house_number', $result['house_number']);
+                $session->php_session_register('street_name', $result['street_name']);
+                $session->php_session_register('city', $result['city']);
+                $session->php_session_register('zip', $result['zip']);
+                $session->php_session_register('state', $result['state_id']);
+                $session->php_session_register('county', $result['county_id']);
+                $session->php_session_register('miss_utility_yes_no', $miss_utility_yes_no);
+                $session->php_session_register('lamp_yes_no', $lamp_yes_no);
+                $session->php_session_register('lamp_use_gas', $lamp_use_gas);
+                $session->php_session_register('cross_street_directions', $result['cross_street_directions']);
+                $session->php_session_register('zip4', $result['zip4']);
+                $session->php_session_register('request_zip4', $request_zip4);
+
+                $explode = explode('_', $result['adc_number']);
+                if (count($explode) != 3) {
+                    $adc_page = '';
+                    $adc_letter = '';
+                    $adc_number = '';
+                } else {
+                    $adc_page = $explode[0];
+                    $adc_letter = $explode[1];
+                    $adc_number = $explode[2];
+                }
+            }
+            tep_redirect(FILENAME_ORDER_CREATE_SPECIAL);
+        }
+    }
+} else { //have come from orders link (could be type 2 or 3)
+    $address_id = '';
+    $session->php_session_register('order_type_id', $order_type);
+}
+?>
+<form  class="order_form" action="<?php echo PAGE_URL; ?>?page_action=submit" method="post">
+    <table width="100%" cellspacing="0" cellpadding="0">
+        <tr>
+            <td width="100%">
+                <table width="100%" cellspacing="0" cellpadding="2" class="pageBox">
+                    <tr>
+                        <td class="main">
+                            &PAGE_TEXT
+                            <div class="alert alert-info alert-block">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <i class="icon-4x pull-left icon-warning-sign badge badge-info" style="padding: 6px;"></i>
+                                <h4>IMPORTANT!</h4> You must receive the Order Confirmation e-mail to be certain we have received your install order. 
+                                Be sure to complete the order process until you see a CONGRATULATIONS page.
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+                    </tr>
+                    <?php
+                    if ($order_type == ORDER_TYPE_INSTALL) {
+                        $text = 'Please enter the address details below.  Please note that to prevent delays all details on this page must be filled in.';
+                    } else {
+                        $text = 'Please select an address below.  These are the addresses that you currently have a Sign Post installed at.  If an address does not show up then please contact us for assistance.';
+                    }
+                    ?>
+                    <tr>
+                        <td class="main"><?php echo $text; ?></td>
+                    </tr>
+                    <tr>
+                        <td height="3"><img scr="images/pixel_trans.gif" height="3" width="1"/></td>
+                    </tr>
+                    <?php
+                    if ($error->get_error_status('account_create_address')) {
+                        ?>
+                        <tr>
+                            <td class="mainError" colspan="2"><?php echo $error->get_error_string('account_create_address'); ?></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                    <?php
+                    if ($order_type == ORDER_TYPE_INSTALL) {
+                        ?>
+                        <tr>
+                            <td width="100%">
+                                <table cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="main" width="150">House Number: </td><td><input type="text" name="house_number" size="10" value="<?php echo $house_number; ?>" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="main" width="150">Street Name: </td><td><input type="text" name="street_name" value="<?php echo $street_name; ?>" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="main" width="150">City: </td><td><input type="text" name="city" value="<?php echo $city; ?>" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="main" width="150">State: </td><td><?php echo tep_draw_state_pulldown('state', $state, ' onchange="this.form.submit();"'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="main" width="150">Zip Code: </td><td><input type="text" name="zip" size="10" value="<?php echo $zip; ?>" /></td>
+                                    </tr>
+                                    <?php
+                                    if ($request_zip4) {
+                                        ?>
+                                        <input type="hidden" name="request_zip4" value="1" />
+                                        <tr>
+                                            <td class="main" width="150">Zip+4 Code: </td><td><input type="text" name="zip4_code" value="<?php echo $zip4_code; ?>" /></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                    <tr>
+                                        <td class="main" width="150">County: </td><td><?php echo tep_draw_county_pulldown('county', $state, $county); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="main" colspan="2">
+                                            Do you want us to call Miss Utility for this property? 
+                                            <input name="miss_utility_yes_no" value="yes" type="radio" 
+                                                <?php echo $miss_utility_yes_no == "yes" ? "checked" : ""; ?>/>Yes 
+                                            <input name="miss_utility_yes_no" value="no" type="radio"
+                                                <?php echo $miss_utility_yes_no == "no" ? "checked" : ""; ?>/>No
+                                        </td>
+                                    </tr>
+                                    <tr id="lamp_yes_no">
+                                        <td class="main" colspan="2">
+                                            Does property have a lamp in the yard?
+                                            <input name="lamp_yes_no" value="yes" type="radio"
+                                                <?php echo $lamp_yes_no == "yes" ? "checked" : ""; ?>/>Yes 
+                                            <input name="lamp_yes_no" value="no" type="radio"
+                                                <?php echo $lamp_yes_no == "no" ? "checked" : ""; ?>/>No
+                                        </td>
+                                    </tr>
+                                    <tr id="lamp_use_gas">
+                                        <td class="main" colspan="2">
+                                            Does the yard lamp use gas?
+                                            <input name="lamp_use_gas" value="yes" type="radio"
+                                                <?php echo $lamp_use_gas == "yes" ? "checked" : ""; ?>/>Yes 
+                                            <input name="lamp_use_gas" value="no" type="radio"
+                                                <?php echo $lamp_use_gas == "no" ? "checked" : ""; ?>/>No
+                                            <input name="lamp_use_gas" value="unsure" type="radio"
+                                                <?php echo $lamp_use_gas == "unsure" ? "checked" : ""; ?>/>Not Sure 
+                                        </td>
+                                    </tr>
+                                    <script language="javascript">
+                                    $("input:radio[name='miss_utility_yes_no']").click(function () {
+                                        if ($(this).val() == "yes") {
+                                            $("tr#lamp_yes_no").hide();
+                                            $("tr#lamp_use_gas").hide();
+                                        } else {
+                                            $("tr#lamp_yes_no").show();
+                                            if ($("input:radio[name='lamp_yes_no'][value='no']").is(':checked')) {
+                                                $("tr#lamp_use_gas").hide();
+                                            } else if ($("input:radio[name='lamp_yes_no'][value='yes']").is(':checked')) {
+                                                $("tr#lamp_use_gas").show();
+                                            }
+                                        } 
+                                    });
+                                    $("input:radio[name='lamp_yes_no']").click(function () {
+                                        if ($(this).val() == "yes") {
+                                            $("tr#lamp_use_gas").show();
+                                        } else {
+                                            $("tr#lamp_use_gas").hide();
+                                        } 
+                                    });
+                                    // hidden by default, shown if neccesary.
+                                    $("tr#lamp_yes_no").hide();
+                                    $("tr#lamp_use_gas").hide();
+                                    <?php echo $miss_utility_yes_no == "no" ? '$("tr#lamp_yes_no").show();' : ''; ?>
+                                    <?php echo ($lamp_yes_no == "yes" && $miss_utility_yes_no == "no")? '$("tr#lamp_use_gas").show();' : ''; ?>
+                                    </script>
+                                    <tr>
+                                        <td colspan="2" style="font-weight: bold; color: red;">
+                                            NOTE: Miss Utility requires THREE business days to mark the 
+                                            property. <br />We will wait until Miss Utility has marked the utilities 
+                                            on the property before we can install the signpost.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="main" width="150">ADC Map Coordinates (optional): </td><td><select size="1" name="adc_page">
+                                                <option value="">Page</option>
+                                                <option  value="1"<?php echo (($adc_page == '1') ? ' SELECTED' : ''); ?>>1</option>
+                                                <option  value="2"<?php echo (($adc_page == '2') ? ' SELECTED' : ''); ?>>2</option>
+                                                <option  value="3"<?php echo (($adc_page == '3') ? ' SELECTED' : ''); ?>>3</option>
+                                                <option  value="4"<?php echo (($adc_page == '4') ? ' SELECTED' : ''); ?>>4</option>
+                                                <option  value="5"<?php echo (($adc_page == '5') ? ' SELECTED' : ''); ?>>5</option>
+                                                <option  value="6"<?php echo (($adc_page == '6') ? ' SELECTED' : ''); ?>>6</option>
+                                                <option  value="7"<?php echo (($adc_page == '7') ? ' SELECTED' : ''); ?>>7</option>
+                                                <option  value="8"<?php echo (($adc_page == '8') ? ' SELECTED' : ''); ?>>8</option>
+                                                <option  value="9"<?php echo (($adc_page == '9') ? ' SELECTED' : ''); ?>>9</option>
+                                                <option  value="10"<?php echo (($adc_page == '10') ? ' SELECTED' : ''); ?>>10</option>
+                                                <option  value="11"<?php echo (($adc_page == '11') ? ' SELECTED' : ''); ?>>11</option>
+                                                <option  value="12"<?php echo (($adc_page == '12') ? ' SELECTED' : ''); ?>>12</option>
+                                                <option  value="13"<?php echo (($adc_page == '13') ? ' SELECTED' : ''); ?>>13</option>
+                                                <option  value="14"<?php echo (($adc_page == '14') ? ' SELECTED' : ''); ?>>14</option>
+                                                <option  value="15"<?php echo (($adc_page == '15') ? ' SELECTED' : ''); ?>>15</option>
+                                                <option  value="16"<?php echo (($adc_page == '16') ? ' SELECTED' : ''); ?>>16</option>
+                                                <option  value="17"<?php echo (($adc_page == '17') ? ' SELECTED' : ''); ?>>17</option>
+                                                <option  value="18"<?php echo (($adc_page == '18') ? ' SELECTED' : ''); ?>>18</option>
+                                                <option  value="19"<?php echo (($adc_page == '19') ? ' SELECTED' : ''); ?>>19</option>
+                                                <option  value="20"<?php echo (($adc_page == '20') ? ' SELECTED' : ''); ?>>20</option>
+                                                <option  value="21"<?php echo (($adc_page == '21') ? ' SELECTED' : ''); ?>>21</option>
+                                                <option  value="22"<?php echo (($adc_page == '22') ? ' SELECTED' : ''); ?>>22</option>
+                                                <option  value="23"<?php echo (($adc_page == '23') ? ' SELECTED' : ''); ?>>23</option>
+                                                <option  value="24"<?php echo (($adc_page == '24') ? ' SELECTED' : ''); ?>>24</option>
+                                                <option  value="25"<?php echo (($adc_page == '25') ? ' SELECTED' : ''); ?>>25</option>
+                                                <option  value="26"<?php echo (($adc_page == '26') ? ' SELECTED' : ''); ?>>26</option>
+                                                <option  value="27"<?php echo (($adc_page == '27') ? ' SELECTED' : ''); ?>>27</option>
+                                                <option  value="28"<?php echo (($adc_page == '28') ? ' SELECTED' : ''); ?>>28</option>
+                                                <option  value="29"<?php echo (($adc_page == '29') ? ' SELECTED' : ''); ?>>29</option>
+                                                <option  value="30"<?php echo (($adc_page == '30') ? ' SELECTED' : ''); ?>>30</option>
+                                                <option  value="31"<?php echo (($adc_page == '31') ? ' SELECTED' : ''); ?>>31</option>
+                                                <option  value="32"<?php echo (($adc_page == '32') ? ' SELECTED' : ''); ?>>32</option>
+                                                <option  value="33"<?php echo (($adc_page == '33') ? ' SELECTED' : ''); ?>>33</option>
+                                                <option  value="34"<?php echo (($adc_page == '34') ? ' SELECTED' : ''); ?>>34</option>
+                                                <option  value="35"<?php echo (($adc_page == '35') ? ' SELECTED' : ''); ?>>35</option>
+                                                <option  value="36"<?php echo (($adc_page == '36') ? ' SELECTED' : ''); ?>>36</option>
+                                                <option  value="37"<?php echo (($adc_page == '37') ? ' SELECTED' : ''); ?>>37</option>
+                                                <option  value="38"<?php echo (($adc_page == '38') ? ' SELECTED' : ''); ?>>38</option>
+                                                <option  value="39"<?php echo (($adc_page == '39') ? ' SELECTED' : ''); ?>>39</option>
+                                                <option  value="40"<?php echo (($adc_page == '40') ? ' SELECTED' : ''); ?>>40</option>
+                                            </select>
+                                            <select size="1" name="adc_letter">
+                                                <option value="">Letter</option>
+                                                <option  value="A"<?php echo (($adc_letter == 'A') ? ' SELECTED' : ''); ?>>A</option>
+                                                <option  value="B"<?php echo (($adc_letter == 'B') ? ' SELECTED' : ''); ?>>B</option>
+                                                <option  value="C"<?php echo (($adc_letter == 'C') ? ' SELECTED' : ''); ?>>C</option>
+                                                <option  value="D"<?php echo (($adc_letter == 'D') ? ' SELECTED' : ''); ?>>D</option>
+                                                <option  value="E"<?php echo (($adc_letter == 'E') ? ' SELECTED' : ''); ?>>E</option>
+                                                <option  value="F"<?php echo (($adc_letter == 'F') ? ' SELECTED' : ''); ?>>F</option>
+                                                <option  value="G"<?php echo (($adc_letter == 'G') ? ' SELECTED' : ''); ?>>G</option>
+                                                <option  value="H"<?php echo (($adc_letter == 'H') ? ' SELECTED' : ''); ?>>H</option>
+                                                <option  value="I"<?php echo (($adc_letter == 'I') ? ' SELECTED' : ''); ?>>I</option>
+                                                <option  value="J"<?php echo (($adc_letter == 'J') ? ' SELECTED' : ''); ?>>J</option>
+                                                <option  value="K"<?php echo (($adc_letter == 'K') ? ' SELECTED' : ''); ?>>K</option>
+                                            </select>
+                                            <select size="1" name="adc_number">
+                                                <option value="">Grid #</option>
+                                                <option  value="1"<?php echo (($adc_number == '1') ? ' SELECTED' : ''); ?>>1</option>
+                                                <option  value="2"<?php echo (($adc_number == '2') ? ' SELECTED' : ''); ?>>2</option>
+                                                <option  value="3"<?php echo (($adc_number == '3') ? ' SELECTED' : ''); ?>>3</option>
+                                                <option  value="4"<?php echo (($adc_number == '4') ? ' SELECTED' : ''); ?>>4</option>
+                                                <option  value="5"<?php echo (($adc_number == '5') ? ' SELECTED' : ''); ?>>5</option>
+                                                <option  value="6"<?php echo (($adc_number == '6') ? ' SELECTED' : ''); ?>>6</option>
+                                                <option  value="7"<?php echo (($adc_number == '7') ? ' SELECTED' : ''); ?>>7</option>
+                                                <option  value="8"<?php echo (($adc_number == '8') ? ' SELECTED' : ''); ?>>8</option>
+                                                <option  value="9"<?php echo (($adc_number == '9') ? ' SELECTED' : ''); ?>>9</option>
+                                                <option  value="10"<?php echo (($adc_number == '10') ? ' SELECTED' : ''); ?>>10</option>
+                                                <option  value="11"<?php echo (($adc_number == '11') ? ' SELECTED' : ''); ?>>11</option>
+                                                <option  value="12"<?php echo (($adc_number == '12') ? ' SELECTED' : ''); ?>>12</option>
+                                                <option  value="13"<?php echo (($adc_number == '13') ? ' SELECTED' : ''); ?>>13</option>
+                                            </select>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="3"><img src="images/pixel_trans.gif" height="3" width="1" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <table width="100%" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td class="main">Crossstreet/Directions:</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><textarea name="cross_street_directions" cols="40" rows="8" class="input-block-level"><?php echo $cross_street_directions; ?></textarea></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    //$post_not_allowed_error = true;
+                                    if ($post_not_allowed_error) {
+                                        ?>
+                                        <tr>
+                                            <td colspan="2" width="100%">
+                                                <table width="100%" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="main" style="color:#FF0000;"><b>WARNING: Our records indicate that signposts are not allowed at the requested address. Please verify with your homeowner and HOA that signposts are allowed. If we go to the address and are not allowed to install the post, you will be charged a trip fee. If we install the post, and it is removed by the HOA, you may be charged for a Lost/Damaged post.</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="main" style="color:#FF0000;">I have read and understand the above notice <input type="checkbox" id="pna" name="pna" value="1" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <?php
+                                    }
+                                    ?>
+                                </table>
+                            </td>
+                        </tr>
+                        <?php
+                    } else {
+                        ?>
+                        <?php
+                        $sort_by = 'street';
+                        $query = $database->query("select a.address_id, a.house_number, a.street_name, a.city from " . TABLE_ADDRESSES . " a join " . TABLE_ORDERS . " o on (a. address_id = o.address_id and o.order_type_id = '3' and o.order_status_id != '3' and o.order_status_id != '4'), " . TABLE_ADDRESSES_TO_USERS . " atu, " . TABLE_USERS . " u, " .    TABLE_USERS_DESCRIPTION . " ud where atu.user_id = u.user_id and u.user_id = ud.user_id  and u.user_id = '" . $user->fetch_user_id() . "' and atu.address_id = a.address_id and (o.              order_status_id != '3' or (o.order_id is NULL and a.status < '3')) order by a.address_id DESC");
+                        $found = false;
+                        while ($result = $database->fetch_array($query)) {
+                            $found = true;
+                            $checked = '';
+                            if ($result['address_id'] == $address_id) {
+                                $checked = 'CHECKED ';
+                                $name = '<b>' . $result['house_number'] . ' ' . $result['street_name'] . ', ' . $result['city'] . '</b>';
+                            } else {
+                                $name = $result['house_number'] . ' ' . $result['street_name'] . ', ' . $result['city'];
+                            }
+                            ?>
+                            <tr>
+                                    <!--<td class="main">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="order_type" value="<?php echo $result['address_id']; ?>"<?php echo $checked; ?> /><?php echo $name; ?></td>-->
+                                <td class="main">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="address_id" value="<?php echo $result['address_id']; ?>"<?php echo $checked; ?> /><?php echo $name; ?></td>
+                            </tr>
+                            <?php
+                        }
+                        if (!$found) {
+                            $noPreviousAddresses = true;
+                            ?>
+                            <tr>
+                                <td class="main"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You do not currently have any Active signposts.  When you are ready, we will be happy to meet your Realty SignPost needs.</b></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                        <?php
+                    }
+                    ?>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+        </tr>
+        <?php if (!isset($noPreviousAddresses) || !$noPreviousAddresses) { ?>
+            <tr>
+                <td width="100%">
+                    <table width="100%" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td align="right"><?php if ($order_type != ORDER_TYPE_REMOVAL) echo tep_create_button_submit('proceed_to_special_instructions_and_extras', 'Proceed to Special Instructions and Extras', ' name="submit_string"'); else echo '<input class="btn btn-primary" type="submit" name="submit_string" value="Proceed to Change Removal Date">'; ?></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td height="20"><img src="images/pixel_trans.gif" height="20" width="1" /></td>
+            </tr>
+            <?php if ($order_type != ORDER_TYPE_REMOVAL) { ?>
+                <tr>
+                    <td align="center" class="mediumGrey"><?php echo tep_show_order_footer(); ?></td>
+                </tr>
+            <?php } ?>
+        <?php } ?>
+    </table>
+</form>

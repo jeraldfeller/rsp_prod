@@ -1,0 +1,95 @@
+<!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Sample Batch Transaction Page</title>
+		<link rel="STYLESHEET" type="text/css" href="main.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	</head>
+	<body bgcolor="#FFFFFF" link="#CC0000" vlink="#CC0000" alink="#CC0000" text="#000000" topmargin="5" leftmargin="0">
+
+<form action="doBatchTransaction.php" method= "POST" name="payment_info">
+<table border = "1" cellspacing = "0" cellpadding = "0" align = "center">
+	<tr>
+		<td width="534">
+			<table border = "0" cellspacing = "0" cellpadding = "0" width = "550" align = "center">
+				<tr>
+					<td height = "30"></td>
+				</tr>
+				<tr>
+					<td>
+
+              <table border = "0" cellspacing = "0" cellpadding = "0" width = "100%">
+                <tr>
+                  <td height="54" align = "center"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td> <h3 align="center"><u>Sample Batch Transaction Page</u></h3>
+                        <div align="right"></div></td>
+                      </tr>
+                  </table>
+                  </td>
+                </tr>
+              </table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan = "2">              <table border = "0" cellspacing = "0" cellpadding = "2"  align = "center">
+                      <tr>
+                        <td height = "10"></td>
+                      </tr>
+                      <tr>
+                        <td colspan = "2">
+						<table border = "0" cellspacing = "0" cellpadding = "0" width = "400">
+                            <tr class = "header">
+                              <td>Common Fields</td>
+                            </tr>
+                        </table>
+						</td>
+                      </tr>
+                      <tr>
+                        <td align = "right">Action:</td>
+                        <td align = "left"><select name = "action" id="action">
+                          <option value="TOTALS" selected>TOTALS</option>
+                          <option value="SETTLE">SETTLE</option>
+                          <option value="PURGE">PURGE</option>
+                                                                        </select></td>
+                      </tr>
+                      <tr>
+                        <td align = "right">Batch ID :</td>
+                        <td align = "left"><table border = "0" cellspacing = "0" cellpadding = "0">
+                            <tr>
+                              <td>
+                                <input name = "batch_id" maxlength = "30">
+                              </td>
+                            </tr>
+                        </table></td>
+
+                      <tr>
+                        <td colspan = "2" height = "10"></td>
+                      </tr>
+
+                      <tr>
+                        <td colspan = "2" height = "10"></td>
+                      </tr>
+                      <tr>
+                        <td align = "center" colspan = "2"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td><div align="right">
+                                  <input name = "button" type = "submit" value="Submit">
+                                  <input type = "reset" name = "button" value = "Reset">
+                              </div></td>
+                              <td><div align="right"></div></td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td height = "30"></td>
+                      </tr>
+                    </table></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+</form>
+</html>

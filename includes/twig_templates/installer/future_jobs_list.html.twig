@@ -1,0 +1,182 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css"/>
+ 
+<style>
+#datatableAddress_length {
+	display:none;
+}
+.no-left {
+	padding-left:0px;
+}
+</style>
+ 
+{% endblock %}
+
+{% block content_body %}
+
+{% if error.get_error_status('agent_active_addresses') %}
+	<div class="alert alert-danger">
+		{{ error.get_error_string('agent_active_addresses')|raw }}
+	</div>
+{% endif %}
+
+<div class="row">
+	<div class="col-md-12">
+	
+	<div class="col-lg-12">
+		<div class="col-md-5 no-left">
+			<div class="col-md-6 no-left">
+				<div class="form-group">
+					<label for="street_name" class="control-label">House #:</label>
+					<div>
+						<input type="text" class="form-control" id="house" name="house">	
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 no-left">
+				<div class="form-group">
+					<label for="street_name" class="control-label">Street Name:</label>
+					<div>
+						<input type="text" class="form-control" id="street" name="street">	
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 no-left">
+				<div class="form-group">
+					<label for="street_name" class="control-label">Job Type:</label>
+					<div>
+						<select id="type" class="form-control" name="type">
+							<option value="">Any</option>
+							<option value="Install">Install</option>
+							<option value="Removal">Removal</option>
+							<option value="Service Call">Service Call</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		
+		</div>	
+
+	
+		<table id="datatableAddress" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+				<th data-priority="1">Date</th>
+				<th>Type</th>
+				<th>House #</th>
+				<th>Street</th>
+				<th>City</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+			
+
+		{% if vars.table|length > 0  %}
+		<tbody>
+			{% for result in vars.table %}
+				<tr>
+					<td class="pageBoxContent">
+						{% if (result['date_schedualed'] is not null) and (result['date_schedualed']>0) %}
+							{{ result['date_schedualed']|date("m/d/Y") }}
+						{% else %}
+							Never
+						{% endif %}
+					</td>
+					<td class="pageBoxContent">{{ result['order_type_name'] }}</td>
+					
+					<td class="pageBoxContent">{{ result['house_number'] }}</td>
+					
+					<td class="pageBoxContent">{{ result['street_name'] }}</td>
+					
+					<td class="pageBoxContent">{{ result['city'] }}</td>
+					
+					<td class="pageBoxContent">
+						<a class="btn btn-info btn-sm" href="{{ constant('FILENAME_INSTALLER_VIEW_DETAILS') }}?oID={{ result['order_id'] }}&page={{ constant('FILENAME_INSTALLER_VIEW_FUTURE') }}">View</a>
+					</td>
+				
+				</tr>
+			{% endfor %}
+		</tbody>
+		{% else %} 
+		<tbody>
+			There are no jobs assigned to you in the future.
+		</tbody>
+
+		{% endif %}
+
+		  </table>
+		  
+		  <a target="_blank" href="/installer_view_printable_equipment.php?display_view=detailed&day_view=future" class="btn btn-success">Show Printable Equipment Sheet - Next 7 Days</a>
+
+	</div>
+	
+</div>
+
+</div>
+{% endblock content_body %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.1/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.1/js/responsive.bootstrap.min.js"></script>
+
+
+
+
+<script>
+
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var type = $('#type').val();
+        var house = $('#house').val();
+		var street = $('#street').val();
+        var tableType = data[1]; //parseFloat( data[3] ) || 0; // use data for the age column
+		var tableHouse = data[2];
+		var tableStreet = data[3];
+		
+		//console.log(house);
+ 
+        if ( ( type == '' &&  house == '' && street == '') ||
+			 ( type == tableType &&  house == '' && street == '') ||
+			 ( type == '' &&  tableHouse.indexOf(house) >= 0 && street == '') ||
+             ( type == tableType && tableHouse.indexOf(house) >= 0 && street == '' ) ||
+			 ( type == '' &&  house == '' && tableStreet.indexOf(street) >= 0) ||
+			 ( type == tableType &&  house == '' && tableStreet.indexOf(street) >= 0) ||
+			 ( type == tableType &&  tableHouse.indexOf(house) >= 0 && tableStreet.indexOf(street) >= 0))
+        {
+            return true;
+        }
+        return false;
+    }
+);
+
+$(document).ready(function() {
+    var table = $('#datatableAddress').DataTable(
+	{
+        "order": [[ 0, "asc" ]]
+    }
+	);
+	
+	 $('#type').change( function() {
+        table.draw();
+    } );
+	
+	$('#house, #street').keyup( function() {
+        table.draw();
+    } );
+	
+	
+} );
+</script>
+
+{% endblock %}

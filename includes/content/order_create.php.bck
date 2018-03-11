@@ -1,0 +1,138 @@
+<?php
+	$order_type = tep_fill_variable('order_type', 'get', '1');
+	$address_id = tep_fill_variable('address_id', 'get');
+	
+	$session->php_session_unregister('order_id');
+	$session->php_session_unregister('order_type_id');
+	$session->php_session_unregister('address_id');
+	$session->php_session_unregister('house_number');
+	$session->php_session_unregister('street_name');
+	$session->php_session_unregister('number_of_posts');
+	$session->php_session_unregister('city');
+	$session->php_session_unregister('zip');
+	$session->php_session_unregister('zip4');
+	$session->php_session_unregister('state');
+	$session->php_session_unregister('county');
+	$session->php_session_unregister('cross_street_directions');
+	$session->php_session_unregister('schedualed_start');
+	$session->php_session_unregister('request_zip4');
+	$session->php_session_unregister('payment_method_id');
+	$session->php_session_unregister('cc_type');
+	$session->php_session_unregister('cc_name');
+	$session->php_session_unregister('cc_number');
+	$session->php_session_unregister('cc_month');
+	$session->php_session_unregister('cc_year');
+	$session->php_session_unregister('cc_verification_number');
+	$session->php_session_unregister('cc_billing_street');
+	$session->php_session_unregister('cc_billing_city');
+	$session->php_session_unregister('cc_billing_zip');
+	$session->php_session_unregister('sc_reason');
+	$session->php_session_unregister('sc_reason_4');
+	$session->php_session_unregister('sc_reason_5');
+	$session->php_session_unregister('sc_reason_7');
+	$session->php_session_unregister('equipment');
+	$session->php_session_unregister('optional');
+	$session->php_session_unregister('install_equipment');
+	$session->php_session_unregister('remove_equipment');
+		
+	$session->php_session_unregister('order_type_id');
+	$session->php_session_register('order_type_id', $order_type);
+
+	if (tep_address_is_assigned_to_user($address_id, $user->fetch_user_id())) {
+		$session->php_session_unregister('address_id');
+		$session->php_session_register('address_id', $address_id);
+		$query = $database->query("select zip4 from " . TABLE_ADDRESSES . " where address_id = '" . $address_id . "' limit 1");
+		$result = $database->fetch_array($query);
+		$session->php_session_register('zip4', $result['zip4']);
+
+		$redirect = FILENAME_ORDER_CREATE_SPECIAL;
+	} else {
+		$redirect = FILENAME_ORDER_CREATE_ADDRESS;
+	}
+	
+	tep_redirect($redirect);
+		
+	$order_type_name = tep_get_order_type_name($order_type);
+?>
+<form class="order_form" action="<?php echo PAGE_URL; ?>?page_action=submit" method="post">
+<table width="100%" cellspacing="0" cellpadding="0">
+	<tr>
+		<td width="100%">
+			<table width="100%" cellspacing="0" cellpadding="2" class="pageBox">
+				<tr>
+					<td class="main">&PAGE_TEXT</td>
+				</tr>
+				<tr>
+					<td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+				</tr>
+				<?php
+					if (!empty($order_type)) {
+						$text = 'You have currently selected a <b>"'.$order_type_name.'"</b>.  If this is incorrect please change it below.  An incorrect choice will cause problems and delays with your order.';
+					} else {
+						$text = 'Please select the order type from the list below.';
+					}
+				?>
+				<?php
+					if ($error->get_error_status('order_create')) {
+				?>
+				<tr>
+					<td class="mainError"><?php echo $error->get_error_string('order_create'); ?></td>
+				</tr>
+				<tr>
+					<td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+				</tr>
+				<?php
+					}
+				?>
+				<tr>
+					<td class="main"><?php echo $text; ?></td>
+				</tr>
+				<tr>
+					<td height="3"><img scr="images/pixel_trans.gif" height="3" width="1"/></td>
+				</tr>
+				<?php
+					$query = $database->query("select order_type_id, name from " . TABLE_ORDER_TYPES . " order by order_type_id");
+						while($result = $database->fetch_array($query)) {
+							$checked = '';
+								if ($result['order_type_id'] == $order_type) {
+									$checked = 'CHECKED ';
+									$name = '<b>'.$result['name'].'</b>';
+								} else {
+									$name = $result['name'];
+								}
+							?>
+								<tr>
+									<td class="main">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="order_type" value="<?php echo $result['order_type_id']; ?>"<?php echo $checked; ?> /><?php echo $name; ?></td>
+								</tr>
+							<?php
+						}
+				?>
+				<tr>
+					<td height="3"><img scr="images/pixel_trans.gif" height="3" width="1"/></td>
+				</tr>
+				<tr>
+					<td class="main">Job Start Date: <input type="text" name="job_start_date" value = "<?php echo $job_start_date; ?>" /> (mm/dd/yyyy)</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+	</tr>
+	<tr>
+		<td width="100%">
+			<table width="100%" cellspacing="0" cellpadding="0">
+				<tr>
+					<td align="right"><input type="submit" value="Procceed to Property Address" /></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td height="20"><img src="images/pixel_trans.gif" height="20" width="1" /></td>
+	</tr>
+	<tr>
+		<td align="center" class="mediumGrey"><span class="mediumGrey">Property Address</span> - <span class="mediumGrey">Payment Information</span> - <span class="mediumGrey">Confirmation</span> - <span class="mediumGrey">Finished</span></td>
+	</tr>
+</table>
+</form>

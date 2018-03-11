@@ -1,0 +1,173 @@
+{% extends '/order/order_layout.html.twig' %}
+{% block order %}
+
+<form class="order_form form-horizontal" action="{{ constant('PAGE_URL') }}?page_action=submit" style="padding-left:20px;" method="post">
+
+<div class="col-md-8">
+
+<div class="alert order-alert alert-info">
+		{{ vars.form.text }}
+</div>
+
+
+{% if error.get_error_status('account_create_address') %}
+	<div class="alert order-alert alert-danger">
+		{{ error.get_error_string('account_create_address')|raw }}
+	</div>
+{% endif %}
+
+<div class="form-group">
+    <label for="house_number">House Number:</label>
+    <input type="text" required class="form-control" name="house_number" id="house_number" value="{{ vars.form['house_number'] }}">
+</div>
+  
+<div class="form-group">
+    <label for="street_name">Street Name:</label>
+    <input class="form-control" required name="street_name" id="street_name" value="{{ vars.form['street_name'] }}">
+</div>
+
+<div class="form-group">
+    <label for="cc_number">City:</label>
+    <input class="form-control" required name="city" id="city" value="{{ vars.form['city'] }}">
+</div>
+
+<div class="form-group">
+   <label for="cc_number">State:</label>
+    {{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['states']}) }}
+</div>
+	 
+<div class="form-group">
+    <label for="cc_number">Zip Code:</label>
+    <input class="form-control" required name="zip" id="zip" value="{{ vars.form['zip'] }}">
+</div>
+
+
+{% if vars.form.request_zip4 is not empty %}
+<input type="hidden" name="request_zip4" value="1" />
+<div class="form-group">
+   <label for="zip4_code">Zip+4 Code:</label>
+   <input class="form-control" name="zip4_code" id="zip4_code" value="{{ vars.form['zip4_code'] }}">
+</div>
+{% endif %}
+
+
+{% if vars.form.state is not empty %}
+<div class="form-group" id="county_select"  >
+{% else %}
+<div class="form-group" id="county_select" style="display:none;">
+{% endif %}
+   <label for="cc_number">County:</label>
+   {{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['country']}) }}
+</div>
+
+
+
+<div class="form-group">
+   <label> Do you want us to call Miss Utility for this property?</label>
+   <input name="miss_utility_yes_no" value="yes" {% if vars.form.miss_utility_yes_no == 'yes' %} checked {% endif %} type="radio" > Yes
+				<input name="miss_utility_yes_no" value="no" {% if vars.form.miss_utility_yes_no == 'no' %} checked {% endif %} type="radio"> No
+</div>
+
+<div class="form-group" id="lamp_yes_no" {% if vars.form.miss_utility_yes_no is empty or vars.form.miss_utility_yes_no == 'yes' %} style="display:none;" {% endif %}>
+   <label> Does property have a lamp in the yard?</label>
+   <input name="lamp_yes_no" value="yes" {% if vars.form.lamp_yes_no == 'yes' %} checked {% endif %} type="radio" > Yes
+	<input name="lamp_yes_no" value="no" {% if vars.form.lamp_yes_no == 'no' %} checked {% endif %} type="radio"> No
+</div>
+
+
+<div class="form-group" id="lamp_use_gas" {% if (vars.form.lamp_yes_no is empty or vars.form.miss_utility_yes_no == 'yes') and (vars.form.lamp_yes_no != "yes") %} style="display:none;" {% endif %}>
+   <label for="lamp_use_gas"> Does the yard lamp use gas?</label>
+   <input name="lamp_use_gas" value="yes" {% if vars.form.lamp_use_gas == 'yes' %} checked {% endif %} type="radio" > Yes
+				<input name="lamp_use_gas" value="no" {% if vars.form.lamp_use_gas == 'no' %} checked {% endif %} type="radio"> No
+				<input name="lamp_use_gas" value="unsure" {% if vars.form.lamp_use_gas == 'unsure' %} checked {% endif %} type="radio"> Not Sure
+</div>
+
+
+	
+	<div class="alert order-alert alert-info">
+		NOTE: Miss Utility requires THREE business days to mark the property. <br />We will wait until Miss Utility has marked the utilities on the property before we can install the signpost.
+	</div>
+	
+	<div class="form-group">
+   <label for="adc_page"> ADC Map Coordinates (optional)</label>
+				<select class="form-control" name="adc_page">
+					<option>Page</option>                                       
+					{% for i in 1..40 %}
+						<option value="{{ i }}" {% if vars.form.adc_page == i %} SELECTED {% endif %}> {{ i }}</option>
+					{% endfor %}
+				</select>
+				<select class="form-control" name="adc_letter">
+						<option>Letter</option>                                       
+					{% for letter in 'A'..'K' %}
+						<option value="{{ letter }}" {% if vars.form.adc_letter == letter %} SELECTED {% endif %}> {{ letter }}</option>
+					{% endfor %}
+				</select>
+				<select class="form-control" name="adc_number">
+					<option>Grid #</option>                                       
+					{% for i in 1..13 %}
+						<option value="{{ i }}" {% if vars.form.adc_number == i %} SELECTED {% endif %}> {{ i }}</option>
+					{% endfor %}
+				</select>
+</div>
+	
+	<div class="form-group">
+   <label for="zip4_code"> Crossstreet/Directions:</label>
+		<textarea required class="form-control" name="cross_street_directions" id="cross_street_directions">{{ vars.form['cross_street_directions'] }}</textarea>
+	</div>
+
+	
+	
+{% if vars.post_not_allowed_error is not empty %}
+	 <div class="alert alert-danger"><b>WARNING: Our records indicate that signposts are not allowed at the requested address. Please verify with your homeowner and HOA that signposts are allowed. If we go to the address and are not allowed to install the post, you will be charged a trip fee. If we install the post, and it is removed by the HOA, you may be charged for a Lost/Damaged post.</div>
+	 I have read and understand the above notice <input type="checkbox" id="pna" name="pna" value="1" />
+{% endif %}
+
+                  
+
+</div>
+{% endblock order %}
+
+
+{% block next_button %}
+	
+	<input type="hidden" name="submit_string_y" id="submit_string_y" value="1">
+	
+	{% if vars.order_type != constant('ORDER_TYPE_REMOVAL') %}
+		<button name="proceed_to_special_instructions_and_extras" style="float:right" type="submit" class="btn btn-info">Proceed to Special Instructions and Extras</button>
+	{% else %}
+		<button name="submit_string" type="submit" class="btn btn-info" style="float:right">Proceed to Change Removal Date</button>
+	{% endif %}
+	
+{% endblock next_button %}	
+
+{% block javascripts %}
+
+{{ parent() }}
+
+<script language="javascript">
+ $(document).ready(function () {
+                                    $("input:radio[name='miss_utility_yes_no']").click(function () {
+                                        if ($(this).val() == "yes") {
+                                            $("#lamp_yes_no").hide();
+                                            $("#lamp_use_gas").hide();
+                                        } else {
+                                            $("#lamp_yes_no").show();
+                                            if ($("input:radio[name='lamp_yes_no'][value='no']").is(':checked')) {
+                                                $("#lamp_use_gas").hide();
+                                            } else if ($("input:radio[name='lamp_yes_no'][value='yes']").is(':checked')) {
+                                                $("#lamp_use_gas").show();
+                                            }
+                                        } 
+                                    });
+									
+                                    $("input:radio[name='lamp_yes_no']").click(function () {
+									
+                                        if ($(this).val() == "yes") {
+                                            $("#lamp_use_gas").show();
+                                        } else {
+                                            $("#lamp_use_gas").hide();
+                                        } 
+                                    });
+									});
+	</script>
+{% endblock %}

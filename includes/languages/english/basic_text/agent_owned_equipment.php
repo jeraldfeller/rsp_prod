@@ -1,0 +1,1 @@
+<font size=\"3\" color=\"#ff0000\">The database management of agent inventory is still being fine tuned.&nbsp; The equipment information displayed here may not be 100% accurate.&nbsp; We are working to get the signpanel inventory information&nbsp; in the new database 100% correct.</font>

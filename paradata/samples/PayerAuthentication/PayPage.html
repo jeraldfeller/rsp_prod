@@ -1,0 +1,825 @@
+<!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Sample Payer Authentication Transaction Page</title>
+		<link rel="STYLESHEET" type="text/css" href="main.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></head>
+	<body bgcolor="#FFFFFF" link="#CC0000" vlink="#CC0000" alink="#CC0000" text="#000000" topmargin="5" leftmargin="0">
+
+<form action="beginPayerAuthentication.php" method= "POST" name="payment_info">
+<table border="1" cellspacing="0" cellpadding="0" align="center" width=550>
+	<tr>
+		<td>
+			<table border="0" cellspacing="0" cellpadding="0" width="500" align="center">
+				<tr>
+					<td height="30"></td>
+				</tr>
+				<tr>
+					<td>
+
+              <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                  <td height="54" align="center"><h3><u>Sample Payer Authentication Transaction Page</u></h3>
+                    <p><font color="#FF0000" size="1">This page is for testing purposes
+                      only. <br>
+                      Do not submit real credit card information.</font></p></td>
+                  <td align="center"><img src="vbv_logo_small.gif" width="78" height="46"><img src="mastercard_securecode.gif" width="72" height="48"><img src="jcb_secure.gif" width="72" height="48"></td>
+                </tr>
+              </table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+
+              <table border="0" cellspacing="0" cellpadding="2"  align="center">
+                <tr>
+                  <td height="10"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"> <table border="0" cellspacing="0" cellpadding="0" Width="100%">
+                      <tr class="header">
+                        <td>&nbsp;User Details<font face=arial size="1pt">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;To be initially set by the merchant</font></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr>
+                  <td align="right">PO/User ID:</td>
+                  <td align="left"> <input type=text name=order_user_id> </td>
+                </tr>
+                <tr>
+                  <td align="right">Order ID:</td>
+                  <td align="left"> <input type=text name="order_id"> </td>
+                </tr>
+                <tr>
+				  <td align = "right"> Invoice Number:</td>
+				  <td align = "left"> <input type=text name="invoice_number"> </td>
+                </tr>
+                <tr>
+                  <td colspan="2" height="10"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"> <table border="0" cellspacing="0" cellpadding="0" Width="498">
+                      <tr class="header">
+                        <td width="100%">&nbsp;Purchase Details&nbsp;&nbsp;&nbsp;<font face="arial" color="#CC0000" size="2pt"><b>*</b>&nbsp;</font><font face=arial size="1pt">(required
+                          field)</font><font face=arial size="1pt">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;To be initially set by the merchant</font></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr>
+                  <td align="right"><font face="arial" color="#CC0000" size="2pt">*</font>&nbsp;Total:
+                    $</td>
+                  <td align="left"> <input type="text" name="charge_total" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Tax Amount: $</td>
+                  <td align="left"> <input type="text" name="tax_amount" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Shipping Charge: $</td>
+                  <td align="left"> <input type="text" name="shipping_charge" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Transaction Condition Code:</td>
+                  <td align="left"><input name="transaction_condition_code" type="text" style="HEIGHT: 22px; WIDTH: 200px" maxlength="1">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right" valign="top"><font face="arial" color="#CC0000" size="2pt">*</font>&nbsp;Charge
+                    Type:</td>
+                  <td align="left">
+				  	<select name="charge_type">
+                      <option value=TYPE selected>-- Charge Type -- </option>
+                      <option value=AUTH>Auth</option>
+                      <option value=SALE>Sale</option>
+                      <option value=CREDIT>Credit</option>
+                    </select></td>
+                </tr>
+                <tr>
+				  <td align = "right"> Buyer Code:</td>
+				  <td align = "left"> <input type=text name="buyer_code"> </td>
+                </tr>
+                <tr>
+                  <td align="right" valign="top">Details:</td>
+                  <td align="left"> <textarea cols=34 name= "order_description" rows="3"></textarea>
+                  </td>
+                </tr>
+				<tr>
+				  <td align="right">Do Transaction When Payer Authentication Is Inconclusive:</td>
+				  <td align="left"><input type="checkbox" name="do_transaction_on_authentication_inconclusive" value="true"></td>
+                </tr>
+                <tr>
+                  <td colspan="2" height="10"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"> <table border="0" cellspacing="0" cellpadding="0" Width="100%">
+                      <tr class="header">
+                        <td>&nbsp;Credit Card Details &nbsp;&nbsp;&nbsp;<font face="arial" color="#CC0000" size="2pt"><b>*</b>&nbsp;</font><font face=arial size="1pt">(required
+                          field)</font><font face=arial size="1pt">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;To be entered by the customers</font></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr>
+                  <td align="right">Credit Card Brand:</td>
+                  <td align="left"> <SELECT name="credit_card_brand">
+                      <OPTION value=VISA selected>Visa</OPTION>
+                      <OPTION value=MASTERCARD>Mastercard</OPTION>
+                      <OPTION value=AMERICAN_EXPRESS>American Express</OPTION>
+                      <OPTION value=DISCOVER>Discover</OPTION>
+                      <OPTION value=NOVA>Nova</OPTION>
+                      <OPTION value=AMEX>Amex</OPTION>
+                      <OPTION value=EUROCARD>Eurocard</OPTION>
+                    </SELECT> </td>
+                </tr>
+                <tr>
+                  <td align="right"><font face="arial" color="#CC0000" size="2pt">*</font>&nbsp;Card
+                    Number:</td>
+                  <td align="left"> <input name="credit_card_number" maxlength="16">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right"><font face="arial" color="#CC0000" size="2pt">*</font>&nbsp;Expiry:</td>
+                  <td align="left"> <table border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td> <SELECT name="expire_month">
+                            <option value="month" selected>--Month--</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">06</option>
+                            <option value="7">07</option>
+                            <option value="8">08</option>
+                            <option value="9">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                          </SELECT> </td>
+                        <td>&nbsp;&nbsp;/&nbsp;&nbsp;</td>
+                        <td> <SELECT name= "expire_year">
+                            <OPTION value="year_selected">--Year--</OPTION>
+                            <OPTION value="2002">2002</OPTION>
+                            <OPTION value="2003">2003</OPTION>
+                            <OPTION value="2004">2004</OPTION>
+                            <OPTION value="2005">2005</OPTION>
+                            <OPTION value="2006">2006</OPTION>
+                            <OPTION value="2007">2007</OPTION>
+                            <OPTION value="2008">2008</OPTION>
+                            <OPTION value="2009">2009</OPTION>
+                            <OPTION value="2010">2010</OPTION>
+                            <OPTION value="2011">2011</OPTION>
+                            <OPTION value="2012">2012</OPTION>
+                          </SELECT> </td>
+                      </tr>
+                    </table></td>
+                <tr>
+                  <td align="right">CVV:</td>
+                  <td align="left"> <input name="cvv" maxlength="4"> </td>
+                </tr>
+                <tr>
+                  <td colspan="2" height="10"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"> <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                      <tr class="header">
+                        <td>&nbsp;Billing Information<font face=arial size="1pt">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;To be entered by the customers</font></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr>
+                  <td align="right">Customer Title:</td>
+                  <td align="left"> <input type="text" name="bill_customer_title" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">First Name:</td>
+                  <td align="left"> <input type="text" name=bill_first_name style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Last Name:</td>
+                  <td align="left"> <input type="text" name="bill_last_name" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Middle Name:</td>
+                  <td align="left"> <input type="text" name="bill_middle_name" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Company:</td>
+                  <td align="left"> <input type="text" name="bill_company" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Address One:</td>
+                  <td align="left"> <input type="text" name="bill_address_one" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Address Two:</td>
+                  <td align="left"> <input type="text" name="bill_address_two" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">City:</td>
+                  <td align="left"> <input type="text" name="bill_city" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">State or Province:</td>
+                  <td align="left"> <input type="text" name="bill_state_or_province" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Country:</td>
+                  <td align="left"> <SELECT NAME=bill_country_code style='HEIGHT: 22px; WIDTH: 200px'>
+                      <OPTION value=AF>Afghanistan</OPTION>
+                      <OPTION value=AL>Albania</OPTION>
+                      <OPTION value=DZ>Algeria</OPTION>
+                      <OPTION value=INT>All countries except the USA</OPTION>
+                      <OPTION value=AS>American Samoa</OPTION>
+                      <OPTION value=AD>Andorra</OPTION>
+                      <OPTION value=AI>Anguilla</OPTION>
+                      <OPTION value=AQ>Antarctica</OPTION>
+                      <OPTION value=AG>Antigua and Barbuda</OPTION>
+                      <OPTION value=AR>Argentina</OPTION>
+                      <OPTION value=AM>Armenia</OPTION>
+                      <OPTION value=AW>Aruba</OPTION>
+                      <OPTION value=AU>Australia</OPTION>
+                      <OPTION value=AT>Austria</OPTION>
+                      <OPTION value=AZ>Azerbaijan</OPTION>
+                      <OPTION value=BS>Bahamas</OPTION>
+                      <OPTION value=BH>Bahrain</OPTION>
+                      <OPTION value=BD>Bangladesh</OPTION>
+                      <OPTION value=BB>Barbados</OPTION>
+                      <OPTION value=BY>Belarus</OPTION>
+                      <OPTION value=BE>Belgium</OPTION>
+                      <OPTION value=BZ>Belize</OPTION>
+                      <OPTION value=BJ>Benin</OPTION>
+                      <OPTION value=BM>Bermuda</OPTION>
+                      <OPTION value=BT>Bhutan</OPTION>
+                      <OPTION value=BO>Bolivia</OPTION>
+                      <OPTION value=BW>Botswana</OPTION>
+                      <OPTION value=BV>Bouver Islands</OPTION>
+                      <OPTION value=BR>Brazil</OPTION>
+                      <OPTION value=IO>British Indian Ocean Territory</OPTION>
+                      <OPTION value=BN>Brunei</OPTION>
+                      <OPTION value=BG>Bulgaria</OPTION>
+                      <OPTION value=BF>Burkina Faso</OPTION>
+                      <OPTION value=BI>Burundi</OPTION>
+                      <OPTION value=CM>Cambodia</OPTION>
+                      <OPTION value=CM>Cameroon</OPTION>
+                      <OPTION value=CA selected>Canada</OPTION>
+                      <OPTION value=CV>Cape Verde</OPTION>
+                      <OPTION value=KY>Cayman Islands</OPTION>
+                      <OPTION value=CF>Central African Republic</OPTION>
+                      <OPTION value=TD>Chad</OPTION>
+                      <OPTION value=CL>Chile</OPTION>
+                      <OPTION value=CN>China</OPTION>
+                      <OPTION value=CX>Christmas Islands</OPTION>
+                      <OPTION value=CC>Cocos Keeling Islands</OPTION>
+                      <OPTION value=CO>Columbia</OPTION>
+                      <OPTION value=KM>Comoros</OPTION>
+                      <OPTION value=CG>Congo</OPTION>
+                      <OPTION value=CK>Cook Island</OPTION>
+                      <OPTION value=CR>Costa Rica</OPTION>
+                      <OPTION value=CI>Cote Divoire</OPTION>
+                      <OPTION value=HR>Croatia</OPTION>
+                      <OPTION value=CY>Cyprus</OPTION>
+                      <OPTION value=CZ>Czech Republic</OPTION>
+                      <OPTION value=DK>Denmark</OPTION>
+                      <OPTION value=DJ>Djibouti</OPTION>
+                      <OPTION value=DM>Dominica</OPTION>
+                      <OPTION value=DO>Dominican Republic</OPTION>
+                      <OPTION value=TP>East Timor</OPTION>
+                      <OPTION value=EG>Egypt</OPTION>
+                      <OPTION value=SV>El Salvador</OPTION>
+                      <OPTION value=EC>Equador</OPTION>
+                      <OPTION value=GQ>Equatorial Guinea</OPTION>
+                      <OPTION value=ER>Eritrea</OPTION>
+                      <OPTION value=EE>Estonia</OPTION>
+                      <OPTION value=ET>Ethopia</OPTION>
+                      <OPTION value=FK>Falkland Islands</OPTION>
+                      <OPTION value=FO>Faroe Islands</OPTION>
+                      <OPTION value=FM>Federated States of Micronesia</OPTION>
+                      <OPTION value=FJ>Fiji</OPTION>
+                      <OPTION value=FI>Finland</OPTION>
+                      <OPTION value=FR>France</OPTION>
+                      <OPTION value=GF>French Guiana</OPTION>
+                      <OPTION value=PF>French Polynesia</OPTION>
+                      <OPTION value=TF>French Southern Territories</OPTION>
+                      <OPTION value=GA>Gabon</OPTION>
+                      <OPTION value=GM>Gambia</OPTION>
+                      <OPTION value=GE>Georgia</OPTION>
+                      <OPTION value=DE>Germany</OPTION>
+                      <OPTION value=GA>Ghana</OPTION>
+                      <OPTION value=BI>Gibraltar</OPTION>
+                      <OPTION value=GR>Greece</OPTION>
+                      <OPTION value=GL>Greenland</OPTION>
+                      <OPTION value=GD>Grenada</OPTION>
+                      <OPTION value=GP>Guadeloupe</OPTION>
+                      <OPTION value=GU>Guam</OPTION>
+                      <OPTION value=GT>Guatemala</OPTION>
+                      <OPTION value=GN>Guinea</OPTION>
+                      <OPTION value=GW>Guinea Bissau</OPTION>
+                      <OPTION value=GY>Guyana</OPTION>
+                      <OPTION value=HT>Haiti</OPTION>
+                      <OPTION value=HM>Heard and McDonald Islands</OPTION>
+                      <OPTION value=HN>Honduras</OPTION>
+                      <OPTION value=HK>Hong Kong</OPTION>
+                      <OPTION value=HU>Hungary</OPTION>
+                      <OPTION value=IS>Iceland</OPTION>
+                      <OPTION value=IN>India</OPTION>
+                      <OPTION value=ID>Indonesia</OPTION>
+                      <OPTION value=IE>Ireland</OPTION>
+                      <OPTION value=IL>Israel</OPTION>
+                      <OPTION value=IT>Italy</OPTION>
+                      <OPTION value=JM>Jamaica</OPTION>
+                      <OPTION value=JP>Japan</OPTION>
+                      <OPTION value=JO>Jordan</OPTION>
+                      <OPTION value=KZ>Kazakhstan</OPTION>
+                      <OPTION value=KE>Kenya</OPTION>
+                      <OPTION value=KI>Kiribati</OPTION>
+                      <OPTION value=KW>Kuwait</OPTION>
+                      <OPTION value=KG>Kyrgyzstan</OPTION>
+                      <OPTION value=LA>Laos</OPTION>
+                      <OPTION value=LV>Latvia</OPTION>
+                      <OPTION value=LB>Lebanon </OPTION>
+                      <OPTION value=LS>Lesthoto</OPTION>
+                      <OPTION value=LR>Liberia</OPTION>
+                      <OPTION value=LI>Liechtenstein</OPTION>
+                      <OPTION value=LT>Lithuania</OPTION>
+                      <OPTION value=LU>Luxembourg</OPTION>
+                      <OPTION value=MO>Macau</OPTION>
+                      <OPTION value=MG>Madagascar</OPTION>
+                      <OPTION value=MW>Malawi</OPTION>
+                      <OPTION value=MY>Malaysia</OPTION>
+                      <OPTION value=MV>Maldives</OPTION>
+                      <OPTION value=ML>Mali</OPTION>
+                      <OPTION value=MT>Malta</OPTION>
+                      <OPTION value=MH>Marshall Islands</OPTION>
+                      <OPTION value=MQ>Martinique</OPTION>
+                      <OPTION value=MR>Mauritania</OPTION>
+                      <OPTION value=MU>Mauritius</OPTION>
+                      <OPTION value=YT>Mayotte</OPTION>
+                      <OPTION value=FX>Metropolitan France</OPTION>
+                      <OPTION value=MX>Mexico</OPTION>
+                      <OPTION value=MD>Moldova</OPTION>
+                      <OPTION value=MC>Monaco</OPTION>
+                      <OPTION value=MN>Mongolia</OPTION>
+                      <OPTION value=MS>Montserrat</OPTION>
+                      <OPTION value=MA>Morocco</OPTION>
+                      <OPTION value=MZ>Mozambique</OPTION>
+                      <OPTION value=MM>Myanmar</OPTION>
+                      <OPTION value=NA>Namibia</OPTION>
+                      <OPTION value=NR>Nauru</OPTION>
+                      <OPTION value=NP>Nepal</OPTION>
+                      <OPTION value=NL>Netherlands</OPTION>
+                      <OPTION value=AN>Netherlands Antilles</OPTION>
+                      <OPTION value=NC>New Caledonia</OPTION>
+                      <OPTION value=NZ>New Zealand</OPTION>
+                      <OPTION value=NI>Nicaragua</OPTION>
+                      <OPTION value=NE>Niger</OPTION>
+                      <OPTION value=NG>Nigeria</OPTION>
+                      <OPTION value=NU>Niue</OPTION>
+                      <OPTION value=NF>Norfolk Island</OPTION>
+                      <OPTION value=MP>Northern Mariana Islands</OPTION>
+                      <OPTION value=NO>Norway</OPTION>
+                      <OPTION value=OM>Oman</OPTION>
+                      <OPTION value=PK>Pakistan</OPTION>
+                      <OPTION value=PW>Palau</OPTION>
+                      <OPTION value=PA>Panama</OPTION>
+                      <OPTION value=PG>Papua New Guinea</OPTION>
+                      <OPTION value=PY>Paraguay</OPTION>
+                      <OPTION value=PE>Peru</OPTION>
+                      <OPTION value=PH>Philoppines</OPTION>
+                      <OPTION value=PN>Pitcairn</OPTION>
+                      <OPTION value=PL>Poland</OPTION>
+                      <OPTION value=PT>Portugal</OPTION>
+                      <OPTION value=PR>Puerto Rico</OPTION>
+                      <OPTION value=QA>Qatar</OPTION>
+                      <OPTION value=KR>Republic of Korea</OPTION>
+                      <OPTION value=MK>Republic of Macedonia</OPTION>
+                      <OPTION value=RE>Reunion</OPTION>
+                      <OPTION value=RO>Romania</OPTION>
+                      <OPTION value=RU>Russia</OPTION>
+                      <OPTION value=WS>Samoa</OPTION>
+                      <OPTION value=SM>San Marino</OPTION>
+                      <OPTION value=ST>Sao Tome and Principe</OPTION>
+                      <OPTION value=SA>Saudi Arabia</OPTION>
+                      <OPTION value=SN>Senegal</OPTION>
+                      <OPTION value=SC>Seychelles</OPTION>
+                      <OPTION value=SL>Sierra Leone</OPTION>
+                      <OPTION value=SG>Singapore</OPTION>
+                      <OPTION value=DK>Slovakia</OPTION>
+                      <OPTION value=SI>Slovenia</OPTION>
+                      <OPTION value=SB>Solomon Islands</OPTION>
+                      <OPTION value=SO>Somalia</OPTION>
+                      <OPTION value=ZA>South Africa</OPTION>
+                      <OPTION value=ES>Spain</OPTION>
+                      <OPTION value=LK>Sri Lanka</OPTION>
+                      <OPTION value=SH>St Helena</OPTION>
+                      <OPTION value=KN>St Kitts and Nevis</OPTION>
+                      <OPTION value=LC>St Lucia</OPTION>
+                      <OPTION value=PM>St Pierre and Miquelon</OPTION>
+                      <OPTION value=VC>St Vincent and the Grenadines</OPTION>
+                      <OPTION value=SD>Sudan</OPTION>
+                      <OPTION value=SR>Suriname</OPTION>
+                      <OPTION value=SJ>Svalbard and Jan Mayen Islands</OPTION>
+                      <OPTION value=SZ>Swaziland</OPTION>
+                      <OPTION value=SE>Sweden</OPTION>
+                      <OPTION value=CH>Switzerland</OPTION>
+                      <OPTION value=SY>Syria</OPTION>
+                      <OPTION value=TW>Taiwan</OPTION>
+                      <OPTION value=TJ>Tajikistan</OPTION>
+                      <OPTION value=TZ>Tanzania</OPTION>
+                      <OPTION value=TH>Thailand</OPTION>
+                      <OPTION value=TG>Togo</OPTION>
+                      <OPTION value=TK>Tokelau</OPTION>
+                      <OPTION value=TO>Tonga</OPTION>
+                      <OPTION value=TT>Trinidad and Tobago</OPTION>
+                      <OPTION value=TN>Tunisia</OPTION>
+                      <OPTION value=TR>Turkey</OPTION>
+                      <OPTION value=TM>Turkmenistan</OPTION>
+                      <OPTION value=TC>Turks and Caicos Islands</OPTION>
+                      <OPTION value=TV>Tuvalu</OPTION>
+                      <OPTION value=UG>Uganda</OPTION>
+                      <OPTION value=UA>Ukraine</OPTION>
+                      <OPTION value=AE>United Arab Emirates</OPTION>
+                      <OPTION value=GB>United Kingdom</OPTION>
+                      <OPTION value=US>United States</OPTION>
+                      <OPTION value=UM>United States Minor Outlying Islands</OPTION>
+                      <OPTION value=UY>Uruguay</OPTION>
+                      <OPTION value=UZ>Uzbekistan</OPTION>
+                      <OPTION value=VU>Vanuatu</OPTION>
+                      <OPTION value=VA>Vatican City</OPTION>
+                      <OPTION value=VE>Venezuela</OPTION>
+                      <OPTION value=VN>Vietnam</OPTION>
+                      <OPTION value=VG>Virgin Islands British</OPTION>
+                      <OPTION value=VI>Virgin Islands USA</OPTION>
+                      <OPTION value=WF>Wallis and Futuna Islands</OPTION>
+                      <OPTION value=EH>Western Sahara</OPTION>
+                      <OPTION value=YE>Yemen</OPTION>
+                      <OPTION value=YU>Yugoslavia</OPTION>
+                      <OPTION value=ZR>Zaire</OPTION>
+                      <OPTION value=ZM>Zambia</OPTION>
+                      <OPTION value=ZW>Zimbabwe</OPTION>
+                    </SELECT> </td>
+                </tr>
+                <tr>
+                  <td align="right">Zip or Postal Code:</td>
+                  <td align="left"> <input type="text" name="bill_zip_or_postal_code" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Phone:</td>
+                  <td align="left"> <input type="text" name="bill_phone" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right"> Email:</td>
+                  <td align="left"> <input type="text" name="bill_email" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Note:</td>
+                  <td align="left"> <input type="text" name="bill_note" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" height="10"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"> <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                      <tr class="header">
+                        <td>&nbsp;Shipping Information<font face=arial size="1pt">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;To be entered by the customers</font></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                <tr>
+                  <td align="right">Customer Title:</td>
+                  <td align="left"> <input type="text" name="ship_customer_title" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">First Name:</td>
+                  <td align="left"> <input type="text" name="ship_first_name" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Last Name:</td>
+                  <td align="left"> <input type="text" name="ship_last_name" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Middle Name:</td>
+                  <td align="left"> <input type="text" name="ship_middle_name" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Company:</td>
+                  <td align="left"> <input type="text" name="ship_company" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Address One:</td>
+                  <td align="left"> <input type="text" name="ship_address_one" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Address Two:</td>
+                  <td align="left"> <input type="text" name="ship_address_two" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">City:</td>
+                  <td align="left"> <input type="text" name="ship_city" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">State or Province:</td>
+                  <td align="left"> <input type="text" name="ship_state_or_province" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Country:</td>
+                  <td align="left"> <SELECT NAME=ship_country_code style='HEIGHT: 22px; WIDTH: 200px'>
+                      <OPTION value=AF>Afghanistan</OPTION>
+                      <OPTION value=AL>Albania</OPTION>
+                      <OPTION value=DZ>Algeria</OPTION>
+                      <OPTION value=INT>All countries except the USA</OPTION>
+                      <OPTION value=AS>American Samoa</OPTION>
+                      <OPTION value=AD>Andorra</OPTION>
+                      <OPTION value=AI>Anguilla</OPTION>
+                      <OPTION value=AQ>Antarctica</OPTION>
+                      <OPTION value=AG>Antigua and Barbuda</OPTION>
+                      <OPTION value=AR>Argentina</OPTION>
+                      <OPTION value=AM>Armenia</OPTION>
+                      <OPTION value=AW>Aruba</OPTION>
+                      <OPTION value=AU>Australia</OPTION>
+                      <OPTION value=AT>Austria</OPTION>
+                      <OPTION value=AZ>Azerbaijan</OPTION>
+                      <OPTION value=BS>Bahamas</OPTION>
+                      <OPTION value=BH>Bahrain</OPTION>
+                      <OPTION value=BD>Bangladesh</OPTION>
+                      <OPTION value=BB>Barbados</OPTION>
+                      <OPTION value=BY>Belarus</OPTION>
+                      <OPTION value=BE>Belgium</OPTION>
+                      <OPTION value=BZ>Belize</OPTION>
+                      <OPTION value=BJ>Benin</OPTION>
+                      <OPTION value=BM>Bermuda</OPTION>
+                      <OPTION value=BT>Bhutan</OPTION>
+                      <OPTION value=BO>Bolivia</OPTION>
+                      <OPTION value=BW>Botswana</OPTION>
+                      <OPTION value=BV>Bouver Islands</OPTION>
+                      <OPTION value=BR>Brazil</OPTION>
+                      <OPTION value=IO>British Indian Ocean Territory</OPTION>
+                      <OPTION value=BN>Brunei</OPTION>
+                      <OPTION value=BG>Bulgaria</OPTION>
+                      <OPTION value=BF>Burkina Faso</OPTION>
+                      <OPTION value=BI>Burundi</OPTION>
+                      <OPTION value=CM>Cambodia</OPTION>
+                      <OPTION value=CM>Cameroon</OPTION>
+                      <OPTION value=CA selected>Canada</OPTION>
+                      <OPTION value=CV>Cape Verde</OPTION>
+                      <OPTION value=KY>Cayman Islands</OPTION>
+                      <OPTION value=CF>Central African Republic</OPTION>
+                      <OPTION value=TD>Chad</OPTION>
+                      <OPTION value=CL>Chile</OPTION>
+                      <OPTION value=CN>China</OPTION>
+                      <OPTION value=CX>Christmas Islands</OPTION>
+                      <OPTION value=CC>Cocos Keeling Islands</OPTION>
+                      <OPTION value=CO>Columbia</OPTION>
+                      <OPTION value=KM>Comoros</OPTION>
+                      <OPTION value=CG>Congo</OPTION>
+                      <OPTION value=CK>Cook Island</OPTION>
+                      <OPTION value=CR>Costa Rica</OPTION>
+                      <OPTION value=CI>Cote Divoire</OPTION>
+                      <OPTION value=HR>Croatia</OPTION>
+                      <OPTION value=CY>Cyprus</OPTION>
+                      <OPTION value=CZ>Czech Republic</OPTION>
+                      <OPTION value=DK>Denmark</OPTION>
+                      <OPTION value=DJ>Djibouti</OPTION>
+                      <OPTION value=DM>Dominica</OPTION>
+                      <OPTION value=DO>Dominican Republic</OPTION>
+                      <OPTION value=TP>East Timor</OPTION>
+                      <OPTION value=EG>Egypt</OPTION>
+                      <OPTION value=SV>El Salvador</OPTION>
+                      <OPTION value=EC>Equador</OPTION>
+                      <OPTION value=GQ>Equatorial Guinea</OPTION>
+                      <OPTION value=ER>Eritrea</OPTION>
+                      <OPTION value=EE>Estonia</OPTION>
+                      <OPTION value=ET>Ethopia</OPTION>
+                      <OPTION value=FK>Falkland Islands</OPTION>
+                      <OPTION value=FO>Faroe Islands</OPTION>
+                      <OPTION value=FM>Federated States of Micronesia</OPTION>
+                      <OPTION value=FJ>Fiji</OPTION>
+                      <OPTION value=FI>Finland</OPTION>
+                      <OPTION value=FR>France</OPTION>
+                      <OPTION value=GF>French Guiana</OPTION>
+                      <OPTION value=PF>French Polynesia</OPTION>
+                      <OPTION value=TF>French Southern Territories</OPTION>
+                      <OPTION value=GA>Gabon</OPTION>
+                      <OPTION value=GM>Gambia</OPTION>
+                      <OPTION value=GE>Georgia</OPTION>
+                      <OPTION value=DE>Germany</OPTION>
+                      <OPTION value=GA>Ghana</OPTION>
+                      <OPTION value=BI>Gibraltar</OPTION>
+                      <OPTION value=GR>Greece</OPTION>
+                      <OPTION value=GL>Greenland</OPTION>
+                      <OPTION value=GD>Grenada</OPTION>
+                      <OPTION value=GP>Guadeloupe</OPTION>
+                      <OPTION value=GU>Guam</OPTION>
+                      <OPTION value=GT>Guatemala</OPTION>
+                      <OPTION value=GN>Guinea</OPTION>
+                      <OPTION value=GW>Guinea Bissau</OPTION>
+                      <OPTION value=GY>Guyana</OPTION>
+                      <OPTION value=HT>Haiti</OPTION>
+                      <OPTION value=HM>Heard and McDonald Islands</OPTION>
+                      <OPTION value=HN>Honduras</OPTION>
+                      <OPTION value=HK>Hong Kong</OPTION>
+                      <OPTION value=HU>Hungary</OPTION>
+                      <OPTION value=IS>Iceland</OPTION>
+                      <OPTION value=IN>India</OPTION>
+                      <OPTION value=ID>Indonesia</OPTION>
+                      <OPTION value=IE>Ireland</OPTION>
+                      <OPTION value=IL>Israel</OPTION>
+                      <OPTION value=IT>Italy</OPTION>
+                      <OPTION value=JM>Jamaica</OPTION>
+                      <OPTION value=JP>Japan</OPTION>
+                      <OPTION value=JO>Jordan</OPTION>
+                      <OPTION value=KZ>Kazakhstan</OPTION>
+                      <OPTION value=KE>Kenya</OPTION>
+                      <OPTION value=KI>Kiribati</OPTION>
+                      <OPTION value=KW>Kuwait</OPTION>
+                      <OPTION value=KG>Kyrgyzstan</OPTION>
+                      <OPTION value=LA>Laos</OPTION>
+                      <OPTION value=LV>Latvia</OPTION>
+                      <OPTION value=LB>Lebanon </OPTION>
+                      <OPTION value=LS>Lesthoto</OPTION>
+                      <OPTION value=LR>Liberia</OPTION>
+                      <OPTION value=LI>Liechtenstein</OPTION>
+                      <OPTION value=LT>Lithuania</OPTION>
+                      <OPTION value=LU>Luxembourg</OPTION>
+                      <OPTION value=MO>Macau</OPTION>
+                      <OPTION value=MG>Madagascar</OPTION>
+                      <OPTION value=MW>Malawi</OPTION>
+                      <OPTION value=MY>Malaysia</OPTION>
+                      <OPTION value=MV>Maldives</OPTION>
+                      <OPTION value=ML>Mali</OPTION>
+                      <OPTION value=MT>Malta</OPTION>
+                      <OPTION value=MH>Marshall Islands</OPTION>
+                      <OPTION value=MQ>Martinique</OPTION>
+                      <OPTION value=MR>Mauritania</OPTION>
+                      <OPTION value=MU>Mauritius</OPTION>
+                      <OPTION value=YT>Mayotte</OPTION>
+                      <OPTION value=FX>Metropolitan France</OPTION>
+                      <OPTION value=MX>Mexico</OPTION>
+                      <OPTION value=MD>Moldova</OPTION>
+                      <OPTION value=MC>Monaco</OPTION>
+                      <OPTION value=MN>Mongolia</OPTION>
+                      <OPTION value=MS>Montserrat</OPTION>
+                      <OPTION value=MA>Morocco</OPTION>
+                      <OPTION value=MZ>Mozambique</OPTION>
+                      <OPTION value=MM>Myanmar</OPTION>
+                      <OPTION value=NA>Namibia</OPTION>
+                      <OPTION value=NR>Nauru</OPTION>
+                      <OPTION value=NP>Nepal</OPTION>
+                      <OPTION value=NL>Netherlands</OPTION>
+                      <OPTION value=AN>Netherlands Antilles</OPTION>
+                      <OPTION value=NC>New Caledonia</OPTION>
+                      <OPTION value=NZ>New Zealand</OPTION>
+                      <OPTION value=NI>Nicaragua</OPTION>
+                      <OPTION value=NE>Niger</OPTION>
+                      <OPTION value=NG>Nigeria</OPTION>
+                      <OPTION value=NU>Niue</OPTION>
+                      <OPTION value=NF>Norfolk Island</OPTION>
+                      <OPTION value=MP>Northern Mariana Islands</OPTION>
+                      <OPTION value=NO>Norway</OPTION>
+                      <OPTION value=OM>Oman</OPTION>
+                      <OPTION value=PK>Pakistan</OPTION>
+                      <OPTION value=PW>Palau</OPTION>
+                      <OPTION value=PA>Panama</OPTION>
+                      <OPTION value=PG>Papua New Guinea</OPTION>
+                      <OPTION value=PY>Paraguay</OPTION>
+                      <OPTION value=PE>Peru</OPTION>
+                      <OPTION value=PH>Philoppines</OPTION>
+                      <OPTION value=PN>Pitcairn</OPTION>
+                      <OPTION value=PL>Poland</OPTION>
+                      <OPTION value=PT>Portugal</OPTION>
+                      <OPTION value=PR>Puerto Rico</OPTION>
+                      <OPTION value=QA>Qatar</OPTION>
+                      <OPTION value=KR>Republic of Korea</OPTION>
+                      <OPTION value=MK>Republic of Macedonia</OPTION>
+                      <OPTION value=RE>Reunion</OPTION>
+                      <OPTION value=RO>Romania</OPTION>
+                      <OPTION value=RU>Russia</OPTION>
+                      <OPTION value=WS>Samoa</OPTION>
+                      <OPTION value=SM>San Marino</OPTION>
+                      <OPTION value=ST>Sao Tome and Principe</OPTION>
+                      <OPTION value=SA>Saudi Arabia</OPTION>
+                      <OPTION value=SN>Senegal</OPTION>
+                      <OPTION value=SC>Seychelles</OPTION>
+                      <OPTION value=SL>Sierra Leone</OPTION>
+                      <OPTION value=SG>Singapore</OPTION>
+                      <OPTION value=DK>Slovakia</OPTION>
+                      <OPTION value=SI>Slovenia</OPTION>
+                      <OPTION value=SB>Solomon Islands</OPTION>
+                      <OPTION value=SO>Somalia</OPTION>
+                      <OPTION value=ZA>South Africa</OPTION>
+                      <OPTION value=ES>Spain</OPTION>
+                      <OPTION value=LK>Sri Lanka</OPTION>
+                      <OPTION value=SH>St Helena</OPTION>
+                      <OPTION value=KN>St Kitts and Nevis</OPTION>
+                      <OPTION value=LC>St Lucia</OPTION>
+                      <OPTION value=PM>St Pierre and Miquelon</OPTION>
+                      <OPTION value=VC>St Vincent and the Grenadines</OPTION>
+                      <OPTION value=SD>Sudan</OPTION>
+                      <OPTION value=SR>Suriname</OPTION>
+                      <OPTION value=SJ>Svalbard and Jan Mayen Islands</OPTION>
+                      <OPTION value=SZ>Swaziland</OPTION>
+                      <OPTION value=SE>Sweden</OPTION>
+                      <OPTION value=CH>Switzerland</OPTION>
+                      <OPTION value=SY>Syria</OPTION>
+                      <OPTION value=TW>Taiwan</OPTION>
+                      <OPTION value=TJ>Tajikistan</OPTION>
+                      <OPTION value=TZ>Tanzania</OPTION>
+                      <OPTION value=TH>Thailand</OPTION>
+                      <OPTION value=TG>Togo</OPTION>
+                      <OPTION value=TK>Tokelau</OPTION>
+                      <OPTION value=TO>Tonga</OPTION>
+                      <OPTION value=TT>Trinidad and Tobago</OPTION>
+                      <OPTION value=TN>Tunisia</OPTION>
+                      <OPTION value=TR>Turkey</OPTION>
+                      <OPTION value=TM>Turkmenistan</OPTION>
+                      <OPTION value=TC>Turks and Caicos Islands</OPTION>
+                      <OPTION value=TV>Tuvalu</OPTION>
+                      <OPTION value=UG>Uganda</OPTION>
+                      <OPTION value=UA>Ukraine</OPTION>
+                      <OPTION value=AE>United Arab Emirates</OPTION>
+                      <OPTION value=GB>United Kingdom</OPTION>
+                      <OPTION value=US>United States</OPTION>
+                      <OPTION value=UM>United States Minor Outlying Islands</OPTION>
+                      <OPTION value=UY>Uruguay</OPTION>
+                      <OPTION value=UZ>Uzbekistan</OPTION>
+                      <OPTION value=VU>Vanuatu</OPTION>
+                      <OPTION value=VA>Vatican City</OPTION>
+                      <OPTION value=VE>Venezuela</OPTION>
+                      <OPTION value=VN>Vietnam</OPTION>
+                      <OPTION value=VG>Virgin Islands British</OPTION>
+                      <OPTION value=VI>Virgin Islands USA</OPTION>
+                      <OPTION value=WF>Wallis and Futuna Islands</OPTION>
+                      <OPTION value=EH>Western Sahara</OPTION>
+                      <OPTION value=YE>Yemen</OPTION>
+                      <OPTION value=YU>Yugoslavia</OPTION>
+                      <OPTION value=ZR>Zaire</OPTION>
+                      <OPTION value=ZM>Zambia</OPTION>
+                      <OPTION value=ZW>Zimbabwe</OPTION>
+                    </SELECT> </td>
+                </tr>
+                <tr>
+                  <td align="right">Zip or Postal Code:</td>
+                  <td align="left"> <input type="text" name="ship_zip_or_postal_code" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Phone:</td>
+                  <td align="left"> <input type="text" name="ship_phone" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Email:</td>
+                  <td align="left"> <input type="text" name="ship_email" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="right">Note:</td>
+                  <td align="left"> <input type="text" name="ship_note" style="HEIGHT: 22px; WIDTH: 200px">
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" height="20"></td>
+                </tr>
+                <tr>
+                  <td align="center"> <div align="right">
+                      <input name="button" type="submit" value="Submit">
+                      <input type="reset" name="button" value="Reset">
+                    </div></td>
+                  <td align="center"><div align="right"></div></td>
+                </tr>
+                <tr>
+                  <td height="30"></td>
+                </tr>
+              </table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</form>
+</html>

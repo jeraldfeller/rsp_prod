@@ -1,0 +1,109 @@
+
+{% extends 'layout.html.twig' %}
+
+
+
+{% block stylesheets %}
+{{ parent() }}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css"/>
+ 
+{% endblock %}
+
+{% block content_body %}
+<div class="row">
+	<div class="col-md-12">
+		{% if vars.message|length>0 %}
+			<div class="alert alert-success">
+				{{ vars.message }}
+			</div>
+		{% endif %}
+		{% if error.get_error_status('aom_manage_agents') %}
+			<div class="alert alert-danger">
+				{{ error.get_error_string('aom_manage_agents')|raw }}
+			</div>
+		{% endif %}
+		<div class="alert alert-info">
+				Click Set Active/Inactive to change the status of a user or click Add User below to add a new Agent.
+			</div>
+		<div style="margin-bottom:20px;">
+			<a href="aom_manage_agents.php?page_action=add" class="btn btn-primary">Add User</a>
+		</div>	
+		  <table id="datatableHistory" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+		  <thead>
+								<tr>
+									<th>User Name</th>
+									<th>User Email</th>
+									<th>User Group</th>
+									<th>Status</th>
+									<th>Orders</th>
+									<th>Manage</th>
+								</tr>
+			</thead>
+				
+			{% if vars.listing_split.number_of_rows > 0  %}
+			<tbody>
+								{% for result in vars.split_result %}
+								<tr>
+									<td class="pageBoxContent">{{ result['firstname'] }} {{ result['lastname'] }}</td>
+									<td class="pageBoxContent">{{ result['email_address'] }}</td>
+									<td class="pageBoxContent">{{ result['name'] }}</td>
+									<td class="pageBoxContent">
+									{% if result['active_status']==1 %}
+									<span style="color:green;">Active</span>
+									{% else %}
+									<span style="color:red;">Inactive</span>
+									{% endif %}
+									</td>
+									<td class="pageBoxContent"><a class="btn btn-sm btn-primary" href="{{ constant('FILENAME_AOM_ORDERS') }}?agent_id={{ result['user_id'] }}'">Orders</a></td>
+									<td class="pageBoxContent">
+									{% if result['active_status']==1 %}
+										<a class="btn btn-sm btn-danger" href="aom_manage_agents.php?agent_id={{ result['user_id'] }}&page_action=update_status&set_status=0">Set Incative</a>
+									{% else %}
+										<a class="btn btn-sm btn-success" href="aom_manage_agents.php?agent_id={{ result['user_id'] }}&page_action=update_status&set_status=1">Set Active</a>
+									{% endif %}
+									</td>
+								</tr>
+								{% endfor %}
+			</tbody>
+			{% else %} 
+			<tbody>
+				Sorry no orders could be found.  Please either schedule a new one or change the options on the right.
+			</tbody>
+
+			{% endif %}
+
+		  </table>
+
+</div>
+
+</div>
+{% endblock content_body %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.1/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.0.1/js/responsive.bootstrap.min.js"></script>
+
+
+
+
+<script>
+$(document).ready(function() {
+    $('#datatableHistory').DataTable(
+    {
+        "order": [[ 0, "asc" ]]
+    }
+    );
+} );
+</script>
+
+{% endblock %}
+
+

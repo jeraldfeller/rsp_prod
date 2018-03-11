@@ -1,0 +1,216 @@
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+
+<div class="col-md-10">
+
+<form name="update_account" class="form-horizontal" action="aom_manage_agents.php?page_action=add" method="post">
+
+{% if vars.update_success is not empty %}
+<div class="alert alert-success">
+	Your Account has been successfully updated.
+</div>	
+{% endif %}
+{% if error.get_error_status('aom_manage_agents') %}
+	<div class="alert alert-danger">
+		{{ error.get_error_string('aom_manage_agents')|raw }}
+	</div>
+{% endif %}
+
+
+<h4 class="title-panel">Personal Information</h4>
+<div class="panel-library">
+		<div class="row-mg"> 
+		<div class="form-group">
+			<label for="firstname" class="control-label">Agent First Name:</label>
+			<div>
+				<input type="text" class="form-control" id="firstname" required name="firstname" value="{{ vars.form.firstname }}">
+			</div>
+		 </div>
+		</div>
+		
+		<div class="row-mg"> 
+		<div class="form-group">
+			<label for="lastname" class="control-label">Agent Last Name:</label>
+			<div>
+				<input class="form-control" name="lastname" id="lastname" required value="{{ vars.form.lastname }}">
+			</div>
+		</div>
+		</div>
+		
+		<div class="row-mg"> 
+		<div class="form-group">
+			<label for="email_address" class="control-label">Agent Email Address:</label>
+			<div>
+				<input class="form-control" name="email_address" type="email" required id="email_address" value="{{ vars.form.email_address }}">
+			</div>
+		</div>
+		</div>
+		
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label for="agent_id" class="control-label">Agent ID:</label>
+			<div>
+				<input class="form-control" name="agent_id" id="agent_id" required value="{{ vars.form.agent_id }}">
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Billing Method:</label>
+				<div>
+					{{ include('/macros/pulldown.html.twig', {'args': vars.form['billing_method_id']}) }}
+				</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label for="street_address" class="control-label">Street Address:</label>
+			<div>
+				<input class="form-control" name="street_address" id="street_address" value="{{ vars.form.street_address }}">
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label for="city" class="control-label">City:</label>
+			<div>
+				<input class="form-control" name="city" id="city" value="{{ vars.form.city }}">
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">State:</label>
+				<div>
+					{{ include('/macros/pulldown.html.twig', {'args': vars.form['state']}) }}
+				</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">County:</label>
+				<div>
+					{{ include('/macros/pulldown.html.twig', {'args': vars.form['county_id']}) }}
+				</div>
+		</div>
+	</div>
+	
+	
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label for="phone_number" class="control-label">Cell Phone Number:</label>
+			<div>
+				<input class="form-control" name="phone_number" id="phone_number" value="{{ vars.form.phone_number }}">
+			</div>
+		</div>
+	</div>
+
+	<div class="row-mg"> 
+	<div class="form-group">
+		<label for="second_phone_number" class="control-label">Phone Number:</label>
+		<div>
+			<input class="form-control" name="second_phone_number" id="second_phone_number" value="{{ vars.form.second_phone_number }}">
+		</div>
+	</div>
+	</div>
+
+	<div class="row-mg"> 
+	<div class="form-group">
+		<label for="optional_third_phone_number" class="control-label">Fax Number:</label>
+		<div>
+			<input class="form-control" name="optional_third_phone_number" id="optional_third_phone_number" value="{{ vars.form.optional_third_phone_number }}">
+		</div>
+	</div>
+	</div>
+
+	<div class="row-mg"> 
+	<div class="form-group">
+		<label for="optional_fourth_phone_number" class="control-label">Optional Phone Number:</label>
+		<div>
+			<input class="form-control" name="optional_fourth_phone_number" id="optional_fourth_phone_number" value="{{ vars.form.optional_fourth_phone_number }}">
+		</div>
+	</div>
+	</div>
+	
+	{% if vars.form['alternate_result'] is not empty %}
+		{% set i=1 %}
+		{% for result in vars.form['alternate_result'] %}
+			<div class="row-mg"> 
+				<div class="form-group">
+					<label class="control-label">Alternate Email {{ i }}:</label>
+					<div>
+						<input class="form-control" name="alternate_email_address[]" type="email" id="alternate_email_address0" value="{{ result.email_address }}">
+						<input type="checkbox" name="chkexpert[]" value="1" {% if result.email_status is not empty %} checked {% endif %} >Receive emails on this Email Address
+					</div>
+				</div>
+			</div>	
+			{% set i = i+1 %}
+		{% endfor %}
+
+	{% else %}
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label for="alternate_email_address10" class="control-label">Alternate Email:</label>
+			<div>
+				<input class="form-control" name="alternate_email_address[]" type="email" id="alternate_email_address0" value="{{ vars.form.alternateemail_address[0] }}">
+				<input type="checkbox" name="chkexpert[]" value="1" {% if vars.form.chkexpert[0] is not empty %} checked {% endif %} >Receive emails on this Email Address
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label for="alternate_email_address10" class="control-label">Alternate Email 2:</label>
+			<div>
+				<input class="form-control" name="alternate_email_address[]" type="email" id="alternate_email_address1" value="{{ vars.form.alternateemail_address[1] }}">
+				<input type="checkbox" name="chkexpert[]" value="1" {% if vars.form.chkexpert[1] is not empty %} checked {% endif %} >Receive emails on this Email Address
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label for="alternate_email_address10" class="control-label">Alternate Email 3:</label>
+			<div>
+				<input class="form-control" name="alternate_email_address[]" type="email" id="alternate_email_address2" value="{{ vars.form.alternateemail_address[2] }}">
+				<input type="checkbox" name="chkexpert[]" value="1" {% if vars.form.chkexpert[2] is not empty %} checked {% endif %} >Receive emails on this Email Address
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label for="alternate_email_address10" class="control-label">Alternate Email 4:</label>
+			<div>
+				<input class="form-control" name="alternate_email_address[]" type="email" id="alternate_email_address3" value="{{ vars.form.alternateemail_address[3] }}">
+				<input type="checkbox" name="chkexpert[]" value="1" {% if vars.form.chkexpert[3] is not empty %} checked {% endif %} >Receive emails on this Email Address
+			</div>
+		</div>
+	</div>
+	
+	{% endif %}
+	
+	
+	
+</div>
+	
+	<input type="hidden" name="submit_string_y" id="submit_string_y" value="1">
+	
+<!--<input type="hidden" name="submit_value" value="Create">	-->
+
+<div style="float:right" >
+	<a href="{{ constant('FILENAME_ACCOUNT_OVERVIEW') }}" class="btn btn-default btn-midsize">Cancel</a>
+	<button name="submit_type" type="submit" class="btn btn-info btn-midsize">Create Agent</button>
+</div>
+
+</form>
+
+</div>
+
+{% endblock content_body %}

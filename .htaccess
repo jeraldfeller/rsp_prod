@@ -1,0 +1,57 @@
+###########################
+######## IMPORTANT ########
+###########################
+### THIS IS FOR RSP.NET ###
+###########################
+## REDIRECT FOR HTTPS    ##
+## HAPPENS IN INDEX.PHP  ##
+## DONT REDIRECT HERE OR ##
+## WILL REQUIRE NEW      ##
+## USER TO SIGN IN FOR   ##
+## A SECOND TIME         ##
+###########################
+## CHANGE PAGE.PHP:270 OR SO
+ErrorDocument 500 /500.html
+ErrorDocument 503 /500.html
+DirectoryIndex index.php
+RewriteEngine on 
+RewriteCond %{REQUEST_URI} ^(.*).php$ 
+RewriteCond %{REQUEST_URI} !/index.php$ 
+RewriteCond %{REQUEST_URI} !/cron_script.php$ 
+RewriteCond %{REQUEST_URI} !/cron_emails.php$ 
+RewriteCond %{REQUEST_URI} !/order_create_success_print.php$ 
+RewriteCond %{REQUEST_URI} !/admin_unused_report_print.php$ 
+RewriteCond %{REQUEST_URI} !/aom_order_create_success_print.php$ 
+RewriteCond %{REQUEST_URI} !/aom_schedule_removal_success_print.php$ 
+RewriteCond %{REQUEST_URI} !/schedule_removal_success_print.php$ 
+RewriteCond %{REQUEST_URI} !/dump/tunnel.php$
+RewriteCond %{REQUEST_URI} !/tunnel.php$ 
+RewriteCond %{REQUEST_URI} !/adminer.php$ 
+RewriteCond %{REQUEST_URI} !/editor/(.*)$ 
+RewriteCond %{REQUEST_URI} !/pma/(.*)$ 
+RewriteCond %{REQUEST_URI} !/lib/deferred/get_deferred_data.php$
+RewriteCond %{REQUEST_URI} !/lib/deferred/get_agent_with_credits_data.php$		
+RewriteCond %{REQUEST_URI} !/lib/google_map/address_list.php$
+RewriteCond %{REQUEST_URI} !/lib/service_stats/get_agent_data.php$				
+RewriteCond %{REQUEST_URI} !/lib/twig/get_left_column_admin.php$
+RewriteCond %{REQUEST_URI} !/lib/inventory/defaults_json.php$
+RewriteCond %{REQUEST_URI} !/lib/inventory/inventory_html.php$
+RewriteCond %{REQUEST_URI} !/lib/inventory/free_inventory_json.php$
+RewriteCond %{REQUEST_URI} !/lib/report/end_year_reports_json.php$
+RewriteCond %{REQUEST_URI} !/lib/orders/open_orders_json.php$
+RewriteCond %{REQUEST_URI} !/lib/reports/service_stats_wrapper.php$
+RewriteCond %{REQUEST_URI} !/lib/charts/orders_distribution_map.php$
+RewriteCond %{REQUEST_URI} !/lib/invoices/invoice_items.php$
+RewriteCond %{REQUEST_URI} !/lib/invoices/invoice_email_single.php$
+RewriteCond %{REQUEST_URI} !/lib/invoices/invoice_display_single.php$
+RewriteCond %{REQUEST_URI} !/lib/invoices/invoice_display_all.php$
+
+
+
+
+RewriteRule ^(.*)$ /index.php
+#RedirectMatch \.(dynamiccontent|pl|plx|perl|cgi|php|php4|php5|php6|php3|shtml)$ #http://powerhosting.com.au/cgi-sys/movingpage.cgi
+
+#RedirectMatch \.(dynamiccontent|pl|plx|perl|cgi|php|php4|php5|php6|php3|shtml)$ #http://powerhosting.com.au/cgi-sys/movingpage.cgi
+
+#RedirectMatch \.(dynamiccontent|pl|plx|perl|cgi|php|php4|php5|php6|php3|shtml)$ #http://powerhosting.com.au/cgi-sys/movingpage.cgi

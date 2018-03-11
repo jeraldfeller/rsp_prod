@@ -1,0 +1,256 @@
+<?php
+// Created 1/10/2013 brad@brgr2.com
+// Updated 1/14/2013 brad@brgr2.com
+/*
+ * Prints a list of orders broken down by year, with year total for *all* users if admin, individual user if not.
+ */
+
+$user_id = 0;
+if(isset($_REQUEST['user_id']) and !empty($_REQUEST['user_id'])) 
+{
+    $user_id = (int)$_REQUEST['user_id'];
+}
+
+$menu = $script = null;
+if(!$user_id) 
+{
+    $menu = "<div class='row-fluid'><label class='span1' for='user_id'>User</label><span class='span4'>".tep_draw_agent_pulldown('user_id',$user_id) . "</span></div>";
+}
+
+// Admins
+if(isset($_SESSION['user_group_id']) and $_SESSION['user_group_id'] == 2) 
+{ // Admin
+    echo $menu = "<div class='row-fluid'><label class='span1' for='user_id'>User</label><span class='span4'>".tep_draw_agent_pulldown('user_id',$user_id) . "</span></div>";
+} 
+elseif(isset($_SESSION['user_group_id']) and $_SESSION['user_group_id'] == 4) 
+{ // Agency order manager
+    echo $menu = "<div class='row-fluid'><label class='span1' for='user_id'>User</label><span class='span4'>".tep_draw_aom_agent_pulldown('user_id',$user_id,$_SESSION['user_id']) . "</span></div>";
+} 
+else 
+{
+    $script = "google.setOnLoadCallback(getOrderReport);";
+}
+
+?>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<div id="reports" class="hide">
+    <h2 class="well" style="text-align: center;">End Of Year Reports <span class="user-name"></span></h2>
+    <div class="year_selector" style="text-align: center;"></div>
+    <div class="results"></div>
+</div>
+
+<script type="text/javascript">
+google.load("visualization", "1", {packages:["corechart","table"]});
+<?php echo $script; ?>
+var userName;
+var userID;
+
+$(function(){
+    var uid = $('select[name=user_id]');
+    uid.change(function(){
+        $('#reports').fadeIn('slow');
+        window.userID = uid.val();
+        window.userName = $('select[name=user_id] option[value="' + uid.val() + '"]').text();
+        getOrderReport(window.userID, window.userName);
+    });    
+});
+
+var yearSelectionSet = false;
+function updateYearSelection() {
+    if(window.yearSelectionSet == false) {
+        var yearSelection = $('select[name=yearSelection]');
+        yearSelection.on('change',function(){
+           alert($(this).val()); 
+        });        
+    } else {
+        yearSelectionSet = true;
+        return;
+    }
+}
+function print_page() {
+    
+    if($('#year_details') != undefined && $('#year_details').attr('data-current-year') != undefined) {
+        var html = $('#year_details').html();
+        var year = $('#year_details').attr('data-current-year');
+        $('body').html("<span class='pull-right' style='margin-right: 1em;'><a class='btn btn-info' href='/end_year_reports.php'>Back</a></span><h1>Realty SignPost - End Of Year Report For " + year + "</h1>" + html);
+        $('a.print-btn').remove();
+    }
+    
+}
+
+function getOrderReport(user, name) {
+$('#reports').fadeIn('slow');
+    if(user == undefined || name == undefined) {
+        user = 0;
+        name = " ";
+    } else {
+        $('.user-name').html(' for ' + name);
+    }
+    
+    var results = $('#reports div.results');
+    results.html('<p style="text-align: center; font-size: 24px; color: #333;"><i class="icon-refresh icon-spin"></i> Loading...</p>');
+    
+    if(window.ajax != undefined) {
+        window.ajax.abort();
+    }
+    window.ajax = $.ajax(window.location.href + '5?u=' + user,{
+        cache: false,
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+            window.results = data;
+            setTimeout(function(){
+                results.html('<div id="year_overview"></div><div class="row-fluid" style="font-size: 14px; margin-top: 2em;"><div class="span4"><div id="year_breakdown"></div></div><div id="year_details" class="span8"></div>');
+                drawYearOverviewChart();
+            },1000);
+        }
+    });
+     
+}
+
+
+
+
+function drawYearOverviewChart() {
+
+    if(window.results == undefined || window.results.totals == undefined) {
+        return
+    }
+
+    window.rows = [];
+    var a = [['Year','Total $']];
+    
+    var i = 1;
+    var this_year = new Date().getFullYear(); console.log(this_year);
+    $.each(window.results.totals,function(year,details) {
+        window.rows.push([year,details.Total]);
+        a.push([year,details.Total]);
+        
+        if(i == Object.keys(window.results.totals).length) {
+            console.log(year == this_year);
+            if(year == this_year) {
+                var new_i = i - 2;
+                if(Object.keys(window.results.totals)[new_i] != undefined) {
+                    printMonthOverviewChart(Object.keys(window.results.totals)[new_i]);                    
+                } else {
+                    printMonthOverviewChart(year);
+                }
+            } else {
+                printMonthOverviewChart(year);                
+            }
+        }
+        i++;
+    });
+
+    var data = google.visualization.arrayToDataTable(a);
+    var options = {
+        title: 'Total of All Orders, In $',
+        hAxis: {title: 'Order Totals By Year', titleTextStyle: {color: '#069'}},
+        isHtml: true,
+        legend: {
+            positon: 'none'
+        }
+    };
+
+    var chart = new google.visualization.ColumnChart(document.getElementById('year_overview'));
+    chart.draw(data, options);
+    
+    //google.visualization.events.addListener(chart, 'select', drawMonthOverviewChart);
+    
+    
+} 
+    function printMonthOverviewChart(year) {
+        
+              var breakdown = [['Month','Total $ of Orders']];
+              $.each(window.results.totals[year].Month,function(month,amt){
+                 breakdown.push([month,amt]); 
+              });
+              
+                ///// Draw the pie chart /////
+                var breakdown_data = google.visualization.arrayToDataTable(breakdown);
+                var breakdown_options = {
+                  title: 'Orders Totals ($) By Month in ' + year,
+                  is3D: true,
+                  legend: {
+                      position: 'bottom'
+                  }, chartArea: {
+                      width: '100%', height: '80%'
+                  }
+                  
+                };
+
+                var breakdown_chart = new google.visualization.PieChart(document.getElementById('year_breakdown'));
+                breakdown_chart.draw(breakdown_data, breakdown_options);
+                
+                ///// Draw the table chart with *all* the listings for the year /////
+                var order_list = [];
+                $.each(window.results.orders[year],function(i,order){
+                   var addr = order.house_number + " " + order.street_name + ", " + order.city + ", " + order.state + " " + order.zip;
+                   var date = new Date(order.date_completed * 1000);
+                   order_list.push([{v: parseInt(order.date_completed), f: date.toDateString()},addr,{v: parseFloat(order.order_total), f: "$" + order.order_total}]);
+                });
+                
+                
+                var table_data = new google.visualization.DataTable();
+                table_data.addColumn('number', 'Date');
+                table_data.addColumn('string', 'Address');
+                table_data.addColumn('number', 'Amount');
+                table_data.addRows(order_list);
+                table_data.addRows([[{v: 999999999999, f: ""},'TOTAL FOR ' + year,{v: window.results.totals[year].Total, f: "$" + parseFloat(window.results.totals[year].Total)}]]);
+                var table = new google.visualization.Table(document.getElementById('year_details'));
+                
+                $('#year_details').attr('data-current-year',year);
+                table.draw(table_data, {showRowNumber: true, sortColumn: 0,isHtml: true});
+                
+                // FIXME
+                var yearSelect = "<ul class='breadcrumb'><li class='home'>Select year <span class='divider'>/</span>";
+                $.each(window.results.totals,function(year,val){
+                    yearSelect += "<li><a href='javascript:;' onclick='drawMonthOverviewChart(null," + year +");'>" + year +"</a> <span class='divider'>/</span>";
+                });
+                yearSelect += "</ul>";
+                $('.year_selector').html(yearSelect);
+                $('#year_details').append(yearSelect + '<div style="text-align: right; margin-top: 1em;"><a href="#" class="print-btn btn btn-small btn-primary" onclick="print_page()"><i class="icon-print"></i> Print</a></div>');
+                console.log(order_list);
+
+    }
+    function drawMonthOverviewChart(e,y) {
+
+
+        if(y != undefined) {
+            printMonthOverviewChart(y);
+            return
+        }
+        
+        console.log(chart.getSelection());
+        var selection = chart.getSelection();
+        var message = '';
+        for (var i = 0; i < selection.length; i++) {
+          var item = selection[i];
+          if (item.row != null && item.column != null) {
+            var str = data.getFormattedValue(item.row, item.column);
+            message += '{row:' + item.row + ',column:' + item.column + '} = ' + str + '\n';
+          } else if (item.row != null) {
+            var str = data.getFormattedValue(item.row, 0);
+            message += '{row:' + item.row + ', column:none}; value (col 0) = ' + str + '\n';
+          } else if (item.column != null) {
+            var str = data.getFormattedValue(0, item.column);
+            message += '{row:none, column:' + item.column + '}; value (row 0) = ' + str + '\n';
+          }
+          
+          var year = window.rows[item.row][0];
+          
+          // If the year is current, revert to prior year.
+          // if(year == )
+          
+          console.log(window.results.totals[year]);
+          // Month [int], total]
+          // Total [int]
+          
+          if(year != undefined) {
+              printMonthOverviewChart(year);
+          }
+          
+        }
+    }
+</script>

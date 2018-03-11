@@ -1,0 +1,79 @@
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+
+<div class="row">
+                <div class="col-lg-6 col-md-6">
+				<a href="/aom_order_create_address.php?order_type=1&clear=true">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-map-signs fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9" style="vertical-align:bottom;">
+                                    <div class="huge inst">Request Signpost Install</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+				</a>
+                </div>
+                <div class="col-lg-6 col-md-6">
+				<a href="/aom_active_addresses.php">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-list-alt fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="huge adrlist">Active Address List - Use to Request Service Call or Change Removal Date</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        
+                    </div>
+				</a>	
+                </div>
+</div>
+<!--
+<div class="row">
+	<div class="col-md-12">
+		<h4 class="title-panel">Latest News</h4>
+			<div class="panel-library">
+					<div class="row-mg">
+						<div class="col-md-12">
+
+								<img src="http://realtysignpost.com/images/img2.jpg">
+
+
+								<label for="first_name" class="control-label">{{ vars.newsitem.news_item_name }} ({{ vars.newsitem.date_added|date('m/d/Y') }})</label>
+								<hr>
+								<div>
+									{{ vars.newsitem.news_description }}
+								</div>
+
+						</div>
+					</div>
+			</div>		
+	</div>	
+</div>
+-->
+
+    <h4 class="title-panel">Latest News</h4>
+<div class="panel-library">	
+    <div class="row">
+        <div class="col-md-12">
+            <img style='float:left;width:100px;height:100px; margin-right:10px;' src="http://testdnx.net/images/img2.jpg" />
+			<b>{{ vars.newsitem.news_item_name }} ({{ vars.newsitem.date_added|date('m/d/Y') }})</b>
+            <p>{{ vars.newsitem.news_description }}</p>
+        </div>
+    </div>
+</div>
+
+<div style="height:350px;"></div>
+
+{% endblock content_body %}

@@ -1,0 +1,2959 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class ACHRequest</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class ACHRequest</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-vars">Vars</a>
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+		<p class="notes">
+			Located in <a class="field" href="_AchRequest_php.html">/AchRequest.php</a> (line <span class="field">41</span>)
+		</p>
+		
+				
+		<pre><a href="../Paygateway/TransactionRequestBase.html">TransactionRequestBase</a>
+   |
+   --ACHRequest</pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-vars">Vars</a>
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+								
+				<div class="method-definition">
+											<span class="method-result">ACHRequest</span>
+										<a href="#ACHRequest" title="details" class="method-name">ACHRequest</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#doTransaction" title="details" class="method-name">doTransaction</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAccountClass" title="details" class="method-name">getAccountClass</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAccountNumber" title="details" class="method-name">getAccountNumber</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAccountType" title="details" class="method-name">getAccountType</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillAddressOne" title="details" class="method-name">getBillAddressOne</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillAddressTwo" title="details" class="method-name">getBillAddressTwo</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillBirthDay" title="details" class="method-name">getBillBirthDay</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillBirthMonth" title="details" class="method-name">getBillBirthMonth</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillBirthYear" title="details" class="method-name">getBillBirthYear</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillCity" title="details" class="method-name">getBillCity</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillCompany" title="details" class="method-name">getBillCompany</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillCountryCode" title="details" class="method-name">getBillCountryCode</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillCustomerTitle" title="details" class="method-name">getBillCustomerTitle</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillDriverLicenseNumber" title="details" class="method-name">getBillDriverLicenseNumber</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillDriverLicenseStateCode" title="details" class="method-name">getBillDriverLicenseStateCode</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillDriverLicenseSwipe" title="details" class="method-name">getBillDriverLicenseSwipe</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillEmail" title="details" class="method-name">getBillEmail</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillFax" title="details" class="method-name">getBillFax</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillFirstName" title="details" class="method-name">getBillFirstName</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillLastName" title="details" class="method-name">getBillLastName</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillMiddleName" title="details" class="method-name">getBillMiddleName</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillPhone" title="details" class="method-name">getBillPhone</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillSocialSecurityNumber" title="details" class="method-name">getBillSocialSecurityNumber</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillStateOrProvince" title="details" class="method-name">getBillStateOrProvince</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBillZipOrPostalCode" title="details" class="method-name">getBillZipOrPostalCode</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getCartridgeType" title="details" class="method-name">getCartridgeType</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getChargeTotal" title="details" class="method-name">getChargeTotal</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getChargeType" title="details" class="method-name">getChargeType</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getCheckNumber" title="details" class="method-name">getCheckNumber</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getClerkID" title="details" class="method-name">getClerkID</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getCurrency" title="details" class="method-name">getCurrency</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getCustomerIPAddress" title="details" class="method-name">getCustomerIPAddress</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getInvoiceNumber" title="details" class="method-name">getInvoiceNumber</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getOrderDescription" title="details" class="method-name">getOrderDescription</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getOrderID" title="details" class="method-name">getOrderID</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getOriginalReferenceID" title="details" class="method-name">getOriginalReferenceID</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getPurchaseOrderNumber" title="details" class="method-name">getPurchaseOrderNumber</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getRoutingNumber" title="details" class="method-name">getRoutingNumber</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipAddressOne" title="details" class="method-name">getShipAddressOne</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipAddressTwo" title="details" class="method-name">getShipAddressTwo</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipCity" title="details" class="method-name">getShipCity</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipCompany" title="details" class="method-name">getShipCompany</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipCountryCode" title="details" class="method-name">getShipCountryCode</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipCustomerTitle" title="details" class="method-name">getShipCustomerTitle</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipEmail" title="details" class="method-name">getShipEmail</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipFax" title="details" class="method-name">getShipFax</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipFirstName" title="details" class="method-name">getShipFirstName</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipLastName" title="details" class="method-name">getShipLastName</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipMiddleName" title="details" class="method-name">getShipMiddleName</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipPhone" title="details" class="method-name">getShipPhone</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipStateOrProvince" title="details" class="method-name">getShipStateOrProvince</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getShipZipOrPostalCode" title="details" class="method-name">getShipZipOrPostalCode</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getTransactionConditionCode" title="details" class="method-name">getTransactionConditionCode</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setAccountClass" title="details" class="method-name">setAccountClass</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argAccountClass</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setAccountNumber" title="details" class="method-name">setAccountNumber</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argAccountNumber</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setAccountType" title="details" class="method-name">setAccountType</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argAccountType</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillAddressOne" title="details" class="method-name">setBillAddressOne</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillAddressOne</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillAddressTwo" title="details" class="method-name">setBillAddressTwo</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillAddressTwo</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillBirthDay" title="details" class="method-name">setBillBirthDay</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillBirthDay</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillBirthMonth" title="details" class="method-name">setBillBirthMonth</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillBirthMonth</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillBirthYear" title="details" class="method-name">setBillBirthYear</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillBirthYear</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillCity" title="details" class="method-name">setBillCity</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillCity</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillCompany" title="details" class="method-name">setBillCompany</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillCompany</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillCountryCode" title="details" class="method-name">setBillCountryCode</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$argBillCountryCode</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillCustomerTitle" title="details" class="method-name">setBillCustomerTitle</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillCustomerTitle</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillDriverLicenseNumber" title="details" class="method-name">setBillDriverLicenseNumber</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillDriverLicenseNumber</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillDriverLicenseStateCode" title="details" class="method-name">setBillDriverLicenseStateCode</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillDriverLicenseStateCode</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillDriverLicenseSwipe" title="details" class="method-name">setBillDriverLicenseSwipe</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillDriverLicenseSwipe</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillEmail" title="details" class="method-name">setBillEmail</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillEmail</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillFax" title="details" class="method-name">setBillFax</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillFax</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillFirstName" title="details" class="method-name">setBillFirstName</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillFirstName</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillLastName" title="details" class="method-name">setBillLastName</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillLastName</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillMiddleName" title="details" class="method-name">setBillMiddleName</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillMiddleName</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillPhone" title="details" class="method-name">setBillPhone</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillPhone</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillSocialSecurityNumber" title="details" class="method-name">setBillSocialSecurityNumber</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillSocialSecurityNumber</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillStateOrProvince" title="details" class="method-name">setBillStateOrProvince</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillStateOrProvince</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setBillZipOrPostalCode" title="details" class="method-name">setBillZipOrPostalCode</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillPostalCode</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setCartridgeType" title="details" class="method-name">setCartridgeType</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argCartridgeType</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setChargeTotal" title="details" class="method-name">setChargeTotal</a>
+											(<span class="var-type">numeric</span>&nbsp;<span class="var-name">$argChargeTotal</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setChargeType" title="details" class="method-name">setChargeType</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$argChargeType</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setCheckNumber" title="details" class="method-name">setCheckNumber</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argCheckNumber</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setClerkID" title="details" class="method-name">setClerkID</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argClerkID</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setCurrency" title="details" class="method-name">setCurrency</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argCurrency</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setCustomerIPAddress" title="details" class="method-name">setCustomerIPAddress</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argCustomerIPAddress</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setInvoiceNumber" title="details" class="method-name">setInvoiceNumber</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argInvoiceNumber</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setOrderDescription" title="details" class="method-name">setOrderDescription</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argOrderDescription</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setOrderID" title="details" class="method-name">setOrderID</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argOrderID</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setOriginalReferenceID" title="details" class="method-name">setOriginalReferenceID</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argOriginalReferenceID</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setPurchaseOrderNumber" title="details" class="method-name">setPurchaseOrderNumber</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argPurchaseOrderNumber</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setReferenceID" title="details" class="method-name">setReferenceID</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argReferenceID</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setRoutingNumber" title="details" class="method-name">setRoutingNumber</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argRoutingNumber</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipAddressOne" title="details" class="method-name">setShipAddressOne</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipAddressOne</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipAddressTwo" title="details" class="method-name">setShipAddressTwo</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipAddressTwo</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipCity" title="details" class="method-name">setShipCity</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipCity</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipCompany" title="details" class="method-name">setShipCompany</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipCompany</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipCountryCode" title="details" class="method-name">setShipCountryCode</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$argShipCountryCode</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipCustomerTitle" title="details" class="method-name">setShipCustomerTitle</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipCustomerTitle</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipEmail" title="details" class="method-name">setShipEmail</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipEmail</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipFax" title="details" class="method-name">setShipFax</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipFax</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipFirstName" title="details" class="method-name">setShipFirstName</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipFirstName</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipLastName" title="details" class="method-name">setShipLastName</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipLastName</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipMiddleName" title="details" class="method-name">setShipMiddleName</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipMiddleName</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipPhone" title="details" class="method-name">setShipPhone</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipPhone</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipStateOrProvince" title="details" class="method-name">setShipStateOrProvince</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipStateOrProvince</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setShipZipOrPostalCode" title="details" class="method-name">setShipZipOrPostalCode</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipPostalCode</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setTransactionConditionCode" title="details" class="method-name">setTransactionConditionCode</a>
+											(<span class="var-type">numeric</span>&nbsp;<span class="var-name">$argTCC</span>)
+									</div>
+							</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+										<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../Paygateway/TransactionRequestBase.html">TransactionRequestBase</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../Paygateway/TransactionRequestBase.html#var$objCABundle">TransactionRequestBase::$objCABundle</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../Paygateway/TransactionRequestBase.html#var$objError">TransactionRequestBase::$objError</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../Paygateway/TransactionRequestBase.html#var$objPostData">TransactionRequestBase::$objPostData</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-vars">Vars</a>
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodACHRequest" id="ACHRequest"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor ACHRequest</span> (line <span class="line-number">44</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">ACHRequest</span>
+		<span class="method-name">
+			ACHRequest
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methoddoTransaction" id="doTransaction"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">doTransaction</span> (line <span class="line-number">47</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			doTransaction
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAccountClass" id="getAccountClass"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAccountClass</span> (line <span class="line-number">512</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAccountClass
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAccountNumber" id="getAccountNumber"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAccountNumber</span> (line <span class="line-number">500</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAccountNumber
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAccountType" id="getAccountType"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAccountType</span> (line <span class="line-number">508</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAccountType
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillAddressOne" id="getBillAddressOne"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillAddressOne</span> (line <span class="line-number">536</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillAddressOne
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillAddressTwo" id="getBillAddressTwo"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillAddressTwo</span> (line <span class="line-number">540</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillAddressTwo
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillBirthDay" id="getBillBirthDay"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillBirthDay</span> (line <span class="line-number">588</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillBirthDay
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillBirthMonth" id="getBillBirthMonth"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillBirthMonth</span> (line <span class="line-number">592</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillBirthMonth
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillBirthYear" id="getBillBirthYear"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillBirthYear</span> (line <span class="line-number">596</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillBirthYear
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillCity" id="getBillCity"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillCity</span> (line <span class="line-number">544</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillCity
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillCompany" id="getBillCompany"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillCompany</span> (line <span class="line-number">572</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillCompany
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillCountryCode" id="getBillCountryCode"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillCountryCode</span> (line <span class="line-number">568</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillCountryCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillCustomerTitle" id="getBillCustomerTitle"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillCustomerTitle</span> (line <span class="line-number">528</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillCustomerTitle
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillDriverLicenseNumber" id="getBillDriverLicenseNumber"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillDriverLicenseNumber</span> (line <span class="line-number">600</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillDriverLicenseNumber
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillDriverLicenseStateCode" id="getBillDriverLicenseStateCode"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillDriverLicenseStateCode</span> (line <span class="line-number">604</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillDriverLicenseStateCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillDriverLicenseSwipe" id="getBillDriverLicenseSwipe"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillDriverLicenseSwipe</span> (line <span class="line-number">608</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillDriverLicenseSwipe
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillEmail" id="getBillEmail"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillEmail</span> (line <span class="line-number">548</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillEmail
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillFax" id="getBillFax"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillFax</span> (line <span class="line-number">580</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillFax
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillFirstName" id="getBillFirstName"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillFirstName</span> (line <span class="line-number">552</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillFirstName
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillLastName" id="getBillLastName"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillLastName</span> (line <span class="line-number">556</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillLastName
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillMiddleName" id="getBillMiddleName"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillMiddleName</span> (line <span class="line-number">532</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillMiddleName
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillPhone" id="getBillPhone"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillPhone</span> (line <span class="line-number">576</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillPhone
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillSocialSecurityNumber" id="getBillSocialSecurityNumber"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillSocialSecurityNumber</span> (line <span class="line-number">584</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillSocialSecurityNumber
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillStateOrProvince" id="getBillStateOrProvince"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillStateOrProvince</span> (line <span class="line-number">564</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillStateOrProvince
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBillZipOrPostalCode" id="getBillZipOrPostalCode"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBillZipOrPostalCode</span> (line <span class="line-number">560</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBillZipOrPostalCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetCartridgeType" id="getCartridgeType"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCartridgeType</span> (line <span class="line-number">668</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getCartridgeType
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetChargeTotal" id="getChargeTotal"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getChargeTotal</span> (line <span class="line-number">672</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getChargeTotal
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetChargeType" id="getChargeType"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getChargeType</span> (line <span class="line-number">676</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getChargeType
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetCheckNumber" id="getCheckNumber"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCheckNumber</span> (line <span class="line-number">516</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getCheckNumber
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetClerkID" id="getClerkID"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getClerkID</span> (line <span class="line-number">520</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getClerkID
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetCurrency" id="getCurrency"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCurrency</span> (line <span class="line-number">680</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getCurrency
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetCustomerIPAddress" id="getCustomerIPAddress"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCustomerIPAddress</span> (line <span class="line-number">684</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getCustomerIPAddress
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetInvoiceNumber" id="getInvoiceNumber"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getInvoiceNumber</span> (line <span class="line-number">704</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getInvoiceNumber
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetOrderDescription" id="getOrderDescription"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getOrderDescription</span> (line <span class="line-number">692</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getOrderDescription
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetOrderID" id="getOrderID"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getOrderID</span> (line <span class="line-number">696</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getOrderID
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetOriginalReferenceID" id="getOriginalReferenceID"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getOriginalReferenceID</span> (line <span class="line-number">524</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getOriginalReferenceID
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetPurchaseOrderNumber" id="getPurchaseOrderNumber"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getPurchaseOrderNumber</span> (line <span class="line-number">700</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getPurchaseOrderNumber
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetRoutingNumber" id="getRoutingNumber"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getRoutingNumber</span> (line <span class="line-number">504</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getRoutingNumber
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipAddressOne" id="getShipAddressOne"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipAddressOne</span> (line <span class="line-number">632</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipAddressOne
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipAddressTwo" id="getShipAddressTwo"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipAddressTwo</span> (line <span class="line-number">636</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipAddressTwo
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipCity" id="getShipCity"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipCity</span> (line <span class="line-number">640</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipCity
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipCompany" id="getShipCompany"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipCompany</span> (line <span class="line-number">656</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipCompany
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipCountryCode" id="getShipCountryCode"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipCountryCode</span> (line <span class="line-number">652</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipCountryCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipCustomerTitle" id="getShipCustomerTitle"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipCustomerTitle</span> (line <span class="line-number">612</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipCustomerTitle
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipEmail" id="getShipEmail"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipEmail</span> (line <span class="line-number">628</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipEmail
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipFax" id="getShipFax"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipFax</span> (line <span class="line-number">664</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipFax
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipFirstName" id="getShipFirstName"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipFirstName</span> (line <span class="line-number">616</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipFirstName
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipLastName" id="getShipLastName"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipLastName</span> (line <span class="line-number">620</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipLastName
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipMiddleName" id="getShipMiddleName"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipMiddleName</span> (line <span class="line-number">624</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipMiddleName
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipPhone" id="getShipPhone"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipPhone</span> (line <span class="line-number">660</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipPhone
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipStateOrProvince" id="getShipStateOrProvince"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipStateOrProvince</span> (line <span class="line-number">644</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipStateOrProvince
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetShipZipOrPostalCode" id="getShipZipOrPostalCode"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getShipZipOrPostalCode</span> (line <span class="line-number">648</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getShipZipOrPostalCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetTransactionConditionCode" id="getTransactionConditionCode"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getTransactionConditionCode</span> (line <span class="line-number">688</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getTransactionConditionCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetAccountClass" id="setAccountClass"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setAccountClass</span> (line <span class="line-number">72</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The valid values are an empty string (for no account class) and:</p>
+<p class="description"><p><ul><li>PERSONAL</li><li>CORPORATE</li></ul></p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setAccountClass
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argAccountClass</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$argAccountClass</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodsetAccountNumber" id="setAccountNumber"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setAccountNumber</span> (line <span class="line-number">58</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">**********************************************************</p>
+<p class="description"><p>***********************************************************   Setter functions for ACH request fields - in alpha order *********************************************************** **********************************************************</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setAccountNumber
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argAccountNumber</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetAccountType" id="setAccountType"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setAccountType</span> (line <span class="line-number">91</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The valid values are an empty string (for no account type) and:</p>
+<p class="description"><p><ul><li>CHECKING</li><li>SAVINGS</li></ul></p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setAccountType
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argAccountType</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$argAccountType</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodsetBillAddressOne" id="setBillAddressOne"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillAddressOne</span> (line <span class="line-number">178</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillAddressOne
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillAddressOne</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillAddressTwo" id="setBillAddressTwo"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillAddressTwo</span> (line <span class="line-number">184</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillAddressTwo
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillAddressTwo</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillBirthDay" id="setBillBirthDay"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillBirthDay</span> (line <span class="line-number">241</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillBirthDay
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillBirthDay</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillBirthMonth" id="setBillBirthMonth"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillBirthMonth</span> (line <span class="line-number">247</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillBirthMonth
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillBirthMonth</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillBirthYear" id="setBillBirthYear"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillBirthYear</span> (line <span class="line-number">253</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillBirthYear
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillBirthYear</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillCity" id="setBillCity"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillCity</span> (line <span class="line-number">190</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillCity
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillCity</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillCompany" id="setBillCompany"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillCompany</span> (line <span class="line-number">196</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillCompany
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillCompany</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillCountryCode" id="setBillCountryCode"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillCountryCode</span> (line <span class="line-number">207</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">- Accept only 2 characters country code</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillCountryCode
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$argBillCountryCode</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$argBillCountryCode</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodsetBillCustomerTitle" id="setBillCustomerTitle"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillCustomerTitle</span> (line <span class="line-number">136</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillCustomerTitle
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillCustomerTitle</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillDriverLicenseNumber" id="setBillDriverLicenseNumber"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillDriverLicenseNumber</span> (line <span class="line-number">259</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillDriverLicenseNumber
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillDriverLicenseNumber</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillDriverLicenseStateCode" id="setBillDriverLicenseStateCode"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillDriverLicenseStateCode</span> (line <span class="line-number">265</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillDriverLicenseStateCode
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillDriverLicenseStateCode</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillDriverLicenseSwipe" id="setBillDriverLicenseSwipe"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillDriverLicenseSwipe</span> (line <span class="line-number">271</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillDriverLicenseSwipe
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillDriverLicenseSwipe</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillEmail" id="setBillEmail"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillEmail</span> (line <span class="line-number">148</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillEmail
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillEmail</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillFax" id="setBillFax"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillFax</span> (line <span class="line-number">229</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillFax
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillFax</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillFirstName" id="setBillFirstName"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillFirstName</span> (line <span class="line-number">154</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillFirstName
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillFirstName</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillLastName" id="setBillLastName"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillLastName</span> (line <span class="line-number">160</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillLastName
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillLastName</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillMiddleName" id="setBillMiddleName"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillMiddleName</span> (line <span class="line-number">142</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillMiddleName
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillMiddleName</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillPhone" id="setBillPhone"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillPhone</span> (line <span class="line-number">223</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillPhone
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillPhone</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillSocialSecurityNumber" id="setBillSocialSecurityNumber"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillSocialSecurityNumber</span> (line <span class="line-number">235</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillSocialSecurityNumber
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillSocialSecurityNumber</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillStateOrProvince" id="setBillStateOrProvince"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillStateOrProvince</span> (line <span class="line-number">172</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillStateOrProvince
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillStateOrProvince</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetBillZipOrPostalCode" id="setBillZipOrPostalCode"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setBillZipOrPostalCode</span> (line <span class="line-number">166</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setBillZipOrPostalCode
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argBillPostalCode</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetCartridgeType" id="setCartridgeType"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setCartridgeType</span> (line <span class="line-number">376</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setCartridgeType
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argCartridgeType</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetChargeTotal" id="setChargeTotal"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setChargeTotal</span> (line <span class="line-number">387</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">- Numeric format :  &quot;1000.00&quot;</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setChargeTotal
+		</span>
+					(<span class="var-type">numeric</span>&nbsp;<span class="var-name">$argChargeTotal</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$argChargeTotal</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodsetChargeType" id="setChargeType"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setChargeType</span> (line <span class="line-number">480</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Only these values are allowed:</p>
+<p class="description"><p><ul><li>SALE</li><li>DEBIT</li><li>VOID</li><li>QUERY</li><li>CREDIT</li></ul></p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setChargeType
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$argChargeType</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$argChargeType</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodsetCheckNumber" id="setCheckNumber"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setCheckNumber</span> (line <span class="line-number">118</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setCheckNumber
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argCheckNumber</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetClerkID" id="setClerkID"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setClerkID</span> (line <span class="line-number">124</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setClerkID
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argClerkID</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetCurrency" id="setCurrency"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setCurrency</span> (line <span class="line-number">402</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setCurrency
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argCurrency</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetCustomerIPAddress" id="setCustomerIPAddress"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setCustomerIPAddress</span> (line <span class="line-number">417</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setCustomerIPAddress
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argCustomerIPAddress</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetInvoiceNumber" id="setInvoiceNumber"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setInvoiceNumber</span> (line <span class="line-number">464</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setInvoiceNumber
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argInvoiceNumber</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetOrderDescription" id="setOrderDescription"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setOrderDescription</span> (line <span class="line-number">423</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setOrderDescription
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argOrderDescription</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetOrderID" id="setOrderID"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setOrderID</span> (line <span class="line-number">429</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setOrderID
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argOrderID</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetOriginalReferenceID" id="setOriginalReferenceID"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setOriginalReferenceID</span> (line <span class="line-number">130</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setOriginalReferenceID
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argOriginalReferenceID</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetPurchaseOrderNumber" id="setPurchaseOrderNumber"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setPurchaseOrderNumber</span> (line <span class="line-number">435</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setPurchaseOrderNumber
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argPurchaseOrderNumber</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetReferenceID" id="setReferenceID"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setReferenceID</span> (line <span class="line-number">106</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setReferenceID
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argReferenceID</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetRoutingNumber" id="setRoutingNumber"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setRoutingNumber</span> (line <span class="line-number">112</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setRoutingNumber
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argRoutingNumber</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipAddressOne" id="setShipAddressOne"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipAddressOne</span> (line <span class="line-number">307</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipAddressOne
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipAddressOne</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipAddressTwo" id="setShipAddressTwo"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipAddressTwo</span> (line <span class="line-number">313</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipAddressTwo
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipAddressTwo</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipCity" id="setShipCity"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipCity</span> (line <span class="line-number">319</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipCity
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipCity</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipCompany" id="setShipCompany"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipCompany</span> (line <span class="line-number">358</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipCompany
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipCompany</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipCountryCode" id="setShipCountryCode"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipCountryCode</span> (line <span class="line-number">342</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">- Accept only 2 characters country code</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipCountryCode
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$argShipCountryCode</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$argShipCountryCode</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodsetShipCustomerTitle" id="setShipCustomerTitle"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipCustomerTitle</span> (line <span class="line-number">277</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipCustomerTitle
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipCustomerTitle</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipEmail" id="setShipEmail"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipEmail</span> (line <span class="line-number">301</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipEmail
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipEmail</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipFax" id="setShipFax"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipFax</span> (line <span class="line-number">370</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipFax
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipFax</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipFirstName" id="setShipFirstName"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipFirstName</span> (line <span class="line-number">283</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipFirstName
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipFirstName</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipLastName" id="setShipLastName"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipLastName</span> (line <span class="line-number">289</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipLastName
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipLastName</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipMiddleName" id="setShipMiddleName"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipMiddleName</span> (line <span class="line-number">295</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipMiddleName
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipMiddleName</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipPhone" id="setShipPhone"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipPhone</span> (line <span class="line-number">364</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipPhone
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipPhone</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipStateOrProvince" id="setShipStateOrProvince"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipStateOrProvince</span> (line <span class="line-number">325</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipStateOrProvince
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipStateOrProvince</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetShipZipOrPostalCode" id="setShipZipOrPostalCode"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setShipZipOrPostalCode</span> (line <span class="line-number">331</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setShipZipOrPostalCode
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argShipPostalCode</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodsetTransactionConditionCode" id="setTransactionConditionCode"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setTransactionConditionCode</span> (line <span class="line-number">450</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Possible values</p>
+<p class="description"><p><ul><li>ACH_PREARRANGED_PAYMENT_AND_DEPOSIT = 50;</li><li>ACH_TELEPHONE = 51;</li><li>ACH_WEB = 52;</li><li>ACH_CASH_CONCENTRATION_OR_DISBURSEMENT_ORDER = 53</li></ul></p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setTransactionConditionCode
+		</span>
+					(<span class="var-type">numeric</span>&nbsp;<span class="var-name">$argTCC</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">numeric</span>
+				<span class="var-name">$argTCC</span>			</li>
+				</ul>
+		
+		
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Paygateway/TransactionRequestBase.html">TransactionRequestBase</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodclearError">TransactionRequestBase::clearError()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodexecuteTransaction">TransactionRequestBase::executeTransaction()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodgetAccountToken">TransactionRequestBase::getAccountToken()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodgetCABundle">TransactionRequestBase::getCABundle()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodgetError">TransactionRequestBase::getError()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodgetPostString">TransactionRequestBase::getPostString()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodgetProperty">TransactionRequestBase::getProperty()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodgetTransactionType">TransactionRequestBase::getTransactionType()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodgetVersionID">TransactionRequestBase::getVersionID()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodsetAccountToken">TransactionRequestBase::setAccountToken()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodsetCABundle">TransactionRequestBase::setCABundle()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodsetError">TransactionRequestBase::setError()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodsetProperty">TransactionRequestBase::setProperty()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodsetProtocolVersion">TransactionRequestBase::setProtocolVersion()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodsetTransactionType">TransactionRequestBase::setTransactionType()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionRequestBase.html#methodsetVersionID">TransactionRequestBase::setVersionID()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 30 Jun 2006 14:06:00 -0700 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC3</a>
+	</p>
+	</div></body>
+</html>

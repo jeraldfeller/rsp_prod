@@ -1,0 +1,554 @@
+{% extends 'layout.html.twig' %}
+{% block scripts %}
+
+{% endblock scripts %}
+{% block stylesheets %}
+{{ parent() }}
+<style>
+.font-weight-bold {
+  font-weight: bold;
+}
+.table td.fit,
+.table th.fit {
+    white-space: nowrap !important;
+    width: 1% !important;
+}
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}
+
+#datatableAddress_length {
+	display:none;
+}
+.no-left {
+	padding-left:0px;
+}
+#map {
+  height: 550px;
+  width: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+.loader{
+  position: absolute;
+  right: 48.5%;
+  top: 47%;
+  z-index: 1000;
+}
+#map {
+  opacity: 0.2
+}
+</style>
+
+{% endblock %}
+
+{% block content_body %}
+
+
+<!-- Modal -->
+<div id="deferredDataModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="deferredModalTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <table id="responsive-table" class="table">
+                    <thead>
+                        <tr>
+                            <th>Agent</th>
+                            <th>Reason</th>
+                            <th>Amount</th>
+                            <th>Date Added</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="modalDeferredBody">
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div id="agentsWithCreditDataModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">CC Agents with Credit Balance</h4>
+            </div>
+            <div class="modal-body">
+                <table id="responsive-table-agents" class="table">
+                    <thead>
+                    <tr>
+                        <th>Agent</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    $(document).on('ready', function(){
+       $('#responsive-table').DataTable({
+               "ajax": '../../lib/deferred/get_deferred_data.php?type=seven&showBy=Total Billed'
+       });
+        $('#responsive-table-agents').DataTable({
+                "ajax": '../../lib/deferred/get_agent_with_credits_data.php'
+        });
+    });
+
+    function showDeferredTotal(data){
+        $('#deferredModalTitle').html('<img width="50" height="50" src="images/ajax-loader.gif">');
+        $('#deferredDataModal').modal('show');
+        var table = $('#responsive-table').DataTable();
+        table.ajax.url( '../../lib/deferred/get_deferred_data.php?type='+data.type+'&showBy='+data.showBy+'' ).load(function(){
+            if(data['type'] == 'seven'){
+                if(data['showBy'] == 'Total Billed'){
+                    $title = data['showBy'] + ': Deferred Billing CC Total (7 days)';
+                }else{
+                    $title = data['showBy'] + ': 7 days';
+                }
+            }else if(data['type'] == 'current_month'){
+                if(data['showBy'] == 'Total Billed'){
+                    $title = data['showBy'] + ': Deferred CC Billing Total - Current Month';
+                }else{
+                    $title = data['showBy'] + ': Current Month';
+                }
+            }else if(data['type'] == 'prev_month'){
+                if(data['showBy'] == 'Total Billed'){
+                    $title = data['showBy'] + ': Deferred CC Billing Total - Previous Month';
+                }else{
+                    $title = data['showBy'] + ': Previous Month';
+                }
+            }
+            $('#deferredModalTitle').html($title);
+        });
+    }
+
+    function showAgentsWithCreditBalance(){
+        $('#agentsWithCreditDataModal .modal-title').html('<img width="50" height="50" src="images/ajax-loader.gif">');
+        $('#agentsWithCreditDataModal').modal('show');
+        var table = $('#responsive-table-agents').DataTable();
+
+        table.ajax.url('../../lib/deferred/get_agent_with_credits_data.php').load(function(){
+            $('#agentsWithCreditDataModal .modal-title').html('CC Agents with Credit Balance');
+        });
+    }
+</script>
+
+
+
+<div class="row">
+  <div class="col-md-12">
+      {% if vars['warnings']['inventory_criticals']|length > 0 %}
+
+      {% endif %}
+  </div>
+  <div class="col-md-12">
+        <table class="table table-borderless" style="width: 1px !important;">
+          <thead>
+            <tr>
+              <th colspan="4" class="fit">Issues</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td class="fit">Unassigned/Red Flag/On Hold: </td>
+                <td class="fit" style="">{{vars['issues']['unsigned'] | raw}}</td>
+                <td class="fit">{{vars['issues']['red_flag'] | raw}} </td>
+                <td class="fit">{{vars['issues']['on_hold'] | raw}}</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <div class="col-md-12">
+        <table class="table table-borderless" style="width: 1px !important;">
+          <thead>
+            <tr>
+              <th colspan="5" class="fit">Miss Utility:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td class="fit">Open/Called/Completed/Percentage: </td>
+                <td class="fit" style="">{{vars['miss_utilities']['open'] | raw}}</td>
+                <td class="fit">{{vars['miss_utilities']['called'] | raw}} </td>
+                <td class="fit">{{vars['miss_utilities']['completed'] | raw}}</td>
+                <td class="fit">{{vars['miss_utilities']['percentage']}}%</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <div class="col-md-12">
+        <table class="table table-borderless" style="width: 1px !important;">
+          <tbody>
+            <tr>
+                <td class="fit font-weight-bold">ORDERED TODAY: </td>
+                <td class="fit" style="">{{vars['order_today']['installs'] | raw}}</td>
+                <td class="fit">{{vars['order_today']['removals'] | raw}} </td>
+                <td class="fit">{{vars['order_today']['service_calls'] | raw}}</td>
+
+            </tr>
+            <tr>
+                <td class="fit font-weight-bold">RESCHEDULED TODAY: </td>
+                <td class="fit" style="">{{vars['rescheduled_today']['removals'] | raw}}</td>
+                <td class="fit">{{vars['rescheduled_today']['pushed_back'] | raw}} </td>
+                <td class="fit">{{vars['rescheduled_today']['moved_up'] | raw}}</td>
+
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <div class="col-md-12">
+        <table class="table table-borderless" style="width: 1px !important;">
+          <tbody>
+            <tr>
+                <td class="fit font-weight-bold">Post Total Change for Yesterday: </td>
+                <td class="fit" style="">{{vars['post_total_change']['yesterday'] | raw}}</td>
+                <td class="fit font-weight-bold">Post Total Change for Last Week: </td>
+                <td class="fit" style="">{{vars['post_total_change']['last_week'] | raw}}</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <div class="col-md-12">
+        <table class="table table-borderless" style="width: 1px !important;">
+          <thead>
+            <tr>
+              <th colspan="5" class="fit">Overdue Orders:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td class="fit" style="">{{vars['overdue_orders']['pending']['date'] | raw}}</td>
+                <td class="fit" style="">{{vars['overdue_orders']['pending']['count'] | raw}}</td>
+            </tr>
+            <tr>
+                <td class="fit" style="">{{vars['overdue_orders']['scheduled']['date'] | raw}}</td>
+                <td class="fit" style="">{{vars['overdue_orders']['scheduled']['count'] | raw}}</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <div class="col-md-12">
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th colspan="5">Current Active Orders:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>{{vars['current_active_orders']['pending']['date'] | raw}}</td>
+                <td>{{vars['current_active_orders']['pending']['installs_count'] | raw}}</td>
+                <td>{{vars['current_active_orders']['pending']['removals_count'] | raw}}</td>
+                <td>{{vars['current_active_orders']['pending']['service_calls_count'] | raw}}</td>
+                <td>{{vars['current_active_orders']['pending']['total'] | raw}}</td>
+            </tr>
+            <tr>
+                <td>{{vars['current_active_orders']['scheduled']['date'] | raw}}</td>
+                <td>{{vars['current_active_orders']['scheduled']['installs_count'] | raw}}</td>
+                <td>{{vars['current_active_orders']['scheduled']['removals_count'] | raw}}</td>
+                <td>{{vars['current_active_orders']['scheduled']['service_calls_count'] | raw}}</td>
+                <td>{{vars['current_active_orders']['scheduled']['total'] | raw}}</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <div class="col-md-12">
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th colspan="5">Completed Orders:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>Completed Yesterday: </td>
+                <td>{{vars['completed_orders']['yesterday']['installs_count'] | raw}}</td>
+                <td>{{vars['completed_orders']['yesterday']['removals_count'] | raw}}</td>
+                <td>{{vars['completed_orders']['yesterday']['service_calls_count'] | raw}}</td>
+                <td>{{vars['completed_orders']['yesterday']['total'] | raw}}</td>
+            </tr>
+            <tr>
+                <td>Completed Today: </td>
+                <td>{{vars['completed_orders']['today']['installs_count'] | raw}}</td>
+                <td>{{vars['completed_orders']['today']['removals_count'] | raw}}</td>
+                <td>{{vars['completed_orders']['today']['service_calls_count'] | raw}}</td>
+                <td>{{vars['completed_orders']['today']['total'] | raw}}</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <div class="col-md-12">
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th colspan="5">Future Orders:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>{{vars['future_orders']['pending']['date'] | raw}}</td>
+                <td>{{vars['future_orders']['pending']['installs_count'] | raw}}</td>
+                <td>{{vars['future_orders']['pending']['removals_count'] | raw}}</td>
+                <td>{{vars['future_orders']['pending']['service_calls_count'] | raw}}</td>
+                <td>{{vars['future_orders']['pending']['total'] | raw}}</td>
+            </tr>
+            <tr>
+                <td>{{vars['future_orders']['scheduled']['date'] | raw}}</td>
+                <td>{{vars['future_orders']['scheduled']['installs_count'] | raw}}</td>
+                <td>{{vars['future_orders']['scheduled']['removals_count'] | raw}}</td>
+                <td>{{vars['future_orders']['scheduled']['service_calls_count'] | raw}}</td>
+                <td>{{vars['future_orders']['scheduled']['total'] | raw}}</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <div class="col-md-12">
+        <table class="table table-borderless" style="width: 1px !important;">
+          <tbody>
+            <tr>
+                <td class="fit font-weight-bold" style="">Agents to be made Inactive:</td>
+                <td class="fit" style="">{{vars['agents_to_be_made_inactive'] | raw}}</td>
+            </tr>
+            <tr>
+                <td class="fit font-weight-bold" style="">Agencies to be made Inactive:</td>
+                <td class="fit" style="">{{vars['agencies_to_be_made_inactive'] | raw}}</td>
+            </tr>
+            <tr>
+                <td class="fit font-weight-bold" style="">Posts in the Field: FFX, MD, PA, Total:</td>
+                <td class="fit" style="">{{vars['post_in_the_field'] | raw}}</td>
+            </tr>
+            <tr>
+                <td class="fit font-weight-bold" style="">Total Operational Posts (Installed + Pending + Scheduled + Available):</td>
+                <td class="fit" style="">{{vars['total_operational_posts'] | raw}}</td>
+            </tr>
+            <tr>
+                <td class="fit font-weight-bold" style="">Pending/Scheduled Removals:</td>
+                <td class="fit" style="">{{vars['pending_scheduled_removals'] | raw}}</td>
+            </tr><tr>
+                <td class="fit font-weight-bold" style="">New/Active Agencies:</td>
+                <td class="fit" style="">{{vars['new_active_agencies'] | raw}}</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <div class="col-md-12">
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th colspan="4">MONEY STATISTICS: </th>
+            </tr>
+            <tr>
+              <th></th>
+              <th>Total Billed</th>
+              <th>Total Paid</th>
+              <th>% Unpaid</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>Deferred Billing CC Total (7 days): </td>
+                <td>{{vars['money_statistics']['deffered_biling_total_7']['billed'] | raw}}</td>
+                <td>{{vars['money_statistics']['deffered_biling_total_7']['paid'] | raw}}</td>
+                <td>{{vars['money_statistics']['deffered_biling_total_7']['unpaid'] | raw}}</td>
+            </tr>
+            <tr>
+                <td>Deferred CC Billing Total - Current Month: </td>
+                <td>{{vars['money_statistics']['deffered_biling_total_current_month']['billed'] | raw}}</td>
+                <td>{{vars['money_statistics']['deffered_biling_total_current_month']['paid'] | raw}}</td>
+                <td>{{vars['money_statistics']['deffered_biling_total_current_month']['unpaid'] | raw}}</td>
+            </tr>
+            <tr>
+                <td>Deferred CC Billing Total - Previous Month: </td>
+                <td>{{vars['money_statistics']['deffered_biling_total_previous_month']['billed'] | raw}}</td>
+                <td>{{vars['money_statistics']['deffered_biling_total_previous_month']['paid'] | raw}}</td>
+                <td>{{vars['money_statistics']['deffered_biling_total_previous_month']['unpaid'] | raw}}</td>
+            </tr>
+            <tr>
+                <td>CC Agents with Credit Balance:</td>
+                <td class="text-center">Total # of Agents: ({{vars['money_statistics']['agents_with_credit_balance']['count'] | raw}})</td>
+                <td class="text-center">Total Amount of Credits: (${{vars['money_statistics']['agents_with_credit_balance']['amount']}})</td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <div class="col-md-12">
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th colspan="4">Current Year: </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>Today (placed): </td>
+                <td>{{vars['current_year']['today']['number_of_installs'] | raw}} </td>
+                <td>{{vars['current_year']['today']['value_of_orders_placed'] | raw}} </td>
+                <td>{{vars['current_year']['today']['value_number_of_installs'] | raw}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{vars['current_year']['today']['amount_of_cc_orders'] | raw}}</td>
+                <td> {{vars['current_year']['today']['value_of_invoice_orders'] | raw}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Month (placed): </td>
+                <td>{{vars['current_year']['month']['placed']['number_of_installs'] | raw}} </td>
+                <td>{{vars['current_year']['month']['placed']['value_of_orders_placed'] | raw}} </td>
+                <td>{{vars['current_year']['month']['placed']['value_number_of_installs'] | raw}}</td>
+            </tr>
+            <tr>
+                <td>Month (completed): </td>
+                <td>{{vars['current_year']['month']['completed']['number_of_installs'] | raw}} </td>
+                <td>{{vars['current_year']['month']['completed']['value_of_orders_placed'] | raw}} </td>
+                <td>{{vars['current_year']['month']['completed']['value_number_of_installs'] | raw}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{vars['current_year']['month']['completed']['amount_of_cc_orders'] | raw}}</td>
+                <td> {{vars['current_year']['month']['completed']['value_of_invoice_orders'] | raw}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>YTD (completed): </td>
+                <td>{{vars['current_year']['ytd']['completed']['number_of_installs'] | raw}} </td>
+                <td>{{vars['current_year']['ytd']['completed']['value_of_orders_placed'] | raw}} </td>
+                <td>{{vars['current_year']['ytd']['completed']['value_number_of_installs'] | raw}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{vars['current_year']['ytd']['completed']['amount_of_cc_orders'] | raw}}</td>
+                <td> {{vars['current_year']['ytd']['completed']['value_of_invoice_orders'] | raw}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Previous Month (completed): </td>
+                <td>{{vars['current_year']['previous_month']['completed']['number_of_installs'] | raw}} </td>
+                <td>{{vars['current_year']['previous_month']['completed']['value_of_orders_placed'] | raw}} </td>
+                <td>{{vars['current_year']['previous_month']['completed']['value_number_of_installs'] | raw}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{vars['current_year']['previous_month']['completed']['amount_of_cc_orders'] | raw}}</td>
+                <td> {{vars['current_year']['previous_month']['completed']['value_of_invoice_orders'] | raw}}</td>
+                <td></td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+
+  <div class="col-md-12">
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th colspan="4">Previous Year (Completed): </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>Month : </td>
+                <td>{{vars['previous_year']['month']['completed']['number_of_installs'] | raw}} </td>
+                <td>{{vars['previous_year']['month']['completed']['value_of_orders_placed'] | raw}} </td>
+                <td>{{vars['previous_year']['month']['completed']['value_number_of_installs'] | raw}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{vars['previous_year']['month']['completed']['amount_of_cc_orders'] | raw}}</td>
+                <td> {{vars['previous_year']['month']['completed']['value_of_invoice_orders'] | raw}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>YTD : </td>
+                <td>{{vars['previous_year']['ytd']['number_of_installs'] | raw}} </td>
+                <td>{{vars['previous_year']['ytd']['value_of_orders_placed'] | raw}} </td>
+                <td>{{vars['previous_year']['ytd']['value_number_of_installs'] | raw}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{vars['previous_year']['ytd']['amount_of_cc_orders'] | raw}}</td>
+                <td> {{vars['previous_year']['ytd']['value_of_invoice_orders'] | raw}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Full Year : </td>
+                <td>{{vars['previous_year']['full_year']['number_of_installs'] | raw}} </td>
+                <td>{{vars['previous_year']['full_year']['value_of_orders_placed'] | raw}} </td>
+                <td>{{vars['previous_year']['full_year']['value_number_of_installs'] | raw}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{vars['previous_year']['full_year']['amount_of_cc_orders'] | raw}}</td>
+                <td> {{vars['previous_year']['full_year']['value_of_invoice_orders'] | raw}}</td>
+                <td></td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <div class="col-md-12">
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th colspan="4">Installer Information: </th>
+            </tr>
+            <tr>
+              <th>Installer Name</th>
+              <th>Last Login</th>
+              <th>Overdue Pendings</th>
+              <th>Overdue Scheduled</th>
+            </tr>
+          </thead>
+          <tbody>
+						
+            {% for info in vars['installer_information'] %}
+              <tr>
+                <td>{{ info['name'] }} </td>
+                <td>{{ info['last_login'] }} </td>
+                <td>{{ info['overdue_pendings'] | raw }} </td>
+                <td>{{ info['overdue_schedule'] | raw }} </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+  </div>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+
+
+{% endblock %}

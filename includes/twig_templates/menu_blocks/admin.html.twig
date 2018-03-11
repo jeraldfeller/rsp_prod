@@ -1,0 +1,183 @@
+<div class="panel panel-default panel-menu sidebar-panel">
+  <div class="groupHeader" id="header-my-daily-management">
+    <span>A - Daily Management</span>
+  </div>
+    <div class="panel-body">
+        <h3><i class="fa fa-spinner fa-spin"></i></h3>
+    </div>
+</div>
+<div class="panel panel-default panel-menu sidebar-panel">
+  <div class="groupHeader" id="header-statistics-reports">
+    <span>B - Statistics / Reports</span>
+  </div>
+    <div class="panel-body">
+        <h3><i class="fa fa-spinner fa-spin"></i></h3>
+    </div>
+</div>
+
+<div class="panel panel-default panel-menu sidebar-panel">
+  <div class="groupHeader" id="header-manage-users">
+    <span>C - Manage Users</span>
+  </div>
+    <div class="panel-body">
+      <h3><i class="fa fa-spinner fa-spin"></i></h3>
+    </div>
+</div>
+
+
+<div class="panel panel-default panel-menu sidebar-panel">
+  <div class="groupHeader" id="header-manage-equipment">
+    <span>D - Manage Equipment</span>
+  </div>
+    <div class="panel-body">
+      <h3><i class="fa fa-spinner fa-spin"></i></h3>
+    </div>
+</div>
+
+<div class="panel panel-default panel-menu sidebar-panel">
+  <div id="header-manage-service" class="groupHeader">
+    <span>E - Manage Service</span>
+  </div>
+    <div class="panel-body">
+      <h3><i class="fa fa-spinner fa-spin"></i></h3>
+    </div>
+</div>
+
+<div class="panel panel-default panel-menu sidebar-panel">
+  <div id="header-manage-service-area" class="groupHeader">
+    <span>F - Manage Service Area</span>
+  </div>
+    <div class="panel-body">
+      <h3><i class="fa fa-spinner fa-spin"></i></h3>
+    </div>
+</div>
+
+<div class="panel panel-default panel-menu sidebar-panel">
+  <div id="header-manage-website" class="groupHeader">
+    <span>G - Manage Website</span>
+  </div>
+    <div class="panel-body">
+      <h3><i class="fa fa-spinner fa-spin"></i></h3>
+    </div>
+</div>
+
+<div class="panel panel-default panel-menu sidebar-panel">
+  <div id="header-experimental" class="groupHeader">
+    <span>H - Expiremental</span>
+  </div>
+    <div class="panel-body">
+      <h3><i class="fa fa-spinner fa-spin"></i></h3>
+    </div>
+</div>
+
+<div class="panel panel-default panel-menu sidebar-panel">
+  <div id="header-myaccount" class="groupHeader">
+    <span>I - My Account</span>
+  </div>
+    <div class="panel-body">
+      <h3><i class="fa fa-spinner fa-spin"></i></h3>
+    </div>
+</div>
+<script>
+$post = {
+  userGroupId : 2
+};
+$.post( "../../lib/twig/get_left_column_admin.php", $post)
+                .done(function( data ) {
+                    $response = jQuery.parseJSON( data );
+                    console.log($response);
+                    $dailyManagement = $response.dailyManagement;
+                    $statisticsReports = $response.statisticsReports;
+                    $manageUsers = $response.manageUsers;
+                    $manageEquipment = $response.manageEquipment;
+                    $manageService = $response.manageService;
+                    $manageServiceArea = $response.manageServiceArea;
+                    $manageWebsite = $response.manageWebsite;
+                    $experimental = $response.experimental;
+                    $myAccount = $response.myAccount;
+
+                    $dailyManagementHtmlData = '';
+                    $statisticsReportsHtmlData = '';
+                    $manageUsersHtmlData = '';
+                    $manageEquipmentHtmlData = '';
+                    $manageServiceHtmlData = '';
+                    $manageServiceAreaHtmlData = '';
+                    $manageWebsiteHtmlData = '';
+                    $experimentalHtmlData = '';
+                    $myAccountHtmlData = '';
+
+
+                    $.each($dailyManagement, function(index, key){
+                        $dailyManagementHtmlData += '<li> '+key.count+ ' <a href="'+key.pageUrl+'"><span class="fa arrow fa-arrow-right"></span>'+key.name+'</a></li>'
+                    });
+
+                    $('#header-my-daily-management').next('div').html($dailyManagementHtmlData);
+
+
+                    $.each($statisticsReports, function(index, key){
+                        $statisticsReportsHtmlData += '<li> '+key.count+ ' <a href="'+key.pageUrl+'"><span class="fa arrow fa-arrow-right"></span>'+key.name+'</a></li>'
+                    });
+
+                    $('#header-statistics-reports').next('div').html($statisticsReportsHtmlData);
+
+                    $.each($manageUsers, function(index, key){
+                        $manageUsersHtmlData += '<li> '+key.count+ ' <a href="'+key.pageUrl+'"><span class="fa arrow fa-arrow-right"></span>'+key.name+'</a></li>'
+                    });
+
+                    $('#header-manage-users').next('div').html($manageUsersHtmlData);
+
+                    $.each($manageEquipment, function(index, key){
+                        $manageEquipmentHtmlData += '<li> '+key.count+ ' <a href="'+key.pageUrl+'"><span class="fa arrow fa-arrow-right"></span>'+key.name+'</a></li>'
+                    });
+
+                    $('#header-manage-equipment').next('div').html($manageEquipmentHtmlData);
+
+
+                    $.each($manageService, function(index, key){
+                        $manageServiceHtmlData += '<li> '+key.count+ ' <a href="'+key.pageUrl+'"><span class="fa arrow fa-arrow-right"></span>'+key.name+'</a></li>'
+                    });
+
+                    $('#header-manage-service').next('div').html($manageServiceHtmlData);
+
+                    $.each($manageServiceArea, function(index, key){
+                        $manageServiceAreaHtmlData += '<li> '+key.count+ ' <a href="'+key.pageUrl+'"><span class="fa arrow fa-arrow-right"></span>'+key.name+'</a></li>'
+                    });
+
+                    $('#header-manage-service-area').next('div').html($manageServiceAreaHtmlData);
+
+                    $.each($manageWebsite, function(index, key){
+                        $manageWebsiteHtmlData += '<li> '+key.count+ ' <a href="'+key.pageUrl+'"><span class="fa arrow fa-arrow-right"></span>'+key.name+'</a></li>'
+                    });
+
+                    $('#header-manage-website').next('div').html($manageWebsiteHtmlData);
+
+                    $.each($experimental, function(index, key){
+                        $experimentalHtmlData += '<li> '+key.count+ ' <a href="'+key.pageUrl+'"><span class="fa arrow fa-arrow-right"></span>'+key.name+'</a></li>'
+                    });
+
+                    $('#header-experimental').next('div').html($experimentalHtmlData);
+
+                    if($myAccount.isLoggedIn != false){
+                      $.each($myAccount.pages, function(index, key){
+                          $myAccountHtmlData += '<li> '+key.count+ ' <a href="'+key.pageUrl+'"><span class="fa arrow fa-arrow-right"></span>'+key.name+'</a></li>'
+                      });
+                    }else{
+                      $myAccountHtmlData +=
+                      '<form action="'+$myAccount.httpPrefix+'/'+$myAccount.pageUrl+'?action=login" method="post">' +
+                        '<label>Email Address</label>' +
+                        '<input class="form-control" name="email_address" type="text" size="15">' +
+                        '<label>Password</label>' +
+                        '<input class="form-control" name="password" type="password" size="15">' +
+                        '<br>' +
+                        '<button class="btn btn-primary" type="submit" name="Sign In">Sign In</button>' +
+                        '<br>' +
+                        '<span>' +
+                          '<a class="columnBoxLeftFooterRed" href="account_create.php">Sign up here</a> for an Account | <a class="columnBoxLeftFooter" href="forgotten_password.php">Forgotten your Password?</a>' +
+                        '</span>' +
+                      '</form>'
+                    }
+                    $('#header-myaccount').next('div').html($myAccountHtmlData);
+
+
+                });
+</script>

@@ -1,0 +1,284 @@
+<?php
+	$equipment_id = tep_fill_variable('equipment_id', 'get');
+	$equipment_item_id = tep_fill_variable('equipment_item_id', 'get');
+	$page_action = tep_fill_variable('page_action', 'get');
+    $receive_email = tep_fill_variable('receive_email', 'get');
+
+    $query = $database->query("SELECT * FROM " . TABLE_INVENTORY_OPT_OUT . " ioo WHERE user_id = '{$user->fetch_user_id()}'");
+    $opt_out = 0;
+    $checked = " checked";
+    if ($result = $database->fetch_array($query)) {
+        $opt_out = $result['email_opt_out'];
+        if ($opt_out) {
+            $checked = "";
+        }
+    }
+?>
+<table width="100%" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="main">&PAGE_TEXT</td>
+	</tr>
+	<tr>
+		<td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+	</tr>
+	<tr>
+		<td valign="top" width="100%">
+			<table width="100%" cellspacing="0" cellpadding="0">
+				<?php
+					if ($page_action == 'list') {
+						//Time to make our nice list.
+						$count = 0;
+						$query = $database->query("select name from " . TABLE_EQUIPMENT . " where equipment_id = '" . $equipment_id . "' limit 1");
+						$result = $database->fetch_array($query);
+						?>
+							<tr>
+								<td class="main"><b><?php echo $result['name']; ?></b></td>
+							</tr>
+							<tr>
+								<td height="10"><img src="images/pixel_trans.gif" height="10" width="1" /></td>
+							</tr>
+						<?php
+						$query = $database->query("select ei.equipment_item_id, es.equipment_status_name from " . TABLE_EQUIPMENT_ITEMS . " ei, " . TABLE_EQUIPMENT_STATUSES . " es where ei.equipment_id = '" . $equipment_id . "' and (ei.user_id = '" . $user->fetch_user_id() . "' or (ei.user_id = '0' AND ei.agency_id = '" . $user->agency_id . "')) and ei.equipment_status_id = es.equipment_status_id ");
+							while($result = $database->fetch_array($query)) {
+									if ($count > 0) {
+										?>
+										<tr>
+											<td height="5"><img src="images/pixel_trans.gif" height="5" width="1" /></td>
+										</tr>
+										<?php
+									}
+								$count++;
+								?>
+								<tr>
+									<td class="style6">Item <?php echo $count; ?>.</td>
+								</tr>
+								<tr>
+									<td class="style6">&nbsp;&nbsp;&nbsp;&nbsp;Current Status: <?php echo $result['equipment_status_name']; ?>.</td>
+								</tr>
+								<tr>
+									<td class="style6">&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo FILENAME_AGENT_OWNED_EQUIPMENT; ?>?equipment_id=<?php echo $equipment_id; ?>&page_action=view_history&equipment_item_id=<?php echo $result['equipment_item_id']; ?>">View History</a></a></td>
+								</tr>
+								<?php
+								
+									?>
+									
+									<?php
+							}
+							if ($count == 0) {
+								?>
+								<tr>
+									<td class="style6">You currently have no equipment of this type stored with us.  To arrange to have us store your equipment please read the FAQ for more information.</td>
+								</tr>
+								<?php
+							}	
+						?>
+						<tr>
+							<td height="10"><img src="images/pixel_trans.gif" height="10" width="1"></td>
+						</tr>
+						<tr>
+							<td align="left">
+								<table width="400" cellspacing="0" cellpadding="0">
+									<tr>
+										<td align="right" width="400"><a href="<?php echo FILENAME_AGENT_OWNED_EQUIPMENT; ?>"><?php echo tep_create_button_link('back', 'Back to Equipment'); ?></a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<?php
+					} elseif ($page_action == 'view_history') {
+						$count = 0;
+						$query = $database->query("select name from " . TABLE_EQUIPMENT . " where equipment_id = '" . $equipment_id . "' limit 1");
+						$result = $database->fetch_array($query);
+						?>
+							<tr>
+								<td class="main"><b><?php echo $result['name']; ?></b></td>
+							</tr>
+							<tr>
+								<td height="10"><img src="images/pixel_trans.gif" height="10" width="1" /></td>
+							</tr>
+						<?php
+							$query = $database->query("select ei.equipment_item_id, es.equipment_status_name from " . TABLE_EQUIPMENT_ITEMS . " ei, " . TABLE_EQUIPMENT_STATUSES . " es where ei.equipment_id = '" . $equipment_id . "' and (ei.user_id = '" . $user->fetch_user_id() . "' or (ei.user_id = '0' and ei.agency_id = '" . $user->agency_id . "')) and ei.equipment_status_id = es.equipment_status_id and ei.equipment_item_id = '" . $equipment_item_id . "' limit 1");
+							$result = $database->fetch_array($query);
+								if (!empty($result['equipment_item_id'])) {
+									?>
+									<tr>
+										<td class="style6">&nbsp;&nbsp;&nbsp;&nbsp;Current Status: <?php echo $result['equipment_status_name']; ?>.</td>
+									</tr>
+									<tr>
+										<td height="10"><img src="images/pixel_trans.gif" height="10" width="1" /></td>
+									</tr>
+									<tr>
+									<tr>
+										<td height="5"><img src="images/pixel_trans.gif" height="5" width="1" /></td>
+									</tr>
+									<tr>
+										<td class="main"><b>History</b></td>
+									</tr>
+									<tr>
+										<td height="5"><img src="images/pixel_trans.gif" height="5" width="1" /></td>
+									</tr>
+									<?php
+										$history_query = $database->query("select equipment_item_id, order_id, address_id, history_status_id, history_status_name, date_added, history_status_description from " . TABLE_EQUIPMENT_ITEMS_HISTORY . " where equipment_item_id = '" . $equipment_item_id . "' order by date_added");
+										$history_count = 0;
+											while($history_result = $database->fetch_array($history_query)) {
+													if ($history_count > 0) {
+														?>
+														<tr>
+															<td height="5"><img src="images/pixel_trans.gif" height="5" width="1" /></td>
+														</tr>
+														<?php
+													}
+												?>
+												<tr>
+													<td width="100%" align="left">
+														<table width="400" cellspacing="0" cellpadding="0">
+															<tr>
+																<td width="10"><img src="images/pixel_trans.gif" height="1" width="10" /></td>
+																<td width="100%" align="left">
+																	<table width="100%" cellspacing="0" cellpadding="0">
+																		<tr>
+																			<td class="style6"><em>Status:</em> <?php echo $history_result['history_status_name']; ?></td>
+																		</tr>
+																		<tr>
+																			<td class="style6"><em>Date Added:</em> <?php echo date("n/d/Y", $history_result['date_added']); ?></td>
+																		</tr>
+																		<?php
+																			if (!empty($history_result['history_status_description'])) {
+																				?>
+																				<tr>
+																					<td class="style6"><em>Details:</em> <?php echo $history_result['history_status_description']; ?></td>
+																				</tr>
+																				<?php
+																			}
+																		?>
+																	</table>
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+												<?php
+												$history_count++;
+											}
+									?>
+									<?php
+								} else {
+									?>
+									<tr>
+										<td class="style6">Sorry that equipment item does not exist in our system.  Please go back and try again.</td>
+									</tr>
+									<?php
+								}
+						?>
+						<tr>
+							<td height="10"><img src="images/pixel_trans.gif" height="10" width="1"></td>
+						</tr>
+						<tr>
+							<td align="left">
+								<table width="400" cellspacing="0" cellpadding="0">
+									<tr>
+										<td align="right" width="400"><a href="<?php echo FILENAME_AGENT_OWNED_EQUIPMENT; ?>?equipment_id=<?php echo $equipment_id; ?>&page_action=list"><?php echo tep_create_button_link('back', 'Back to Equipment'); ?></a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<?php
+                    } elseif ($page_action == 'opt_out') {
+                        if (empty($receive_email)) {
+                            $query = $database->query("INSERT INTO " . TABLE_INVENTORY_OPT_OUT . " (user_id, email_opt_out) VALUES ('" . $user->fetch_user_id() . "', '1')");
+                            echo "<p>You have successfully opted out from receiving inventory emails.</p>\n";
+                        } else {
+                            $query = $database->query("DELETE FROM " . TABLE_INVENTORY_OPT_OUT . " WHERE user_id = '" . $user->fetch_user_id() . "' LIMIT 1");
+                            echo "<p>Thank you.  You will receive inventory updates in your monthly email.</p>\n";
+                        }
+					} else {
+						$count = 0;
+						$first = true;
+						$query = $database->query("select count(ei.equipment_item_id) as count, ei.equipment_id, e.name from " . TABLE_EQUIPMENT . " e, " . TABLE_EQUIPMENT_ITEMS . " ei where (ei.user_id = '" . $user->fetch_user_id() . "' or (ei.user_id = '0' and ei.agency_id = '" . $user->agency_id . "')) and ei.equipment_id = e.equipment_id group by ei.equipment_id");
+							while($result = $database->fetch_array($query)) {
+								$count++;
+									if ($first) {
+									?>
+									<tr>
+										<td height="20"><img src="images/pixel_trans.gif" height="20" width="1" /></td>
+									</tr>
+									<?php
+									}
+									
+						?>
+						<tr>
+							<td class="style6"><b><?php echo $result['name']; ?></b></td>
+						</tr>
+						<tr>
+							<td height="5"><img src="images/pixel_trans.gif" height="5" width="1" /></td>
+						</tr>
+						<tr>
+							<td width="100%" align="left">
+								<table width="100%" cellspacing="0" cellpadding="0">
+									<tr>
+										<td width="100%" align="left">
+											<table width="100%" cellspacing="0" cellpadding="0">
+												<tr>
+													<td width="10"><img src="images/pixel_trans.gif" height="1" width="10" /></td>
+													<td width="100%" align="left">
+														<table cellspacing="0" cellpadding="0">
+																<tr>
+																	<td class="style6" width="120">Total Items : </td>
+																	<td class="style6" width="50" align="left"><?php echo $result['count']; ?></td>
+																</tr>
+														<?php
+															$status_query = $database->query("select es.equipment_status_name, count(ei.equipment_item_id) as count from " . TABLE_EQUIPMENT_STATUSES . " es, " . TABLE_EQUIPMENT_ITEMS . " ei where ei.equipment_id = '" . $result['equipment_id'] . "' and (ei.user_id = '" . $user->fetch_user_id() . "' or (ei.user_id = '0' and ei.agency_id = '" . $user->agency_id . "')) and ei.equipment_status_id = es.equipment_status_id group by ei.equipment_status_id order by ei.equipment_status_id");
+																while($status_result = $database->fetch_array($status_query)) {
+																?>
+																<tr>
+																	<td class="style6" width="120"><?php echo $status_result['equipment_status_name']; ?> : </td>
+																	<td class="style6" width="50" align="left"><?php echo $status_result['count']; ?></td>
+																</tr>
+																<?php
+																}
+														?>	
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td height="4"><img src="images/pixel_trans.gif" height="4" width="1" /></td>
+									</tr>
+									<tr>
+										<td class="main"><a href="<?php echo FILENAME_AGENT_OWNED_EQUIPMENT; ?>?equipment_id=<?php echo $result['equipment_id']; ?>&page_action=list">View Items</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<?php
+							}
+						?> 
+						<?php
+							if ($count == 0) {
+						?>
+						<tr>
+							<td class="style6">You currently have no equipment stored with us.  To arrange to have us store your equipment please read the FAQ for more information.</td>
+						</tr>
+						<?php
+                            }
+                        ?>
+	                    <tr>
+		                    <td height="5"><img src="images/pixel_trans.gif" height="5" width="1"></td>
+	                    </tr>
+	                    <tr>
+                            <td><form method="get">To receive monthly inventory updates via email, check here:
+                                <input type='hidden' name='page_action' value='opt_out'>
+                                <input type='checkbox' name='receive_email' value='true'<?php echo $checked?>>
+                                <?php echo tep_create_button_submit('update', 'Update', ' name="update"'); ?>
+                                </form>
+                            </td>
+	                    </tr>
+					<?php
+						}
+					?>
+			</table>
+		</td>
+	</tr>
+</table>

@@ -1,0 +1,276 @@
+{% extends '/order/aom_order_layout.html.twig' %}
+{% block order %}
+
+<form class="order_form" name="frm1" action="{{ constant('PAGE_URL') }}?page_action=submit" method="post">
+
+<div class="col-md-8">
+
+{% if error.get_error_status('account_create_payment') %}
+	<div class="alert alert-danger">
+		{{ error.get_error_string('account_create_payment') | raw}}
+	</div>
+{% endif %}
+
+<p>Please enter your required activity window start date in the space below.</p>
+
+
+	<div class="form-group">
+		<label for="jobdate" class="control-label">Activity Window Start Date:</label>
+		<div class="">
+			<input class="form-control change-submit date-picker" data-date-format="mm/dd/yyyy" name="jobdate" id="jobdate" required value="{{ vars.jobdate }}">
+		</div>
+	 </div>
+
+
+<h4 class="title-panel">Order Totals</h4>
+	<div class="panel-library">
+
+		{% if order.base_cost > 0 %}
+			<div class="form-group">
+				<label for="street_name" class="control-label">Base Cost:</label>
+				<div>
+					<span>${{ order.base_cost|number_format(2)}}</span>
+				</div>
+			</div>
+		{% endif %}
+
+
+		{% if order.extended_cost > 0 %}
+			<div class="form-group">
+				<label class="control-label">Extended Cost:</label>
+				<div>
+					<span>${{ order.extended_cost|number_format(2)}}</span>
+				</div>
+			</div>
+		{% endif %}
+
+		{% if order.equipment_cost > 0 %}
+			<div class="form-group">
+				<label class="control-label">Equipment Cost:</label>
+				<div>
+					<span>${{ order.equipment_cost|number_format(2)}}</span>
+				</div>
+			</div>
+		{% endif %}
+
+
+		{% if order.extra_cost > 0 %}
+			<div class="form-group">
+				<label class="control-label">Extra Cost:</label>
+				<div>
+					<span>${{ order.extra_cost|number_format(2)}} ({{ extra_cost_string }})</span>
+				</div>
+			</div>
+		{% endif %}
+
+
+		{% if order.deposit_cost > 0 %}
+			<div class="form-group">
+				<label class="control-label">Deposit Cost:</label>
+				<div>
+					<span>${{ order.deposit_cost|number_format(2)}} (This will be refunded when the signpost is successfully removed)</span>
+				</div>
+			</div>
+		{% endif %}
+
+
+		{% if order.discount_cost > 0 %}
+			<div class="form-group">
+				<label class="control-label">Adjustment:</label>
+				<div>
+					<span>${{ order.discount_cost|number_format(2)}} (This will be refunded when the signpost is successfully removed)</span>
+				</div>
+			</div>
+		{% endif %}
+
+		{% if order.credit > 0 %}
+			<div class="form-group">
+				<label class="control-label">Credit:</label>
+				<div>
+					<span>$-{{ order.credit|number_format(2)}}</span>
+				</div>
+			</div>
+		{% endif %}
+
+		{% if vars.order_total > 0 %}
+			<div class="form-group">
+				<label class="control-label">Total Cost:</label>
+				<div>
+					<span>${{ vars.order_total|number_format(2)}}</span>
+				</div>
+			</div>
+
+		{% else %}
+
+			<div class="form-group">
+				<label class="control-label">Total Cost:</label>
+				<div>
+					<span>There is no charge for this order.</span>
+				</div>
+			</div>
+
+		{% endif %}
+		
+	</div>
+
+{% if vars['deferred'] is not null %}
+       {{ vars['deferred']|raw }}
+{% endif %}
+
+{% if vars['request_payment'] is not empty %}
+
+<h4 class="title-panel">Payment Information</h4>
+	<div class="panel-library">
+
+
+	{% if vars['payment_method'] == 1 %}
+		<div class="alert alert-info">
+			Please enter your Credit Card Details below.
+		</div>
+	{% else %}
+		<div class="alert alert-info">
+			You are currently signed up for a monthly bill.  If you would rather pay by Credit Card then please select the option below.
+		</div>
+	{% endif %}
+
+	
+
+			<div class="form-group">
+				<label for="cc_name" class="control-label">You will be billed via</label>
+				<div class="controls">
+					{{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['payment_method_id']}) }}
+				</div>
+			</div>
+
+	
+	{% if vars['payment_method'] == constant('BILLING_METHOD_CREDIT') %}
+	
+	<div>
+	
+		<p class="library-block">Credit Card Details</p>
+		
+ 
+			<div class="form-group">
+				<label for="cc_name" class="control-label">Name on Card:</label>
+				<div class="controls">
+					<input class="form-control" required name="cc_name" id="cc_name" value="{{ vars.payment['cc_name'] }}">
+				</div>
+			</div>
+
+		
+ 
+			<div class="form-group">
+				<label for="cc_type" class="control-label">Card Type:</label>
+				<div class="controls">
+					{{ include('/macros/pulldown.html.twig', {'args': vars.pulldowns['cc_type']}) }}
+				</div>
+			</div>
+
+		
+
+			<div class="form-group">
+				<label for="cc_number" class="control-label">Card Number:</label>
+				<div class="controls">
+					<input class="form-control" required name="cc_number" id="cc_number" value="{{ vars.payment['cc_number'] }}">
+				</div>
+			</div>
+
+		
+ 
+			<div class="form-group">
+				<label for="cc_number" class="control-label">Expiry Date:</label>
+				<div class="controls row">
+					<div class="col-md-6">
+						<select class="form-control" name="cc_month">
+							{% for j in 1..12 %}
+								<option value="{{ j }}">{{ j |date('2012-' ~ j ~ '-01') |date('M') }}</option>
+							{% endfor %}
+						</select>
+					</div>	
+					<div class="col-md-6">
+						<select class="form-control" name="cc_year">
+							{% for year in "now"|date("Y").."now"|date("Y")+6 %}
+								<option value="{{ year }}">{{ year }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+			</div>
+	
+		
+		 
+			<div class="form-group">
+				<label for="cc_verification_number" class="control-label">Security Code:</label>
+				<div class="controls">
+					<input class="form-control" required name="cc_verification_number" id="cc_verification_number" value="{{ vars.payment['cc_verification_number'] }}">
+				</div>
+			</div>
+
+		
+		<p class="library-block">Billing Address</p>
+		
+		 
+			<div class="form-group">
+				<label for="cc_billing_street" class="control-label">Street:</label>
+				<div class="controls">
+					<input class="form-control" required name="cc_billing_street" id="cc_billing_street" value="{{ vars.payment['cc_billing_street'] }}">
+				</div>
+			</div>
+	
+		
+		
+			<div class="form-group">
+				<label for="cc_billing_city" class="control-label">City:</label>
+				<div class="controls">
+					<input class="form-control" required name="cc_billing_city" id="cc_billing_city" value="{{ vars.payment['cc_billing_city'] }}">
+				</div>
+			</div>
+	
+		
+			 
+			<div class="form-group">
+				<label for="cc_billing_zip" class="control-label">Zip:</label>
+				<div class="controls">
+					<input class="form-control" required name="cc_billing_zip" id="cc_billing_zip" value="{{ vars.payment['cc_billing_zip'] }}">
+				</div>
+			</div>
+		
+	
+	</div>
+	
+	<div class="alert alert-info">
+	
+		Please carefully check the information you enter. If you have issues with your credit card, please call us at 202-256-0107 for assistance.
+	
+	</div>
+	</div>			
+	{% endif %}
+
+{% else %}
+<input type="hidden" name="payment_method" value="1">
+{% endif %}
+
+    	  
+
+</div>
+{% endblock order %}
+
+{% block next_button %}
+	
+	<input type="hidden" name="submit_string_y" id="submit_string_y" value="1">
+	<button name="submit_string" style="float:right" type="submit" class="btn btn-info">Proceed to Final Review</button>
+
+{% endblock next_button %}	
+
+{% block javascripts %}
+
+{{ parent() }}
+
+ <script language="javascript" data-cfasync="false">
+                $(document).ready(function () {
+					//alert();
+                    $(".date-picker").datepicker();
+                });
+            </script>
+
+{% endblock %}

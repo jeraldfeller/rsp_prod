@@ -1,0 +1,395 @@
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+
+<div class="col-md-8">
+
+{% if(vars.order_data['order_status_id'] == 2) %}
+
+<div class='alert alert-warning' style='margin: 0.5em 2em 0.5em 0;'>
+	<button type='button' class='close' data-dismiss='alert'>&times;</button>
+	<i class='icon-4x pull-left icon-exclamation-sign'></i>
+	This order has been accepted by our installer, and may be already be completed. Please contact us, at 202 256-0107 or at <a href='mailto:"{{constant("INFO_EMAIL")}}"'>{{constant("INFO_EMAIL")}}</a>, to see if we can reach our installer and potentially make changes to or cancel the order.
+</div>
+
+{% endif %}
+
+<h4 class="title-panel">Agent Information</h4>
+
+<div class="panel-library">
+<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Agent Name:</label>
+			<div>
+				<span>{{vars.user_result['firstname']}} {{vars.user_result['lastname']}}</span>
+			</div>
+		</div>
+	</div>
+<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Agency Name:</label>
+			<div>
+				<span>{{vars.user_result['name']}}</span>
+			</div>
+		</div>
+	</div>	
+
+</div>
+
+<h4 class="title-panel">Address Information</h4>
+	
+<div class="panel-library">
+<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Address:</label>
+			<div>
+				<span>{{vars.order_data['house_number']}} {{vars.order_data['street_name']}}</span>
+			</div>
+		</div>
+	</div>
+<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">City:</label>
+			<div>
+				<span>{{vars.order_data['city']}}</span>
+			</div>
+		</div>
+	</div>
+<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Country:</label>
+			<div>
+				<span>{{vars.order_data['county_name']}}</span>
+			</div>
+		</div>
+	</div>
+<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">State:</label>
+			<div>
+				<span>{{vars.order_data['state_name']}}</span>
+			</div>
+		</div>
+	</div>	
+<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Zip:</label>
+			<div>
+				<span>{{vars.order_data['zip']}}</span>
+			</div>
+		</div>
+	</div>		
+<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Number of Posts:</label>
+			<div>
+				<span>{{vars.order_data['number_of_posts']}}</span>
+			</div>
+		</div>
+	</div>	
+<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Cross Street/Directions:</label>
+			<div>
+				<span>{{vars.order_data['cross_street_directions']}}</span>
+			</div>
+		</div>
+	</div>	
+
+</div>
+
+<h4 class="title-panel">Job Description</h4>
+
+<div class="panel-library">
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Job Status:</label>
+			<div>
+				<span>{{vars.order_data['order_status_name']}}</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Order Type:</label>
+			<div>
+				<span>{{vars.order_data['order_type_name']}}</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Job Total:</label>
+			<div>
+				<span>${{vars.order_data['order_total']}}</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Date Added:</label>
+			<div>
+				<span>{{vars.order_data['date_added']|date("n/d/Y")}}</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Last Modified:</label>
+			<div>
+				<span>{{vars.order_data['last_modified']|date("n/d/Y")}}</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Date Scheduled:</label>
+			<div>
+				<span>{{vars.order_data['date_schedualed']|date("n/d/Y")}}</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Date Completed:</label>
+			<div>
+				<span>
+				{% if (vars.order_data['date_completed'] is not null) and (vars.order_data['date_completed']>0) %}
+					{{ vars.order_data['date_completed']|date("m/d/Y") }}
+				{% else %}
+					Never
+				{% endif %}
+				</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Special Instructions:</label>
+			<div>
+				<span>{{vars.order_data['special_instructions']}}</span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+{% if(vars.order_data['order_type_id']==1 or vars.order_data['order_type_id']==3) %}
+<h4 class="title-panel">Equipment</h4>
+<div class="panel-library">
+	{% if vars.order_data['optional'] is not empty %}
+		{{vars.eq|raw}}
+	{% else %}
+
+		<p>No Optional Items Ordered</p>
+
+	{% endif %}
+</div>
+
+
+{% elseif(vars.order_data['order_type_id']==2) %}
+
+<h4 class="title-panel">Reason and Details</h4>
+<div class="panel-library">
+<p>Reason: </p>
+
+	{% if(vars.order_data['service_call_reason_id']==1) %}
+		<p>Exchange Rider</p>
+		{% for element in vars.order_data['equipment'] %}
+			<p>---{{element['method_id']}} {{element['name']}}</p>
+		{% endfor %}
+	{% elseif(vars.order_data['service_call_reason_id']==2) %}
+		<p>Install New Rider or BBox</p>
+		{% for element in vars.order_data['equipment'] %}
+			<p>---{{element['name']}}</p>
+		{% endfor %}
+	{% elseif(vars.order_data['service_call_reason_id']==3) %}
+		<p>Replace/Exchange Agent SignPanel</p>
+		{% for element in vars.order_data['equipment'] %}
+			<p>---{{element['name']}}</p>
+		{% endfor %}
+	{% elseif(vars.order_data['service_call_reason_id']==4) %}
+		<p>Post Leaning/Straighten Post</p>
+		{% if vars.order_data['service_call_detail_id'] == 1 %}
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Weather
+		{% elseif order_data['service_call_detail_id'] == 2 %}
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Improper Installation
+		{% elseif order_data['service_call_detail_id'] == 3 %}
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Someone moved Post
+		{% elseif order_data['service_call_detail_id'] == 4 %}
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Other
+		{% endif %}	
+		
+	{% elseif(vars.order_data['service_call_reason_id']==5) %}
+		<p>Move Post</p>
+		{% for element in vars.order_data['equipment'] %}
+			<p>---{{element['name']}} was missing and was replaced</p>
+		{% endfor %}
+	{% elseif(vars.order_data['service_call_reason_id']==6) %}
+		<p>Install equipment forgotten at install</p>
+		{% for element in vars.order_data['equipment'] %}
+			<p>---{{element['name']}}</p>
+		{% endfor %}	
+	{% elseif(vars.order_data['service_call_reason_id']==7) %}
+		<p>Other</p>			
+	{% endif %}
+
+</div>	
+	
+{% endif %}
+
+<h4 class="title-panel">Order Cost</h4>
+<div class="panel-library">
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label class="control-label">Base Cost:</label>
+			<div>
+				<span>${{vars.order_data['base_cost']|number_format(2,'.',',')}}</span>
+			</div>
+		</div>
+	</div>
+	{% if (vars.order_data['extended_cost']!=0) %}
+		<div class="row-mg"> 
+			<div class="form-group">
+				<label class="control-label">Extended Cost:</label>
+				<div>
+					<span>${{vars.order_data['extended_cost']|number_format(2,'.',',')}}</span>
+				</div>
+			</div>
+		</div>	
+	{% endif %}
+	{% if (vars.order_data['equipment_cost']!=0) %}
+		<div class="row-mg"> 
+			<div class="form-group">
+				<label class="control-label">Equipment Cost:</label>
+				<div>
+					<span>${{vars.order_data['equipment_cost']|number_format(2,'.',',')}}</span>
+				</div>
+			</div>
+		</div>		
+	{% endif %}
+	{% if (vars.order_data['extra_cost']!=0) %}
+		<div class="row-mg"> 
+			<div class="form-group">
+				<label class="control-label">Extra Cost:</label>
+				<div>
+					<span>${{vars.order_data['extra_cost']|number_format(2,'.',',')}} ({{ vars.order_data['extra_cost_description'] }})</span>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	{% if (vars.order_data['discount_cost']!=0) %}
+		<div class="row-mg"> 
+			<div class="form-group">
+				<label class="control-label">Adjustment:</label>
+				<div>
+					<span>${{vars.order_data['discount_cost']|number_format(2,'.',',')}}</span>
+				</div>
+			</div>
+		</div>		
+	{% endif %}
+	{% if (vars.order_data['order_total']!=0) %}
+		<div class="row-mg"> 
+			<div class="form-group">
+				<label class="control-label">Order Total:</label>
+				<div>
+					<span>${{vars.order_data['order_total']|number_format(2,'.',',')}}</span>
+				</div>
+			</div>
+		</div>			
+	{% endif %}
+	
+
+</div>
+
+<h4 class="title-panel">Installer Comments</h4>
+<div class="panel-library">
+	<span>{{vars.order_data['installer_comments']}}</span>
+</div>
+
+<h4 class="title-panel">Order History</h4>
+<div class="panel-library">
+	{% for history in vars.status_history %}
+	<div class="mg-10">
+		<div class="row-mg"> 
+				<div class="form-group">
+					<label class="control-label">Date:</label>
+					<div>
+						<span>{{history['date_added']|date("n/d/Y")}}</span>
+					</div>
+				</div>
+			</div>
+		<div class="row-mg"> 
+				<div class="form-group">
+					<label class="control-label">Status:</label>
+					<div>
+						<span>{{history['order_status_name']}}</span>
+					</div>
+				</div>
+			</div>
+		<div class="row-mg"> 
+				<div class="form-group">
+					<label class="control-label">Comments:</label>
+					<div>
+						<span>{{history['comments']}}</span>
+					</div>
+				</div>
+			</div>
+	</div>		
+	{% endfor %}	
+	<span>{{vars.order_data['installer_comments']}}</span>
+</div>
+
+
+</div>
+
+<div class="col-md-4">
+
+
+{% if vars.page_action=='delete' %}
+<p>Are you sure you want to cancel this order?</p>
+	<form action="{{ constant('FILENAME_AOM_ORDER_VIEW') }}?page_action=delete_confirm&oID={{ vars.order_data['oID'] }}" method="post">
+			<button class="btn btn-danger btn-midsize" type="submit">Cancel Order</button>
+		</form>
+		<form action="{{ vars.return_page }}?page_action=view&oID={{ vars.order_data['oID'] }}" method="post">
+			<button class="btn btn-info btn-midsize" type="submit">Cancel</button>
+		</form>
+{% elseif vars.page_action == 'edit' %}
+	<button class="btn btn-success" type="submit">Update Order</button>
+	<form action="{{ constant('FILENAME_AOM_ORDER_VIEW') }}?page_action=view&oID={{ vars.order_data['oID'] }}" method="post">
+			<button class="btn btn-info btn-midsize" type="submit">Cancel</button>
+	</form>
+{% else %}
+<p>Press Back to go back to the previous page {% if vars.order_data['order_status_id'] == 1 %} or use the button below to edit the order{% endif %}</p>
+<form action="{{ constant('FILENAME_AOM_ORDER_VIEW') }}" method="post">
+	<button class="btn btn-info btn-midsize" type="submit">Back</button>
+</form>
+	{% if vars.order_data['order_status_id'] <=1 or user.user_group_id == 2 %}
+		{% if vars.order_data['order_type_id'] == constant('ORDER_TYPE_REMOVAL') %}
+			<!--<form class="top-mg-10" action="{{ constant('FILENAME_ORDER_VIEW') }}?page_action=edit&oID={{ vars.order_data['oID'] }}" method="post">
+				<button class="btn btn-info btn-midsize" type="submit">Edit</button>
+			</form>-->
+			<form class="top-mg-10" action="{{ constant('FILENAME_AOM_ACTIVE_ADDRESSES') }}?page_action=reschedule_removal&oID={{ vars.order_data['oID'] }}" method="post">
+				<button class="btn btn-success btn-midsize" type="submit">Reschedule</button>
+			</form>
+		{% else %}
+			<form class="top-mg-10" action="{{ constant('FILENAME_AOM_ORDER_VIEW') }}?page_action=edit&oID={{ vars.order_data['oID'] }}" method="post">
+				<button class="btn btn-info btn-midsize" type="submit">Edit</button>
+			</form>
+			<form class="top-mg-10" action="{{ constant('FILENAME_AOM_ORDER_VIEW') }}?page_action=delete&oID={{ vars.order_data['oID'] }}" method="post">
+				<button class="btn btn-danger btn-midsize" type="submit">Cancel Order</button>
+			</form>
+		{% endif %}
+	{% endif %}
+
+{% endif %}
+
+</div>
+
+{% endblock content_body %}

@@ -1,0 +1,80 @@
+a.header 
+{
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 9pt;
+	COLOR: #CC0000;
+	TEXT-DECORATION: none;
+}
+
+a:hover.header
+{
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 9pt;
+	COLOR: #0000CC;
+	TEXT-DECORATION: bold;
+}	
+
+td
+{ 
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 9pt;
+}
+
+th
+{ 
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 9pt;
+}
+
+tr.header
+{
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 9pt;
+	FONT-WEIGHT: 700;
+	BACKGROUND-COLOR: #D8D8D8; 
+}
+
+tr.highlite
+{
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 9pt;
+	BACKGROUND-COLOR: #F0F0F0; 
+	text-align: center;
+}
+
+h3 
+{
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 14pt;
+	FONT-WEIGHT: 700;
+}
+
+h3 
+{
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 12pt;
+	FONT-WEIGHT: 700;
+}
+
+div.centered 
+{
+	text-align: center;
+}
+
+body 
+{
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 10pt;
+}
+
+p 
+{
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 10pt;
+}
+
+b {
+	FONT-FAMILY: Arial;
+	FONT-SIZE: 10pt;
+	TEXT-DECORATION: bold;
+}

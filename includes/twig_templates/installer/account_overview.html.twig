@@ -1,0 +1,244 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.0.1/css/responsive.bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style>
+#datatableAddress_length {
+	display:none;
+}
+.no-left {
+	padding-left:0px;
+}
+#map {
+  height: 550px;
+  width: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+.loader{
+  position: absolute;
+  right: 48.5%;
+  top: 47%;
+  z-index: 1000;
+}
+#map {
+  opacity: 0.2
+}
+</style>
+
+{% endblock %}
+
+{% block content_body %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title lead">Assigned Jobs</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-responsive table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Installs</th>
+              <th scope="col">Service Calls</th>
+              <th scope="col">Removals</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td colspan="3">Current Pending Orders: {{vars['currentPendingTotal']}}</td>
+
+            </tr>
+            <tr>
+                <td>{{vars['currentPendingInstalls']}}</td>
+                <td>{{vars['currentPendingService']}}</td>
+                <td>{{vars['currentPendingRemoval']}}</td>
+            </tr>
+            <tr>
+                <td colspan="3">Current Scheduled Orders: {{vars['currentScheduleTotal']}}</td>
+
+            </tr>
+            <tr>
+                <td>{{vars['currentScheduleInstalls']}}</td>
+                <td>{{vars['currentScheduleService']}}</td>
+                <td>{{vars['currentScheduleRemoval']}}</td>
+            </tr>
+            <tr>
+                <td colspan="3"><h4> Current Total Orders: {{vars['currentTotalOrders']}} </h4></td>
+
+            </tr>
+            <tr>
+                <td colspan="3">Future Pending Orders: {{vars['futurePendingTotal']}}</td>
+
+            </tr>
+            <tr>
+                <td>{{vars['futurePendingInstalls']}}</td>
+                <td>{{vars['futurePendingService']}}</td>
+                <td>{{vars['futurePendingRemoval']}}</td>
+            </tr>
+            <tr>
+                <td colspan="3"><h4>Future Total Orders: {{vars['futurePendingTotal']}}</h4></td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title lead">Map <button class="btn btn-primary btn-xs pull-right" id="map-print" onClick="printDiv('map')"><i class="fa fa-print"></i> Print Map</button></h3>
+
+      </div>
+      <div class="panel-body">
+
+          <div id="mapContainer">
+            <div class="loader"><h1><i class="fa fa-spinner fa-spin"></i></h1></div>
+            <div id="map"></div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+            var customLabel = {
+                Install: {
+                    label: 'I'
+                },
+    ServiceCall: {
+                    label: 'S'
+                },
+    Removal: {
+                    label: 'R'
+                },
+            };
+
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: new google.maps.LatLng(38.863475, -77.25781),
+                    zoom: 12
+                });
+                var infoWindow = new google.maps.InfoWindow;
+
+                // Change this depending on the name of your PHP or XML file
+                downloadUrl('lib/google_map/address_list.php', function(data) {
+                    var xml = data.responseXML;
+                    var markers = xml.documentElement.getElementsByTagName('marker');
+                    var hasCenter = false;
+                    Array.prototype.forEach.call(markers, function(markerElem) {
+                        if(hasCenter == false){
+                            map.setCenter({lat: parseFloat(markerElem.getAttribute('lat')), lng: parseFloat(markerElem.getAttribute('lng'))});
+                            hasCenter = true;
+                        }
+                        var id = markerElem.getAttribute('id');
+                        var name = markerElem.getAttribute('name');
+                        var address = markerElem.getAttribute('address');
+                        var type = markerElem.getAttribute('type');
+                        var point = new google.maps.LatLng(
+                            parseFloat(markerElem.getAttribute('lat')),
+                            parseFloat(markerElem.getAttribute('lng')));
+
+                        var infowincontent = document.createElement('div');
+                        var strong = document.createElement('strong');
+                        strong.textContent = name
+                        infowincontent.appendChild(strong);
+                        infowincontent.appendChild(document.createElement('br'));
+
+                        var text = document.createElement('text');
+                        text.textContent = address
+                        infowincontent.appendChild(text);
+												/*
+                        var icon = customLabel[type] || {};
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: point,
+                            label: icon.label
+                        });
+											*/
+												var icon = customLabel[type] || {};
+												var iconBase = '../images/markers/';
+									        var icons = {
+									          I: {
+									            icon: iconBase + 'green.png'
+									          },
+									          S: {
+									            icon: iconBase + 'blue.png'
+									          },
+									          R: {
+									            icon: iconBase + 'red.png'
+									          } 
+									        };
+													var marker = new google.maps.Marker({
+	                            map: map,
+	                            position: point,
+															icon: icons[icon.label].icon,
+	                            label: icon.label
+	                        });
+
+
+                        marker.addListener('click', function() {
+                            infoWindow.setContent(infowincontent);
+                            infoWindow.open(map, marker);
+                        });
+                    });
+
+                    // after markers are loaded
+      $('.loader').css('display', 'none');
+      $('#map').css('opacity', 1);
+                });
+            }
+
+
+
+            function downloadUrl(url, callback) {
+                var request = window.ActiveXObject ?
+                    new ActiveXObject('Microsoft.XMLHTTP') :
+                    new XMLHttpRequest;
+
+                request.onreadystatechange = function() {
+                    if (request.readyState == 4) {
+                        request.onreadystatechange = doNothing;
+                        callback(request, request.status);
+
+                    }
+                };
+
+                request.open('GET', url, true);
+                request.send(null);
+            }
+
+            function doNothing() {}
+
+
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf_n7IU-Ui5lJTTtqqgfmjd-C6aHJOMdg&callback=initMap">
+</script>
+
+<script>
+function printDiv(divName) {
+    var printContents = document.getElementById(divName).innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+}
+
+
+</script>
+
+{% endblock %}

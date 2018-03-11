@@ -1,0 +1,17 @@
+
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+<div class="row">
+	<div class="col-md-12">
+
+		<div class="alert alert-warning" style="margin: 0.5em 2em 0.5em 0;">
+                <i class="icon-4x pull-left icon-exclamation-sign"></i>
+                This order has been accepted by our installer, and may be already be completed. Please contact us, at 202 256-0107 
+                or at <a href="mailto:{{ constant('INFO_EMAIL') }}">{{ constant('INFO_EMAIL') }}</a>, to see if we can reach our installer 
+                and potentially make changes to or cancel the order.
+        </div>
+		<div class="pull-right"><form action="{{ constant('FILENAME_AGENT_ACTIVE_ADDRESSES') }}" method="post"><button class="btn btn-info" type="submit">Back</button></form></div>
+	</div>	
+
+</div>
+{% endblock content_body %}

@@ -1,0 +1,330 @@
+{# vars | var_dump #}
+
+
+{% extends 'layout.html.twig' %}
+
+
+{% block stylesheets %}
+{{ parent() }}
+
+<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-switch.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="css/datatables.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="css/datatables.bootstrap.css">
+<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="css/components.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="css/plugins.css">
+ 
+<style>
+
+/*.sm{ width:85%}*/
+.portlet.light.portlet-fit > .portlet-title{padding:3px 96px 4px}
+.portlet.light > .portlet-title{min-height:56px;}
+.portlet.light .dataTables_wrapper .dt-buttons{margin-top:-82px!important}
+</style> 
+ 
+{% endblock %}
+
+{% block content_body %}
+
+
+<div class="row">
+<div class="col-md-12">
+
+<!-- Begin: Demo Datatable 1 -->
+<div class="portlet light portlet-fit portlet-datatable bordered">
+	
+	<div class="portlet-title">
+		<div class="pull-right" style="font-size:12px;font-weight:normal; color:#CC00FF">
+			<i class="icon-settings font-dark"></i>
+			<span class="caption-subject font-dark sbold uppercase">Data Export Options</span>
+		</div>
+		
+		<!--
+		<div class="actions">
+			<div class="btn-group btn-group-devided" data-toggle="buttons">
+				<label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm active">
+					<input type="radio" name="options" class="toggle" id="option1">Actions
+				</label>
+				<label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm">
+					<input type="radio" name="options" class="toggle" id="option2">Settings
+				</label>
+			</div>
+		</div>
+		-->
+		<br clear="all" />
+	</div>
+	
+	<div class="portlet-body">
+		<div style="font-size:12px; font-style:italic; font-weight:bold; color:#FF0000">
+			*Please use the Search Options that are below (Order From, Order To, Type of Job), and THEN use the Data Export Options that are above this line.
+		</div>
+		<div class="table-container">
+			<!--<div class="table-actions-wrapper">
+				<span> </span>
+				<select class="table-group-action-input form-control input-inline input-small input-sm">
+					<option value="">Select...</option>
+					<option value="Cancel">Cancel</option>
+					<option value="Cancel">Hold</option>
+					<option value="Cancel">On Hold</option>
+					<option value="Close">Close</option>
+				</select>
+				<button class="btn btn-sm green table-group-action-submit"><i class="fa fa-check"></i> Submit</button>
+			</div>-->
+			<table class="table table-striped table-bordered table-hover table-checkable" id="dtAjax">
+				<thead>
+
+					<tr role="row" class="filter">
+						<!--<td> </td>-->
+						<td colspan="2">
+							<div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy" style="padding-left:12px!important">
+								<input type="text" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="Order from">
+								<span class="input-group-btn">
+									<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+								</span>
+							</div>
+						</td>
+						<td colspan="2">
+							<div class="input-group date date-picker" data-date-format="dd/mm/yyyy">
+								<input type="text" class="form-control form-filter input-sm" readonly name="order_date_to" placeholder="Order to">
+								<span class="input-group-btn">
+									<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+								</span>
+							</div>						
+						</td>
+						<td colspan="3">
+							<select name="{{ vars['pulldowns']['order_type']['name'] }}" class="form-control form-filter input-sm">
+								<option value="">Type of Job...</option>
+								<option value="all">Any</option>
+								{% for value in vars['pulldowns']['order_type']['contents'] %}
+									<option value="{{ value.id }}" {% if value.id == vars['pulldowns']['order_type']['selected'] %} selected {% endif %}>{{ value.name }}</options>
+								{% endfor %}
+								
+							</select>
+							
+						</td>
+						<!--<td colspan="2">
+							<select name="{{ vars['pulldowns']['order_status']['name'] }}" class="form-control form-filter input-sm">
+								<option value="">Order Status...</option>
+								<option value="all">Any</option>
+								{% for value in vars['pulldowns']['order_status']['contents'] %}
+									<option value="{{ value.id }}" {% if value.id == vars['pulldowns']['order_status']['selected'] %} selected {% endif %}> {{ value.name }} </options>
+								{% endfor %}
+
+							</select>							
+						</td>-->
+						
+						<td colspan="6">
+							<div class="margin-bottom-5">
+								<button class="btn btn-sm green btn-outline filter-submit margin-bottom"><i class="fa fa-search"></i> Search</button>
+								<button class="btn btn-sm red btn-outline filter-cancel"><i class="fa fa-times"></i> Reset</button>
+							</div>
+							
+						</td>
+					</tr>
+					
+					<tr role="row" class="heading">
+						<!--<th width="2%">
+							<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+								<input type="checkbox" class="group-checkable" data-set=".checkboxes" />
+								<span></span>
+							</label>
+						</th>-->
+						<th width="7%"> Order Type </th>
+						<th width="10%">Order Date</th>
+						<th width="10%">Date Completed</th>
+						<th width="7%"> Agent Name </th>
+						<th width="7%"> Agency Name </th>
+						<th width="7%"> House Number </th>
+						<th width="7%"> Street </th>
+						<th width="7%"> City </th>
+						<th width="7%"> County </th>
+						<th width="7%"> Base Cost </th>
+						<th width="7%"> Total Cost </th>
+						<th width="15%"> Installer Comments </th>
+						
+					</tr>					
+				</thead>
+				<tbody> </tbody>
+			</table>
+			<div class="row"><div class="col-md-12"><br /></div></div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+
+
+
+
+{% endblock content_body %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+
+
+<script data-cfasync="false" src="./js/datatable.js"></script>
+<script data-cfasync="false" src="./js/datatables.min.js"></script>
+<script data-cfasync="false" src="./js/datatables.bootstrap.js"></script>
+<script data-cfasync="false" src="./js/bootstrap-datepicker.min.js"></script>
+
+
+<script>
+
+
+	var dtAjax = function () {
+	
+		var initPickers = function () {
+			//init date pickers
+			$('.date-picker').datepicker({
+				autoclose: true,
+				format: 'mm/dd/yyyy'
+				
+			});
+		}
+	
+		var handleDT = function () {
+	
+			var grid = new Datatable();
+	
+			grid.init({
+				src: $("#dtAjax"),
+				onSuccess: function (grid, response) {
+					// grid:        grid object
+					// response:    json object of server side ajax response
+					// execute some code after table records loaded
+				},
+				onError: function (grid) {
+					// execute some code on network or other general error  
+				},
+				onDataLoad: function(grid) {
+					// execute some code on ajax data load
+				},
+				loadingMessage: 'Loading...',
+				dataTable: { // here you can define a typical datatable settings from http://datatables.net/usage/options 
+	
+					// Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
+					// setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/scripts/datatable.js). 
+					// So when dropdowns used the scrollable div should be removed. 
+					//"dom": "<'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r>t<'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'>>",
+					
+					// save datatable state(pagination, sort, etc) in cookie.
+					bStateSave: true, 
+	
+					 // save custom filters to the state
+					fnStateSaveParams:    function ( oSettings, sValue ) {
+						$("#dtAjax tr.filter .form-control").each(function() {
+							sValue[$(this).attr('name')] = $(this).val();
+						});
+					   
+						return sValue;
+					},
+	
+					// read the custom filters from saved state and populate the filter inputs
+					fnStateLoadParams : function ( oSettings, oData ) {
+						//Load custom filters
+						$("#dtAjax tr.filter .form-control").each(function() {
+							var element = $(this);
+							if (oData[element.attr('name')]) {
+								element.val( oData[element.attr('name')] );
+							}
+						});
+						
+						return true;
+					},
+					responsive: true,
+					lengthMenu: [
+						[10, 20, 50, 100, 150, -1],
+						[10, 20, 50, 100, 150, "All"] // change per page values here
+					],
+					pageLength: 10, // default record count per page
+					ajax: {
+						"url": "aom_order_ajax.php", // ajax source
+					},
+					order: [
+						[1, "asc"]
+					],// set first column as a default sort by asc
+					//dom: 'Bpliftplif', //working
+					dom: 'Bplitpli', //working
+					buttons: [
+						{extend: 'csvHtml5', className: 'btn dark btn-outline' ,exportOptions: {columns: [ 0, ':visible' ]}},
+						{extend: 'excelHtml5' , className: 'btn green btn-outline',exportOptions: {columns: ':visible'}}, //to export all visible coloms
+						//{extend: 'excelHtml5' , className: 'btn green btn-outline',exportOptions: {columns: [ 0, 1, 2,4, 5 ]}},
+						//{extend: 'pdfHtml5', className: 'btn purple btn-outline ',exportOptions: {columns: [ 0, 1, 2, 5 ]}},
+						{extend: 'pdfHtml5', className: 'btn purple btn-outline ',exportOptions: {columns: ':visible'}},
+						
+						/*'colvis'*/
+						{ extend: 'colvis', className: 'btn dark btn-outline', text: 'Show/Hide Columns'}
+					],
+					language: {
+						"emptyTable": "No data available in table",
+						"zeroRecords": "No matching records found ",
+					},
+				}
+			});
+	
+			// handle group actionsubmit button click
+			/*grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
+				alert('hello');
+				e.preventDefault();
+				var action = $(".table-group-action-input", grid.getTableWrapper());
+				if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
+					grid.setAjaxParam("customActionType", "group_action");
+					grid.setAjaxParam("customActionName", action.val());
+					grid.setAjaxParam("id", grid.getSelectedRows());
+					grid.getDataTable().ajax.reload();
+					grid.clearAjaxParams();
+				} else if (action.val() == "") {
+					App.alert({
+						type: 'danger',
+						icon: 'warning',
+						message: 'Please select an action',
+						container: grid.getTableWrapper(),
+						place: 'prepend'
+					});
+				} else if (grid.getSelectedRowsCount() === 0) {
+					App.alert({
+						type: 'danger',
+						icon: 'warning',
+						message: 'No record selected',
+						container: grid.getTableWrapper(),
+						place: 'prepend'
+					});
+				}
+			});*/
+	
+			//grid.setAjaxParam("customActionType", "group_action");
+			//grid.getDataTable().ajax.reload();
+			//grid.clearAjaxParams();
+			// handle datatable custom tools
+			
+		}
+	
+	
+		return {
+	
+			//main function to initiate the module
+			init: function () {
+	
+				initPickers();
+				handleDT();
+			}
+	
+		};
+	
+	}();
+	
+	
+	
+	jQuery(document).ready(function() {
+	
+		dtAjax.init();
+	});
+	
+
+</script>
+
+{% endblock %}
+
+

@@ -1,0 +1,73 @@
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+
+<tr>
+							<td class="style6"><b><?php echo $result['name']; ?></b></td>
+						</tr>
+						<tr>
+							<td height="5"><img src="images/pixel_trans.gif" height="5" width="1" /></td>
+						</tr>
+						<tr>
+							<td width="100%" align="left">
+								<table width="100%" cellspacing="0" cellpadding="0">
+									<tr>
+										<td width="100%" align="left">
+											<table width="100%" cellspacing="0" cellpadding="0">
+												<tr>
+													<td width="10"><img src="images/pixel_trans.gif" height="1" width="10" /></td>
+													<td width="100%" align="left">
+														<table cellspacing="0" cellpadding="0">
+																<tr>
+																	<td class="style6" width="120">Total Items : </td>
+																	<td class="style6" width="50" align="left"><?php echo $result['count']; ?></td>
+																</tr>
+														<?php
+															$status_query = $database->query("select es.equipment_status_name, count(ei.equipment_item_id) as count from " . TABLE_EQUIPMENT_STATUSES . " es, " . TABLE_EQUIPMENT_ITEMS . " ei where ei.equipment_id = '" . $result['equipment_id'] . "' and (ei.user_id = '" . $user->fetch_user_id() . "' or (ei.user_id = '0' and ei.agency_id = '" . $user->agency_id . "')) and ei.equipment_status_id = es.equipment_status_id group by ei.equipment_status_id order by ei.equipment_status_id");
+																while($status_result = $database->fetch_array($status_query)) {
+																?>
+																<tr>
+																	<td class="style6" width="120"><?php echo $status_result['equipment_status_name']; ?> : </td>
+																	<td class="style6" width="50" align="left"><?php echo $status_result['count']; ?></td>
+																</tr>
+																<?php
+																}
+														?>	
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td height="4"><img src="images/pixel_trans.gif" height="4" width="1" /></td>
+									</tr>
+									<tr>
+										<td class="main"><a href="<?php echo FILENAME_AGENT_OWNED_EQUIPMENT; ?>?equipment_id=<?php echo $result['equipment_id']; ?>&page_action=list">View Items</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+
+
+<b>Your Account at a Glance</b>
+
+<p>Total # of Active Addresses: {{ vars.active_addresses }}</p>
+
+<div class="padded-blocks">
+<p><b>Current Pending Orders</b> (to be completed in the next two business days): Total ({{ vars.pending_orders_svc + vars.pending_orders_removal + vars.pending_orders_install}})</p>
+<p>Installs ({{ vars.pending_orders_install }})   Removals ({{ vars.pending_orders_removal }})   SVCs ({{ vars.pending_orders_svc }})</p>
+<p class="padded-left">NOTE: You can make changes to the details of these orders under Active Addresses</p>
+</div>
+
+<div class="padded-blocks">
+<p><b>Scheduled Orders</b> (on the installers schedule): Total ({{ vars.scheduled_orders_svc + vars.scheduled_orders_removal + vars.scheduled_orders_install}})</p>
+<p>Installs ({{ vars.scheduled_orders_install }})   Removals ({{ vars.scheduled_orders_removal }})   SVCs ({{ vars.scheduled_orders_svc }})</p>
+<p class="padded-left">NOTE: If you need to change/cancel these orders, please call or e-mail us.</p>
+</div>
+
+<div class="padded-blocks">
+<p><b>Future Pending Orders</b> (orders to be completed in two+ business days): Total ({{ vars.future_orders_svc + vars.future_orders_removal + vars.future_orders_install}})</p>
+<p>Installs ({{ vars.future_orders_install }})   Removals ({{ vars.future_orders_removal }})   SVCs ({{ vars.future_orders_svc }})</p>
+<p class="padded-left">NOTE: If you need to change/cancel these orders, please call or e-mail us.</p>
+</div>
+{% endblock content_body %}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% block meta %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{{page.PAGE_KEYWORDS}}" />
+<meta name="description" content="{{page.PAGE_DESCRIPTION}}" />
+<title>{{page.PAGE_TITLE}}</title>
+{% endblock meta %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+
+<link rel="stylesheet" type="text/css" media="screen" href="/css/datepicker.css">
+
+
+<link rel="stylesheet" type="text/css" media="print" href="css/print.css">
+<!-- 
+<link rel="stylesheet" type="text/css" media="screen" href="css/stylesheet.css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap.no-icons.min.css" rel="stylesheet">
+-->
+
+<!-- bgdn -->
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/metisMenu.css" rel="stylesheet" type="text/css">
+
+    <link href="css/sb-admin-2.css?v=123" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">																											 
+	<style>
+			#header-agents-management {
+			background-image: url('https://realtysignpost.com/images/manage_agents_heading.jpg');
+			height: 48px;
+		}
+	</style>
+	
+	
+<!--end-->	
+
+<link rel="shortcut icon" href="images/favicon.ico" />
+<!--
+<script type="text/css" src="/js/html5slider.js"></script>
+-->
+<!--[if lt IE 9]>
+	<script type="text/css" src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"></script>
+<![endif]-->
+
+<!--
+<script data-cfasync="false" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+-->
+{% endblock stylesheets %}
+
+{% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+<script data-cfasync="false" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+<!--
+<script data-cfasync="false" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.1/bootstrap.min.js"></script>
+-->
+
+<script data-cfasync="false" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+<script data-cfasync="false" src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.10.0/jquery.validate.min.js"></script>
+<!----
+<script data-cfasync="false" src="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
+<script data-cfasync="false" src="./js/datatables/extensions.js"></script> -->
+
+<!-- bgdn -->
+<script src="js/sb-admin-2.js"></script>
+<!--end-->
+
+
+			<!-- deferred ajax js -->
+<script src="js/ajax-function.js"></script>							   
+{% endblock javascripts %}
+
+</head>
+
+<body>
+
+{% block body %}
+{% endblock body %}
+
+{% block modals %}
+{% endblock modals %}
+
+
+</body>
+</html>

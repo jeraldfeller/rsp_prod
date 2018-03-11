@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class TransactionResponse</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class TransactionResponse</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-vars">Vars</a>
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+		<p class="notes">
+			Located in <a class="field" href="_Paygateway_php.html">/Paygateway.php</a> (line <span class="field">1809</span>)
+		</p>
+		
+				
+		<pre><a href="../Paygateway/TransactionResponseBase.html">TransactionResponseBase</a>
+   |
+   --TransactionResponse</pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-vars">Vars</a>
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+								
+				<div class="method-definition">
+											<span class="method-result">TransactionResponse</span>
+										<a href="#TransactionResponse" title="details" class="method-name">TransactionResponse</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argResponseString</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAuthenticationCAVV" title="details" class="method-name">getAuthenticationCAVV</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAuthenticationResponseCode" title="details" class="method-name">getAuthenticationResponseCode</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAuthenticationResponseCodeText" title="details" class="method-name">getAuthenticationResponseCodeText</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAuthenticationRetryRecommended" title="details" class="method-name">getAuthenticationRetryRecommended</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAuthenticationStatus" title="details" class="method-name">getAuthenticationStatus</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAuthenticationTimeStamp" title="details" class="method-name">getAuthenticationTimeStamp</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAuthenticationTimeString" title="details" class="method-name">getAuthenticationTimeString</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAuthenticationTransactionConditionCode" title="details" class="method-name">getAuthenticationTransactionConditionCode</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAuthenticationXID" title="details" class="method-name">getAuthenticationXID</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAuthorizedAmount" title="details" class="method-name">getAuthorizedAmount</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getAVSCode" title="details" class="method-name">getAVSCode</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBankApprovalCode" title="details" class="method-name">getBankApprovalCode</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBankTransactionID" title="details" class="method-name">getBankTransactionID</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBatchBalanceState" title="details" class="method-name">getBatchBalanceState</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBatchID" title="details" class="method-name">getBatchID</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getBatchState" title="details" class="method-name">getBatchState</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getCapturedAmount" title="details" class="method-name">getCapturedAmount</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getCreditCardVerificationResponse" title="details" class="method-name">getCreditCardVerificationResponse</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getCreditedAmount" title="details" class="method-name">getCreditedAmount</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getCreditTotal" title="details" class="method-name">getCreditTotal</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getISOCode" title="details" class="method-name">getISOCode</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getNumberOfCredits" title="details" class="method-name">getNumberOfCredits</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getNumberOfPayments" title="details" class="method-name">getNumberOfPayments</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getOrderID" title="details" class="method-name">getOrderID</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getOriginalAuthorizedAmount" title="details" class="method-name">getOriginalAuthorizedAmount</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getPaymentTotal" title="details" class="method-name">getPaymentTotal</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getReferenceID" title="details" class="method-name">getReferenceID</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getState" title="details" class="method-name">getState</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getTimeStampCreated" title="details" class="method-name">getTimeStampCreated</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getTransactionConditionCode" title="details" class="method-name">getTransactionConditionCode</a>
+										()
+									</div>
+							</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+										<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../Paygateway/TransactionResponseBase.html">TransactionResponseBase</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../Paygateway/TransactionResponseBase.html#var$objResponseFields">TransactionResponseBase::$objResponseFields</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-vars">Vars</a>
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodTransactionResponse" id="TransactionResponse"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor TransactionResponse</span> (line <span class="line-number">1811</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">TransactionResponse</span>
+		<span class="method-name">
+			TransactionResponse
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argResponseString</span>)
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Paygateway/TransactionResponseBase.html#methodTransactionResponse">TransactionResponseBase::TransactionResponse()</a></dt>
+					</dl>
+		
+	</div>
+<a name="methodgetAuthenticationCAVV" id="getAuthenticationCAVV"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAuthenticationCAVV</span> (line <span class="line-number">1926</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAuthenticationCAVV
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAuthenticationResponseCode" id="getAuthenticationResponseCode"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAuthenticationResponseCode</span> (line <span class="line-number">1903</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAuthenticationResponseCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAuthenticationResponseCodeText" id="getAuthenticationResponseCodeText"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAuthenticationResponseCodeText</span> (line <span class="line-number">1907</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAuthenticationResponseCodeText
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAuthenticationRetryRecommended" id="getAuthenticationRetryRecommended"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAuthenticationRetryRecommended</span> (line <span class="line-number">1922</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAuthenticationRetryRecommended
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAuthenticationStatus" id="getAuthenticationStatus"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAuthenticationStatus</span> (line <span class="line-number">1934</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAuthenticationStatus
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAuthenticationTimeStamp" id="getAuthenticationTimeStamp"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAuthenticationTimeStamp</span> (line <span class="line-number">1911</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAuthenticationTimeStamp
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAuthenticationTimeString" id="getAuthenticationTimeString"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAuthenticationTimeString</span> (line <span class="line-number">1915</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAuthenticationTimeString
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAuthenticationTransactionConditionCode" id="getAuthenticationTransactionConditionCode"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAuthenticationTransactionConditionCode</span> (line <span class="line-number">1938</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAuthenticationTransactionConditionCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAuthenticationXID" id="getAuthenticationXID"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAuthenticationXID</span> (line <span class="line-number">1930</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAuthenticationXID
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAuthorizedAmount" id="getAuthorizedAmount"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAuthorizedAmount</span> (line <span class="line-number">1853</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAuthorizedAmount
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetAVSCode" id="getAVSCode"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAVSCode</span> (line <span class="line-number">1841</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getAVSCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBankApprovalCode" id="getBankApprovalCode"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBankApprovalCode</span> (line <span class="line-number">1833</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBankApprovalCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBankTransactionID" id="getBankTransactionID"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBankTransactionID</span> (line <span class="line-number">1837</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBankTransactionID
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBatchBalanceState" id="getBatchBalanceState"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBatchBalanceState</span> (line <span class="line-number">1894</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBatchBalanceState
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBatchID" id="getBatchID"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBatchID</span> (line <span class="line-number">1815</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBatchID
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetBatchState" id="getBatchState"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getBatchState</span> (line <span class="line-number">1890</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getBatchState
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetCapturedAmount" id="getCapturedAmount"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCapturedAmount</span> (line <span class="line-number">1861</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getCapturedAmount
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetCreditCardVerificationResponse" id="getCreditCardVerificationResponse"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCreditCardVerificationResponse</span> (line <span class="line-number">1845</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getCreditCardVerificationResponse
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetCreditedAmount" id="getCreditedAmount"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCreditedAmount</span> (line <span class="line-number">1865</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getCreditedAmount
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetCreditTotal" id="getCreditTotal"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCreditTotal</span> (line <span class="line-number">1878</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getCreditTotal
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetISOCode" id="getISOCode"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getISOCode</span> (line <span class="line-number">1829</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getISOCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetNumberOfCredits" id="getNumberOfCredits"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getNumberOfCredits</span> (line <span class="line-number">1886</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getNumberOfCredits
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetNumberOfPayments" id="getNumberOfPayments"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getNumberOfPayments</span> (line <span class="line-number">1882</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getNumberOfPayments
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetOrderID" id="getOrderID"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getOrderID</span> (line <span class="line-number">1825</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getOrderID
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetOriginalAuthorizedAmount" id="getOriginalAuthorizedAmount"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getOriginalAuthorizedAmount</span> (line <span class="line-number">1857</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getOriginalAuthorizedAmount
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetPaymentTotal" id="getPaymentTotal"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getPaymentTotal</span> (line <span class="line-number">1874</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getPaymentTotal
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetReferenceID" id="getReferenceID"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getReferenceID</span> (line <span class="line-number">1821</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getReferenceID
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetState" id="getState"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getState</span> (line <span class="line-number">1849</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getState
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetTimeStampCreated" id="getTimeStampCreated"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getTimeStampCreated</span> (line <span class="line-number">1869</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getTimeStampCreated
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetTransactionConditionCode" id="getTransactionConditionCode"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getTransactionConditionCode</span> (line <span class="line-number">1898</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getTransactionConditionCode
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Paygateway/TransactionResponseBase.html">TransactionResponseBase</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Paygateway/TransactionResponseBase.html#methodgetProperty">TransactionResponseBase::getProperty()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionResponseBase.html#methodgetResponseCode">TransactionResponseBase::getResponseCode()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionResponseBase.html#methodgetResponseCodeText">TransactionResponseBase::getResponseCodeText()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionResponseBase.html#methodgetRetryRecommended">TransactionResponseBase::getRetryRecommended()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionResponseBase.html#methodgetSecondaryResponseCode">TransactionResponseBase::getSecondaryResponseCode()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionResponseBase.html#methodgetTimeStamp">TransactionResponseBase::getTimeStamp()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionResponseBase.html#methodgetTimeString">TransactionResponseBase::getTimeString()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionResponseBase.html#methodsetProperty">TransactionResponseBase::setProperty()</a></span><br>
+													<span class="method-name"><a href="../Paygateway/TransactionResponseBase.html#methodTransactionResponse">TransactionResponseBase::TransactionResponse()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 30 Jun 2006 14:06:03 -0700 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC3</a>
+	</p>
+	</div></body>
+</html>

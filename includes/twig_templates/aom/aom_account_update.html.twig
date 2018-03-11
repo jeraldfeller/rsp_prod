@@ -1,0 +1,94 @@
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+
+<div class="col-md-10">
+
+<form name="update_account" class="form-horizontal" action="aom_update_account.php?update_account=update" method="post">
+
+{% if vars.update_success is not empty %}
+<div class="alert alert-success">
+	Your Account has been successfully updated.
+</div>	
+{% endif %}
+{% if error.get_error_status('account_update') %}
+	<div class="alert alert-danger">
+		{{ error.get_error_string('account_update')|raw }}
+	</div>
+{% endif %}
+
+
+<h4 class="title-panel">Personal Information</h4>
+<div class="panel-library">
+		<div class="row-mg"> 
+		<div class="form-group">
+			<label for="first_name" class="control-label">First Name:</label>
+			<div>
+				<input type="text" class="form-control" id="first_name" name="first_name" value="{{ vars.form.first_name }}">
+			</div>
+		 </div>
+		</div>
+		
+		<div class="row-mg"> 
+		<div class="form-group">
+			<label for="last_name" class="control-label">Last Name:</label>
+			<div>
+				<input class="form-control" name="last_name" id="last_name" value="{{ vars.form.last_name }}">
+			</div>
+		</div>
+		</div>
+		
+		<div class="row-mg"> 
+		<div class="form-group">
+			<label for="email_address" class="control-label">Email address:</label>
+			<div>
+				<input class="form-control" name="email_address" type="email" id="email_address" value="{{ vars.form.email_address }}">
+			</div>
+		</div>
+		</div>
+		
+	<div class="row-mg"> 
+		<div class="form-group">
+			<label for="phone_number" class="control-label">Cell Phone Number:</label>
+			<div>
+				<input class="form-control" name="phone_number" id="phone_number" value="{{ vars.form.phone_number }}">
+			</div>
+		</div>
+	</div>
+
+	<div class="row-mg"> 
+	<div class="form-group">
+		<label for="second_phone_number" class="control-label">Phone Number:</label>
+		<div>
+			<input class="form-control" name="second_phone_number" id="second_phone_number" value="{{ vars.form.second_phone_number }}">
+		</div>
+	</div>
+	</div>
+
+	<div class="row-mg"> 
+	<div class="form-group">
+		<label for="optional_third_phone_number" class="control-label">Fax Number:</label>
+		<div>
+			<input class="form-control" name="optional_third_phone_number" id="optional_third_phone_number" value="{{ vars.form.optional_third_phone_number }}">
+		</div>
+	</div>
+	</div>
+
+	<div class="row-mg"> 
+	<div class="form-group">
+		<label for="optional_fourth_phone_number" class="control-label">Optional Phone Number:</label>
+		<div>
+			<input class="form-control" name="optional_fourth_phone_number" id="optional_fourth_phone_number" value="{{ vars.form.optional_fourth_phone_number }}">
+		</div>
+	</div>
+	</div>
+</div>
+
+
+<div style="float:right" >
+	<a href="{{ constant('FILENAME_ACCOUNT_OVERVIEW') }}" class="btn btn-default btn-midsize">Cancel</a>
+	<button name="submit_type" type="submit" class="btn btn-info btn-midsize">Update Account</button>
+</div>
+
+</div>
+
+{% endblock content_body %}

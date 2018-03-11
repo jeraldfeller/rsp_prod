@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+{% block content_body %}
+<div class="col-md-8">
+{% if vars.equipment_result is not empty %}
+	{% for equipment in vars.equipment_result %}
+
+		<h4><a href="{{ constant('FILENAME_AGENT_OWNED_EQUIPMENT') }}?equipment_id={{ equipment.equipment_id }}&page_action=list">{{ equipment['name'] }}</a></h4>
+		<!--<p>Total Items : {{ equipment['count'] }}</p>-->
+		<!--<a class="btn btn-info" href="{{ constant('FILENAME_AGENT_OWNED_EQUIPMENT') }}?equipment_id={{ equipment.equipment_id }}&page_action=list">View Items</a>-->
+	
+	{% endfor %}
+{% else %}
+
+<div class="alert alert-warning">
+You currently have no equipment stored with us.  To arrange to have us store your equipment please read the FAQ for more information.
+</div>
+
+{% endif %}	
+
+<form method="get">
+To receive monthly inventory updates via email, check here:
+<input type='hidden' name='page_action' value='opt_out'>
+<input type='checkbox' name='receive_email' value='true' {% if vars.checked == 1 %} checked {% endif %}>
+<button class="btn btn-info" name="update" type="submit">Update</button>
+</form>
+
+</div>
+
+{% endblock content_body %}

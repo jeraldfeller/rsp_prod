@@ -1,0 +1,21 @@
+			<div class="panel panel-default panel-menu sidebar-panel">
+                            <div id="header-my-login"></div>
+							<div class="panel-body">
+							{% if error.get_error_status('login_box', 'error') %}
+								<span class="red-link">{{ error.get_error_string('login_box', 'error') }}</span>
+							{% endif %}
+								<form name="login" action="{{ constant('HTTPS_PREFIX') }}/{{ constant('PAGE_URL') }}?action=login" method="post">	
+									<div class="form-group">
+										<label for="left-login-email">Email</label>
+										<input type="email" class="form-control contact-form" required id="left-login-email" name="email_address" placeholder="">
+									  </div>
+									<div class="form-group">
+										<label for="left-login-password">Password</label>
+										<input type="password" class="form-control contact-form" required id="left-login-password" name="password" placeholder="">
+									  </div>
+									<button type="submit" style="" class="btn btn-default btn-info">Sign In</button>
+								</form>
+								<p class="login-form-links link-padded-top"><a href="account_create.php" class="red-link">Sign up here</a> for an Account</p>
+								<p class="login-form-links"><a href="forgotten_password.php">Forgotten your Password?</a></p>
+							</div>
+						</div>

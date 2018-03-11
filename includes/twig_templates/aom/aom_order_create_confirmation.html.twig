@@ -1,0 +1,481 @@
+{% extends '/order/aom_order_layout.html.twig' %}
+{% block order %}
+
+<form class="order_form" name="frm1" action="{{ constant('PAGE_URL') }}?page_action=submit" method="post">
+
+<div class="col-md-8">
+
+
+{% if error.get_error_status('order_create_confirmation') %}
+	<div class="alert alert-danger">
+		{{ error.get_error_string('order_create_confirmation') | raw}}
+	</div>
+{% endif %}
+
+
+<h4 class="title-panel">Agency Information</h4>
+	<div class="panel-library">
+		
+
+		<div class="form-group">
+			<label for="street_name" class="control-label">AOM Name:</label>
+			<div>
+				<p class="form-control-static">{{ user.fetch_user_name }}</p>
+			</div>
+		</div>
+<!--
+        <div class="form-group">
+			<label for="street_name" class="control-label">Agent Name:</label>
+			<div>
+				<p class="form-control-static">{{ vars.agent_data['firstname'] }} {{ vars.agent_data['lastname'] }}</p>
+			</div>
+		</div>
+-->
+		<div class="form-group">
+			<label for="street_name" class="control-label">Agent ID:</label>
+			<div>
+				<p class="form-control-static">{{ vars.agent_data['agent_id'] }}</p>
+			</div>
+		</div>
+
+
+
+
+		<div class="form-group">
+			<label for="street_name" class="control-label">Agent Email:</label>
+			<div>
+				<p class="form-control-static">{{ vars.email_data['email_address'] }}</p>
+			</div>
+		</div>
+
+
+
+		<div class="form-group">
+			<label for="street_name" class="control-label">Agency Name:</label>
+			<div>
+				<p class="form-control-static">{{ vars.agent_data['name'] }}</p>
+			</div>
+		</div>
+	
+	</div>
+
+
+<h4 class="title-panel">Address Information</h4>
+<div class="panel-library">
+
+
+			<div class="form-group">
+				<label for="street_name" class="control-label">Activity Requested:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['order_type_name'] }}</p>
+				</div>
+			</div>
+
+
+		{% if vars.show_miss_utility > 0 %}
+
+			<div class="form-group">
+				<label for="street_name" class="control-label">Miss Utility Marking Window::</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['miss_utility_start']|date("n/d/Y") }} - {{ vars.form['miss_utility_end']|date("n/d/Y") }}</p>
+				</div>
+			</div>
+
+		{% endif %}
+
+
+	
+			<div class="form-group">
+				<label for="street_name" class="control-label">Date Range for Order Completion:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['schedualed_start']|date("n/d/Y") }} - {{ vars.form['schedualed_end']|date("n/d/Y") }}</p>
+
+				</div>
+			</div>
+
+
+		
+			<div class="form-group">
+				<label for="street_name" class="control-label">Street Address:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['house_number'] }} {{ vars.form['street_name'] }}</p>
+				</div>
+			</div>
+		
+
+	
+			<div class="form-group">
+				<label for="street_name" class="control-label">City:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['city'] }}</p>
+				</div>
+			</div>
+
+
+		
+			<div class="form-group">
+				<label for="street_name" class="control-label">Zip+4:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['zip4_code'] }}</p>
+				</div>
+			</div>
+
+
+	
+			<div class="form-group">
+				<label for="street_name" class="control-label">County:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['county_name'] }}</p>
+				</div>
+			</div>
+
+
+	
+			<div class="form-group">
+				<label for="street_name" class="control-label">State:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['state_name'] }}</p>
+				</div>
+			</div>
+	
+
+	
+			<div class="form-group">
+				<label for="street_name" class="control-label">Number of Posts:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['number_of_posts'] }}</p>
+				</div>
+			</div>
+	
+
+	
+			<div class="form-group">
+				<label for="street_name" class="control-label">Cross Street Directions:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['cross_street_directions'] }}</p>
+				</div>
+			</div>
+		
+
+		{% if vars.form['fetch_service_area_window'] > 0 %}
+		<div class="alert alert-warning">
+			This address has a {{ vars.form['fetch_service_area_window'] }} business day installation window (excludes weekends, Federal Holidays and severe weather days).
+		</div>
+		{% endif %}
+</div>
+
+{% if vars.show_payment > 0 %}
+
+<h4 class="title-panel">Payment Information</h4>
+<div class="panel-library">
+	
+		<div class="form-group">
+			<label for="street_name" class="control-label">Payment Method:</label>
+			<div>
+				<p class="form-control-static">{{ vars.form['payment_type'] }}</p>
+			</div>
+		</div>
+
+	{% if vars.form.payment_method == constant('BILLING_METHOD_CREDIT') %}
+	
+
+		<div class="form-group">
+			<label for="street_name" class="control-label">Name on Card:</label>
+			<div>
+				<p class="form-control-static">{{ vars.form['cc_name'] }}</p>
+			</div>
+		</div>
+
+	
+
+		<div class="form-group">
+			<label for="street_name" class="control-label">Card Type:</label>
+			<div>
+				<p class="form-control-static">{{ vars.form['cc_type'] }}</p>
+			</div>
+		</div>
+
+	
+
+		<div class="form-group">
+			<label for="street_name" class="control-label">Card Number:</label>
+			<div>
+				<p class="form-control-static">{{ vars.form['cc_number'] }}</p>
+			</div>
+		</div>
+
+	
+
+		<div class="form-group">
+			<label for="street_name" class="control-label">Security code:</label>
+			<div>
+				<p class="form-control-static">{{ vars.form['cc_verification_number'] }}</p>
+			</div>
+		</div>
+
+	
+
+		<div class="form-group">
+			<label for="street_name" class="control-label">Billing Address:</label>
+			<div>
+				<p class="form-control-static">{{ vars.form['cc_billing_street'] }} {{ vars.form['cc_billing_city'] }} {{ vars.form['cc_billing_zip'] }}</p>
+			</div>
+		</div>
+
+	
+	{% endif %}
+<!--	
+	{% if constant('SHOW_PROMO_CODE_AREA') == true %}
+
+			<div class="form-group">
+				<label for="street_name" class="control-label">Promotional Code:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['promo_string'] }}</p>
+				</div>
+			</div>
+		
+	{% endif %}
+-->
+</div>
+	
+{% endif %}
+
+<h4 class="title-panel">Extra Information and Optional Extras</h4>
+<div class="panel-library">
+
+{% if vars.order_type == constant('ORDER_TYPE_SERVICE') %}
+
+			<div class="form-group">
+				<label for="street_name" class="control-label">Reason:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form.sc['name'] }}</p>
+				</div>
+			</div>
+
+	{% if vars.sc_reason==1 %}
+	
+	<div class="form-group">
+				<label for="street_name" class="control-label">Details:</label>
+				<div>
+					<p class="form-control-static">Install {{ vars.form.sc['install_equipment_name'] }}</p>
+					<p class="form-control-static">Remove {{ vars.form.sc['remove_equipment_name'] }}</p>
+				</div>
+			</div>
+			
+		{% elseif vars.sc_reason==3 %}		
+	<div class="form-group">
+				<label for="street_name" class="control-label">Details:</label>
+				<div>
+					<p class="form-control-static">Install {{ vars.form.sc['agent_equipment_name'] }}</p>
+				</div>
+			</div>		
+
+	{% elseif vars.sc_reason==2 %}
+	
+	<div class="form-group">
+				<label for="street_name" class="control-label">Details:</label>
+				<div>
+					{% for equipment in vars.form.sc['equipment_array'] %}
+						<p>{{ equipment['name'] }}</p>
+						{% for optional in equipment['equipment'] %}
+							<p><span class="fa fa-arrow-right"></span> {{ optional }}</p>
+						{% endfor %}
+					{% endfor %}
+				</div>
+			</div>
+			
+	{% elseif vars.sc_reason==6 %}
+	
+	<div class="form-group">
+				<label for="street_name" class="control-label">Details:</label>
+				<div>
+					{% for equipment in vars.form.sc['equipment_array'] %}
+						<p>{{ equipment['name'] }}</p>
+						{% for optional in equipment['equipment'] %}
+							<p><span class="fa fa-arrow-right"></span> {{ optional }}</p>
+						{% endfor %}
+					{% endfor %}
+				</div>
+			</div>		
+	
+	{% endif %}
+
+			<div class="form-group">
+				<label for="street_name" class="control-label">Special Instructions:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['special_instructions'] }}</p>
+				</div>
+			</div>
+
+
+{% else %}	
+	
+
+			<div class="form-group">
+				<label for="street_name" class="control-label">Special Instructions:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['special_instructions'] }}</p>
+				</div>
+			</div>
+
+		
+
+			<div class="form-group">
+				<label for="street_name" class="control-label">Miss Utility:</label>
+				<div>
+					<p class="form-control-static">{{ vars.form['miss_utility_string'] }}</p>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label for="street_name" class="control-label">Equipment:</label>
+				<div>
+					{% for equipment in vars.form['equipment_array'] %}
+						<p>{{ equipment['name'] }}</p>
+						{% for optional in equipment['equipment'] %}
+							<p><span class="fa fa-arrow-right"></span> {{ optional }}</p>
+						{% endfor %}
+					{% endfor %}
+				</div>
+			</div>
+
+	
+{% endif %}
+
+</div>
+
+
+<h4 class="title-panel">Order Totals</h4>
+<div class="panel-library">
+
+	{% if order.base_cost > 0 %}
+
+		<div class="form-group">
+			<label class="control-label">Base Cost:</label>
+			<div>
+				<p class="form-control-static">${{ order.base_cost|number_format(2)}}</p>
+			</div>
+		</div>
+
+	{% endif %}
+
+
+
+	{% if order.extended_cost > 0 %}
+
+		<div class="form-group">
+			<label class="control-label">Extended Cost:</label>
+			<div>
+				<p class="form-control-static">${{ order.extended_cost|number_format(2)}}</p>
+			</div>
+		</div>
+
+	{% endif %}
+
+	{% if order.equipment_cost > 0 %}
+
+		<div class="form-group">
+			<label class="control-label">Equipment Cost:</label>
+			<div>
+				<p class="form-control-static">${{ order.equipment_cost|number_format(2)}}</p>
+			</div>
+		</div>
+
+	{% endif %}
+
+
+	{% if order.extra_cost > 0 %}
+
+		<div class="form-group">
+			<label class="control-label">Extra Cost:</label>
+			<div>
+				<p class="form-control-static">${{ order.extra_cost|number_format(2)}} ({{ vars.form['extra_cost_string'] }})</p>
+			</div>
+		</div>
+
+	{% endif %}
+
+
+	{% if order.deposit_cost > 0 %}
+
+		<div class="form-group">
+			<label class="control-label">Deposit Cost:</label>
+			<div>
+				<p class="form-control-static">${{ order.deposit_cost|number_format(2)}} (This will be refunded when the signpost is successfully removed)</p>
+			</div>
+		</div>
+
+	{% endif %}
+
+
+	{% if order.discount_cost > 0 %}
+
+		<div class="form-group">
+			<label class="control-label">Adjustment:</label>
+			<div>
+				<p class="form-control-static">${{ order.discount_cost|number_format(2)}} (This will be refunded when the signpost is successfully removed)</p>
+			</div>
+		</div>
+
+	{% endif %}
+
+	{% if order.credit > 0 %}
+
+		<div class="form-group">
+			<label class="control-label">Credit:</label>
+			<div>
+				<p class="form-control-static">$-{{ order.credit|number_format(2)}}</p>
+			</div>
+		</div>
+
+	{% endif %}
+
+	{% if vars.form['order_total'] > 0 %}
+
+		<div class="form-group">
+			<label class="control-label">Total Cost:</label>
+			<div>
+				<p class="form-control-static">${{ vars.form['order_total']|number_format(2)}}</p>
+			</div>
+		</div>
+
+
+	{% else %}
+
+
+		<div class="form-group">
+			<label class="control-label">Total Cost:</label>
+			<div>
+				<p class="form-control-static">There is no charge for this order.</p>
+			</div>
+		</div>
+	
+
+	{% endif %}
+	
+</div>
+
+{% if vars['deferred'] is not null %}
+       {{ vars['deferred']|raw }}
+{% endif %}
+
+{% if (vars.form.payment_method == constant('BILLING_METHOD_CREDIT')) and (vars.form.order_total+vars.form.deferred_total > 0) %}
+
+	<div class="alert alert-warning">
+		When you press the "Process Order" button your credit card will be charged.
+	</div>
+
+{% endif %}
+
+	<p><input type="checkbox" id="tos" required name="tos" value="1" /> I have read and accept the {{ constant('BUSINESS_NAME') }} Terms of Service <a target="_blank" href="{{ constant('FILENAME_TERMS_OF_SERVICE') }}">(Click here to View)</a></p>
+
+</div>
+{% endblock order %}
+
+{% block next_button %}
+	
+	<input type="hidden" name="submit_string_y" id="submit_string_y" value="1">
+	<button name="submit_string" type="submit" style="float:right" class="btn btn-info">Process Order</button>
+
+{% endblock next_button %}	
