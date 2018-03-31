@@ -59,7 +59,7 @@ $objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getFont()->setBold(true);
 
 $row = 1;
 
-while ($r = $database->fetch_array($q)) {
+foreach($database->fetch_array($q) as $r){
 	$agency_id = $r['agency_id'];
 	$user_id = 0;
 			

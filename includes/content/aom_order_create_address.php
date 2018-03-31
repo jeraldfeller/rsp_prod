@@ -233,16 +233,29 @@
 				
 			if ((!$error->get_error_status('aom_order_create_address')) && ($order_type == ORDER_TYPE_INSTALL)) {
 			//No error, try and get the zip4 code and if so then return that, otherwise spark an error.
-			if (!$request_zip4 || empty($zip4_code)) {
-				$zip4_class=new zip4($house_number.' '.$street_name,tep_get_state_name($state), $city, $zip);
-				if ($zip4_class->search()) {
-					$zip4_code = $zip4_class->return_zip_code();
-					$request_zip4 = false;
-				} else {
-					$error->add_error('aom_order_create_address', 'Sorry that address could not be matched to a zip4 code.  Please either check the address and try again or enter the zip4 code yourself.');
-					$request_zip4 = true;
-				}
-			}
+                if (!$request_zip4 || empty($zip4_code)) {
+                    if(explode('-', $zip)[1] != '9999'){
+                        if(explode('-', $zip4_code)[1] != '9999'){
+                            $zip4_class = new zip4($house_number . ' ' . $street_name, tep_get_state_name($state), $city, $zip);
+                            if ($zip4_class->search()) {
+                                $zip4_code = $zip4_class->return_zip_code();
+                                $request_zip4 = false;
+                            } else {
+                                // brad@brgr2.com
+                                if ($zip4_class->return_fail_type() == 'network') {
+                                    $error->add_error('account_create_address', '<div class="alert alert-error"><i class="icon-4x pull-left icon-warning-sign"></i> <button type="button" class="close" data-dismiss="alert">&times;</button> <p><strong>Error Verifying Address</strong> We tried to look up that address via the US Postal System, but the check failed because of a network issue. Please try again or enter the zip+4 code yourself or lookup at <a href="https://tools.usps.com/go/ZipLookupAction!input.action" target="_blank">USPS</a>.  Please enter all nine digits in zip+4 field (12345-6789).  Thank you.</div>');
+                                } else if ($zip4_class->return_fail_type() == 'mismatch') {
+                                    $error->add_error('account_create_address', 'We tried to look up that address via the US Postal System, but it didn\'t find a match. Please double check the address and try again or enter the zip+4 code yourself or lookup at <a href="https://tools.usps.com/go/ZipLookupAction!input.action" target="_blank">USPS</a>.  Please enter all nine digits in zip+4 field (12345-6789).  Thank you.');
+                                } else if ($zip4_class->return_fail_type() == 'invalid'){
+                                    $error->add_error('account_create_address', $zip4_class->return_fail_description());
+                                }
+                                $request_zip4 = true;
+                            }
+
+
+                        }
+                    }
+                }
 		}
 		if (!$error->get_error_status('aom_order_create_address') && !empty($zip4_code)) {
 			if (!zip4_is_deliverable($zip4_code)) {

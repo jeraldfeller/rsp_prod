@@ -32,7 +32,7 @@ $query = $database->query("SELECT SUBSTRING(zip4, 1, 5) AS zip, COUNT(*) AS coun
 
 echo "{\n";
 $i=0;
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $zip = $result['zip'];
     $count = $result['count'];
     if ($i>0) {

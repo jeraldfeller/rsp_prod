@@ -14,25 +14,25 @@
 ErrorDocument 500 /500.html
 ErrorDocument 503 /500.html
 DirectoryIndex index.php
-RewriteEngine on 
-RewriteCond %{REQUEST_URI} ^(.*).php$ 
-RewriteCond %{REQUEST_URI} !/index.php$ 
-RewriteCond %{REQUEST_URI} !/cron_script.php$ 
-RewriteCond %{REQUEST_URI} !/cron_emails.php$ 
-RewriteCond %{REQUEST_URI} !/order_create_success_print.php$ 
-RewriteCond %{REQUEST_URI} !/admin_unused_report_print.php$ 
-RewriteCond %{REQUEST_URI} !/aom_order_create_success_print.php$ 
-RewriteCond %{REQUEST_URI} !/aom_schedule_removal_success_print.php$ 
-RewriteCond %{REQUEST_URI} !/schedule_removal_success_print.php$ 
+RewriteEngine on
+RewriteCond %{REQUEST_URI} ^(.*).php$
+RewriteCond %{REQUEST_URI} !/index.php$
+RewriteCond %{REQUEST_URI} !/cron_script.php$
+RewriteCond %{REQUEST_URI} !/cron_emails.php$
+RewriteCond %{REQUEST_URI} !/order_create_success_print.php$
+RewriteCond %{REQUEST_URI} !/admin_unused_report_print.php$
+RewriteCond %{REQUEST_URI} !/aom_order_create_success_print.php$
+RewriteCond %{REQUEST_URI} !/aom_schedule_removal_success_print.php$
+RewriteCond %{REQUEST_URI} !/schedule_removal_success_print.php$
 RewriteCond %{REQUEST_URI} !/dump/tunnel.php$
-RewriteCond %{REQUEST_URI} !/tunnel.php$ 
-RewriteCond %{REQUEST_URI} !/adminer.php$ 
-RewriteCond %{REQUEST_URI} !/editor/(.*)$ 
-RewriteCond %{REQUEST_URI} !/pma/(.*)$ 
+RewriteCond %{REQUEST_URI} !/tunnel.php$
+RewriteCond %{REQUEST_URI} !/adminer.php$
+RewriteCond %{REQUEST_URI} !/editor/(.*)$
+RewriteCond %{REQUEST_URI} !/pma/(.*)$
 RewriteCond %{REQUEST_URI} !/lib/deferred/get_deferred_data.php$
-RewriteCond %{REQUEST_URI} !/lib/deferred/get_agent_with_credits_data.php$		
+RewriteCond %{REQUEST_URI} !/lib/deferred/get_agent_with_credits_data.php$
 RewriteCond %{REQUEST_URI} !/lib/google_map/address_list.php$
-RewriteCond %{REQUEST_URI} !/lib/service_stats/get_agent_data.php$				
+RewriteCond %{REQUEST_URI} !/lib/service_stats/get_agent_data.php$
 RewriteCond %{REQUEST_URI} !/lib/twig/get_left_column_admin.php$
 RewriteCond %{REQUEST_URI} !/lib/inventory/defaults_json.php$
 RewriteCond %{REQUEST_URI} !/lib/inventory/inventory_html.php$

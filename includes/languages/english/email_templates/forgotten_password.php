@@ -1,5 +1,5 @@
 (<>)SUBJECT, Your new password from Realty Sign Post
-<p>Your new password.<br />
+<p>Your new password &FROM_STORE &EMAIL.<br />
 A new password has been generated below.<br />
 New password: &amp;PASSWORD<br />
 </p>

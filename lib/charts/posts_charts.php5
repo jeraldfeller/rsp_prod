@@ -16,7 +16,7 @@ if (!is_admin()) {
 // Get a list of all the posts that are installed
 $query = $database->query("SELECT equipment_item_id FROM " . TABLE_EQUIPMENT_ITEMS . " ei JOIN " . TABLE_EQUIPMENT . " e ON (e.equipment_id = ei.equipment_id) WHERE e.equipment_type_id = 1 and ei.equipment_status_id = 2");
 $posts = array();
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $id = $result['equipment_item_id'];
     $p = new Post($id);
     //if ($p->getInstalledTimestamp() > $average_since_ts) {
@@ -36,7 +36,7 @@ $query = $database->query("SELECT od.number_of_posts, CEIL((o.date_completed-o2.
 
 $days_array2 = array();
 
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $num_posts = $result['number_of_posts'];
     for ($i=0; $i<$num_posts; $i++) {
         $days_array2[] = $result['days'];

@@ -4,6 +4,7 @@ error_reporting(0);
 $head=getenv("HTTP_REFERER");
 $message = '';
 $pages = tep_fill_variable('pages', 'post', array());
+
 if(isset($_POST['submit']))
 {
 $dat = date("Y/m/d H:i:s");
@@ -52,14 +53,26 @@ if($num_rows > 0)
 		{
 		$email_template = new email_template('forgotten_password');
 		$email_template->load_email_template();
+        $email_template->set_email_template_variable('EMAIL', '');
+        $email_template->set_email_template_variable('FROM_STORE', '');
 		$email_template->set_email_template_variable('PASSWORD', $password);
 		$email_template->parse_template();
 		$email_template->send_email($email_address, $first_name.','.$last_name);
-        $email_template->send_email(ADMIN_EMAIL, $first_name.','.$last_name);
+        //$email_template->send_email(ADMIN_EMAIL, $first_name.','.$last_name);
 		$extra_query = $database->query("select email_address from emails_to_users where user_id = '" . $usr_id . "' and email_status = '1'");
 			while($extra_result = $database->fetch_array($extra_query)) {
 				$email_template->send_email($extra_result['email_address'], $first_name.','.$last_name);	
 			}
+
+		// send copy to admin
+            $email_template = new email_template('forgotten_password');
+            $email_template->load_email_template();
+            $email_template->set_email_template_variable('EMAIL', $email_address);
+            $email_template->set_email_template_variable('FROM_STORE', 'from Realty Sign Post sent to');
+            $email_template->set_email_template_variable('PASSWORD', $password);
+            $email_template->parse_template();
+            $email_template->send_email(ADMIN_EMAIL, $first_name.','.$last_name);
+
 		if($email_template)
 		{
 		$msg="Your Password has been successfully sent to $email_address";
@@ -99,7 +112,7 @@ $msg="Wrong details entered. Please recheck.";
 
 <form name="forgot" method="POST" action="<?php echo PAGE_URL; ?>">
 <table cellpadding="0" cellspacing="3" border="0">
-<tr><td class="subHeading" colspan="2">Retrieve your Password</td></tr>
+<tr><td class="subHeading" colspan="2">Retrieve your Password </td></tr>
 <tr><td height="5" colspan="2" class="mainError"><?php echo $msg ?></td></tr>
 <tr><td height="5" colspan="2"></td></tr>
 <tr><td height="5" colspan="2"><img src="images/pixel_trans.gif" height="5" width="1"></td></tr>

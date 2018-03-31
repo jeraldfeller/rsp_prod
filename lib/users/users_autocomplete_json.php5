@@ -42,11 +42,11 @@ if (strlen($term) < 2) {
     echo "[]\n";
     exit;
 }
-$term = mysql_escape_string($term);
+$term = $term;
 
 $query = $database->query("SELECT u.user_id, ud.firstname, ud.lastname, u.email_address, u.agency_id, ug.name FROM " . TABLE_USERS . " u, " . TABLE_USERS_DESCRIPTION . " ud, " . TABLE_USERS_TO_USER_GROUPS . " utug, " . TABLE_USER_GROUPS . " ug WHERE u.user_id = ud.user_id AND u.user_id = utug.user_id AND utug.user_id = u.user_id AND ug.user_group_id = utug.user_group_id AND ( ud.firstname LIKE '" . $term . "%' OR ud.lastname LIKE '" . $term . "%' OR u.email_address LIKE '" . $term . "%' OR CONCAT(ud.firstname, ' ', ud.lastname) LIKE '" . $term . "%') ORDER BY ug.name, ud.firstname, ud.lastname");
 $users = array();
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $name = stripslashes($result['firstname']) . " " . stripslashes($result['lastname']) . " (" . $result['email_address'] . ")";
     $users[] = "  {\"label\": " . json_encode($name) . ", \"category\": " . json_encode($result['name']) . ", \"user_id\":" . $result['user_id'] . "}";
 }

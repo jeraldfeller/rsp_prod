@@ -5229,3 +5229,10 @@ function check_subscribe_installer($id,$order_id,$credit){
 	return true;
 
 }
+
+function get_usps_user_id(){
+    global $database;
+    $query = $database->query("SELECT * FROM ". TABLE_CONFIGURATION ." WHERE configuration_id = 46");
+    $result = $database->fetch_array($query);
+    return $result['value'];
+}

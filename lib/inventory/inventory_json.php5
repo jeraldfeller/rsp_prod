@@ -60,7 +60,7 @@ $query = $database->query("SELECT e.equipment_id, e.equipment_type_id, e.name, e
 
 $agent_equip_count = 0;
 $agent_equip = array();
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $agent_equip[$result['equipment_id']] = array();
     $agent_equip[$result['equipment_id']]['name'] = $result['name'];
     $agent_equip[$result['equipment_id']]['inventory_ruleset_id'] = $result['inventory_ruleset_id'];
@@ -76,13 +76,13 @@ while ($result = $database->fetch_array($query)) {
 
 // Find the number of available equipment items
 $query = $database->query("SELECT e.equipment_id, count( ei.equipment_item_id ) AS count FROM " . TABLE_EQUIPMENT_ITEMS . " ei JOIN " . TABLE_EQUIPMENT . " e ON ( e.equipment_id = ei.equipment_id ) WHERE ei.equipment_status_id = 0 AND {$where} GROUP BY e.equipment_id");
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $agent_equip[$result['equipment_id']]['available'] = (int) $result['count'];
 }
 
 // Find the latest activity date
 $query = $database->query("SELECT ei.equipment_id, DATE_FORMAT(DATE(FROM_UNIXTIME(MAX(eih.date_added) - 18000)),'%c/%e/%Y') AS last_activity_date FROM " . TABLE_EQUIPMENT_ITEMS_HISTORY . " eih JOIN " . TABLE_EQUIPMENT_ITEMS . " ei ON ( ei.equipment_item_id = eih.equipment_item_id ) JOIN " . TABLE_EQUIPMENT . " e ON (e.equipment_id = ei.equipment_id) WHERE {$where} GROUP BY e.equipment_id");
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $agent_equip[$result['equipment_id']]['last_activity_date'] = $result['last_activity_date'];
 }
 
@@ -98,7 +98,7 @@ $fairfax_posts_installed = 0;
 	$all_posts_avail = 0;
 	$all_posts_installed = 0;
 
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     if (!array_key_exists($result['equipment_id'], $equip_warehouses)) {
         $equip_warehouses[$result['equipment_id']] = array();
     }
@@ -182,7 +182,7 @@ foreach ($equip_warehouses as $eid => $ewh) {
 // Fetch all the rules and rulesets from the database
 $query = $database->query("SELECT inventory_ruleset_id, inventory_rule_type_id, inventory_rule_id, inventory_alert_id, param_1, param_2 FROM " . TABLE_INVENTORY_RULES . " ORDER BY inventory_rule_order ASC");
 $inventory_rulesets = array();
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     if (!array_key_exists($result['inventory_ruleset_id'], $inventory_rulesets)) {
         $inventory_rulesets[$result['inventory_ruleset_id']] = array();
     }
@@ -196,14 +196,14 @@ while ($result = $database->fetch_array($query)) {
 // Fetch all the alerts so we can use them
 $query = $database->query("SELECT inventory_alert_id, severity FROM " . TABLE_INVENTORY_ALERTS);
 $inventory_alerts = array();
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $inventory_alerts[$result['inventory_alert_id']] = $result['severity'];
 }
 
 // Fetch all the rule types so we can refer to them
 $query = $database->query("SELECT inventory_rule_type_id, name FROM " . TABLE_INVENTORY_RULE_TYPES);
 $inventory_rule_types = array();
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $inventory_rule_types[$result['inventory_rule_type_id']] = $result['name'];
 }
 

@@ -97,7 +97,7 @@ if ($action == "update") {
 
 $query = $database->query("SELECT irs.name as ruleset_name, ia.name as alert, irt.name, param_1 FROM inventory_rulesets irs, inventory_alerts ia, inventory_rule_types irt, inventory_rules ir, equipment e WHERE e.inventory_ruleset_id = ir.inventory_ruleset_id AND ir.inventory_rule_type_id = irt.inventory_rule_type_id AND ia.inventory_alert_id = ir.inventory_alert_id AND irs.inventory_ruleset_id = ir.inventory_ruleset_id AND ia.name IN ('Warning', 'Critical', 'Excess') AND e.equipment_id = '{$equipment_id}'");
 
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $ruleset_name = $result['ruleset_name'];
     if ($result['alert'] == "Warning") {
         if ($result['name'] == "Number Available at Warehouse") {

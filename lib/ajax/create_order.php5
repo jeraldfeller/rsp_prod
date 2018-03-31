@@ -17,7 +17,7 @@ if(isset($_POST['action'])) {
 			} else {
 				$query = $database->query("select county_id, name as county_name from " . TABLE_COUNTYS . " where state_id = '" . $selected_state . "' order by name");
 			}
-			while ($result = $database->fetch_array($query)) {
+			foreach($database->fetch_array($query) as $result){
 				if (isset($result['state_name'])) {
 					$insert_name = $result['county_name'] . ' (' . $result['state_name'] . ')';
 				} else {

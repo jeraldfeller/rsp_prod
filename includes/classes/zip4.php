@@ -13,89 +13,81 @@ class zip4 {
     var $data;
     var $result_zip_code;
     var $fail_type;
+    var $fail_description;
+    var $stringXml;
+    var $uspsKey;
 
-    function __construct($address2 = '', $state = '', $city = '', $zip = '') {
-        $this->address2 = $address2;
+    function __construct($address2 = '', $state = '', $city = '', $zip = '', $uspsUseId = '') {
+        $this->address2 = urlencode($address2);
         $this->state = $state;
-        $this->city = $city;
+        $this->city = urlencode($city);
         $this->zip = $zip;
-        $this->data = 'resultMode=0&companyName=&address2=&address1=' . str_replace(' ', '+', strtoupper($address2)) . '&city=' . strtoupper($city) . '&state=' . strtoupper($state) . '&urbanCode=&postalCode=0&zip=' . $zip;
+        //$this->data = 'resultMode=0&companyName=&address2=&address1=' . str_replace(' ', '+', strtoupper($address2)) . '&city=' . strtoupper($city) . '&state=' . strtoupper($state) . '&urbanCode=&postalCode=0&zip=' . $zip;
+
+
+        $this->uspsKey = $uspsUseId;
+        $this->stringXml = "http://production.shippingapis.com/ShippingAPITest.dll?API=Verify%20&XML=%3CAddressValidateRequest%20USERID=%22$this->uspsKey%22%3E%3CAddress%20ID=%221%22%3E%3CAddress1%3E%20%3C/Address1%3E%3CAddress2%3E$this->address2%3C/Address2%3E%3CCity%3E$this->city%3C/City%3E%20%3CState%3E$this->state%3C/State%3E%3CZip5%3E$this->zip%3C/Zip5%3E%3CZip4%3E%3C/Zip4%3E%3C/Address%3E%20%3C/AddressValidateRequest%3E";
     }
 
     function search() {
 
-        $ch = curl_init();
-        // brad@brgr2.com
-        curl_setopt_array($ch, array(
-            CURLOPT_URL => "https://tools.usps.com/go/ZipLookupResultsAction!input.action",
-            CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => $this->data,
+
+
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_CONNECTTIMEOUT => 1, // in seconds
-            CURLOPT_TIMEOUT => 2 // in seconds
+            CURLOPT_URL => $this->stringXml,
+            CURLOPT_HTTPHEADER => array(
+            ),
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_VERBOSE => 0
         ));
+        // Send the request & save response to $resp
+        $result = curl_exec($curl);
+        // Close request to clear up some resources
+        curl_close($curl);
+        $result = simplexml_load_string($result);
+        $result = json_encode($result);
+        $result = json_decode($result, true);
 
-        $result = null;
-        $result = curl_exec($ch);
-        curl_close($ch);
 
-        if (!$result) {
+        if(!$result){
             $this->fail_type = 'network';
+            $this->fail_description = '';
             return false;
         }
 
-        if (strpos($result, 'more than one address') !== false) {
-            $more_than_one = true;
-        } else {
-            $more_than_one = false;
-        }
-        if (strpos($result, 'Non Deliverable</div>') !== false) {
-            $non_deliverable = true;
-        } else {
-            $non_deliverable = false;
+        if(isset($result['Address']['Error'])){
+            $this->fail_type = 'invalid';
+            $this->fail_description = $result['Address']['Error']['Description'];
+            return false;
         }
 
-//            $result = str_replace(array('"', ' ', "\n", "\n\r", "\n\n", "\r\r", '
-//            '), '', $result);
+        $returnAddress = $result['Address']['Address2'];
+        $returnCity = $result['Address']['City'];
+        $returnState = $result['Address']['State'];
+        $returnZip5 = $result['Address']['Zip5'];
+        $returnZip4 = $result['Address']['Zip4'];
 
-        $start = 0;
-        $result = $this->strip_html_tags($result);
-        if (stripos($result, $this->zip))
-            $start = stripos($result, $this->zip, stripos($result, $this->zip) + 1);
-
-        if ($start > 0) {
-            // beware embedded html that remains + 4 ?!?
-            $this->result_zip_code = rtrim(substr($result, $start, 5) . "-" . substr($result, $start + 6, 4));
-            if (stripos($result, 'not recognized')) {
-                $this->result_zip_code = $this->result_zip_code . "9999";
-            }
-            $this->fail_type = '';
+        if($returnCity != strtoupper($this->city) || $returnState != strtoupper($this->state) || $returnZip5 != $this->zip){
+            $this->fail_type = 'mismatch';
+            $this->fail_description = '';
+            return false;
+        }else{
+            $this->result_zip_code = $returnZip5.'-'.$returnZip4;
             return true;
-        } else {
-            $this->result_zip_code = $this->extract($result);
-            if ($this->result_zip_code) {
-                $this->fail_type = '';
-                return true;
-            } elseif (stripos($result, 'not recognized')) {
-                $this->result_zip_code = $this->result_zip_code . "9999";
-                $this->fail_type = '';
-                return true;
-            } elseif (stripos($result, 'Non Deliverable')) {
-                $this->fail_type = 'none';
-                return false;
-            } elseif ('more than one address') {
-                $this->fail_type = 'multiple';
-                return false;
-            } else {
-                $this->fail_type = 'unknown';
-                return false;
-            }
         }
-        return false;
+
     }
 
     function return_fail_type() {
         return $this->fail_type;
+    }
+
+    function return_fail_description(){
+        return $this->fail_description;
     }
 
     function return_zip_code() {

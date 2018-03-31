@@ -56,7 +56,7 @@ $query = $database->query($sql);
 
 echo "{\n";
 $i=0;
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $zip = $result['zip'];
     $count = $result['count'];
     if ($i>0) {

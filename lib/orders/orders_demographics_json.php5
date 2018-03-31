@@ -63,7 +63,7 @@ if ($current) {
 $demographics = array();
 $demo_sql = "SELECT d.zip, COALESCE(d.population, 0) as population, COALESCE(d.households, 0) as households FROM " . TABLE_DEMOGRAPHICS . " d JOIN (SELECT DISTINCT SUBSTRING(zip4, 1, 5) AS zip FROM " . TABLE_ADDRESSES . ") a ON (a.zip = d.zip)";
 $demo_query = $database->query($demo_sql);
-while ($result = $database->fetch_array($demo_query)) {
+foreach($database->fetch_array($demo_query) as $result){
     $demographics[$result['zip']] = $result;
 }
 
@@ -73,7 +73,7 @@ $query = $database->query($sql);
 
 echo "{\n";
 $i=0;
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $zip = str_pad($result['zip'], 5, "0", STR_PAD_RIGHT);
     $count = $result['count'];
     if (!array_key_exists($zip, $demographics)) {

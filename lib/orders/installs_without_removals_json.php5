@@ -47,7 +47,7 @@ $ts = mktime() - (60*60*24*30*$months);
 $query = $database->query("SELECT address_id, order_type_id, order_id, date_schedualed FROM " . TABLE_ORDERS . " WHERE date_added >= $ts AND order_status_id != 4"); 
 $addresses = array();
 
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
 
     $aID = $result['address_id'];
     $oID = $result['order_id'];

@@ -72,7 +72,7 @@ function get_invoice_email_history($invoice_id, $string = true) {
   $return = "";
   $s = "SELECT * FROM invoice_email_history WHERE invoice_id = '{$invoice_id}'";
   $q = $database->query($s);
-  while ($r = $database->fetch_array($q)) {
+  foreach($database->fetch_array($q) as $r){
     if ($string) {
       $return .= "<span class='inv-comment-box'>Email(s) sent: {$r['date_sent']}</span>";
     }
@@ -254,7 +254,7 @@ function get_invoice_items($month, $year, $user_id, $agency_id)
 	
 	$q = $database->query($s);
 	$list = array();
-	while ($r = $database->fetch_array($q)) 
+	foreach($database->fetch_array($q) as $r)
 	{
 		//var_dump("RECORD");var_dump($r);
 		$this_month = date('n', $r['date_completed']);
@@ -417,13 +417,13 @@ function get_invoice_address($user_id, $agency_id, $month=0, $year=0) {
   if ($user_id) {
     $s = "SELECT u.user_id,ud.firstname,ud.lastname,ud.street_address,ud.postcode,ud.city,ud.state_id,s.name AS state_name FROM users u, users_description ud,states s WHERE u.user_id={$user_id} AND u.user_id = ud.user_id AND ud.state_id = s.state_id";
     $q = $database->query($s);
-    while ($r = $database->fetch_array($q)) {
+    foreach($database->fetch_array($q) as $r){
       return "<strong>{$r['firstname']} {$r['lastname']}</strong><br>{$r['street_address']}<br>{$r['city']} {$r['state_name']}<br>{$r['postcode']}";
     }
   } elseif($agency_id) {
     $s = "SELECT a.name,a.office,a.address FROM agencys a WHERE agency_id = {$agency_id} LIMIT 1";
     $q = $database->query($s);
-    while ($r = $database->fetch_array($q)) {
+    foreach($database->fetch_array($q) as $r){
       return "<strong>{$r['name']}</strong><br>{$r['office']}<br>" . nl2br($r['address']);
     }
   }
@@ -499,7 +499,7 @@ function update_missing_account_item_info() {
   
   $q = $database->query($s);
   $result = false;
-  while ($r = $database->fetch_array($q)) {
+  foreach($database->fetch_array($q) as $r){
     
       $u = "
         UPDATE account_items 
@@ -529,9 +529,10 @@ function update_missing_account_item_info() {
 }
 
 function edit_account_item($id) {
+    global $database;
   $s = "SELECT * FROM account_items WHERE account_item_id = {$id}";
   $q = $database->query($s);
-  while ($r = $database->fetch_array($q)) {
+  foreach($database->fetch_array($q) as $r){
     print_r($r);
   }
 }
@@ -555,7 +556,7 @@ function find_missing_account_item_info() {
   DESC LIMIT 4
   ";
   $q = $database->query($sql);
-  while ($r = $database->fetch_array($q)) {
+  foreach($database->fetch_array($q) as $r){
     $s = "UPDATE account_items SET agency_id = '{$r['agency_id']}', user_id = '{$r['user_id']}', billing_method_id = {$r['billing_method_id']} WHERE account_item_id = {$r['account_item_id']}";
     if ($database->query($s)) {
       //echo "SUCCESS {$s}<br>";
@@ -587,7 +588,7 @@ function find_orphaned_orders() {
   $update = "";
   $q = $database->query($sql);
   $to_update = false;
-  while ($r = $database->fetch_array($q)) {
+  foreach($database->fetch_array($q) as $r){
     
     // First time through, set up the first part of the sql statements.
     if (empty($update)) {
@@ -700,7 +701,7 @@ function get_invoice_overview_table($items, $status = false) {
             global $database;
             $s1 = "SELECT name,office FROM agencys WHERE agency_id = {$aid} LIMIT 1";
             $q1 = $database->query($s1);
-            while ($r1 = $database->fetch_array($q1)) {
+            foreach($database->fetch_array($q1) as $r1){
               $agency_name = $r1['name'];
               $agency_office = $r1['office'];
             }

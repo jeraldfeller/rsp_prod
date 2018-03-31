@@ -29,7 +29,7 @@ if (!is_admin()) {
 header("Content-type: text/plain");
 
 $sa_query = $database->query("SELECT service_area_id FROM " . TABLE_SERVICE_AREAS . " WHERE status = 0");
-while ($sa_result = $database->fetch_array($sa_query)) {
+foreach($database->fetch_array($sa_query) as $sa_result){
     $query = $database->query("SELECT zip_4_first_break_start AS low, zip_4_second_break_start AS high, sa.service_area_id FROM " . TABLE_INSTALLATION_COVERAGE_AREAS . " ica JOIN " . TABLE_INSTALLATION_AREAS . " ia ON (ica.installation_area_id = ia.installation_area_id) JOIN " . TABLE_SERVICE_AREAS . " sa ON (ia.service_area_id = sa.service_area_id) WHERE sa.service_area_id = '{$sa_result['service_area_id']}'");
 
     $singlets = array();
@@ -38,7 +38,7 @@ while ($sa_result = $database->fetch_array($sa_query)) {
 
     echo "@ECHO OFF\n\n";
 
-    while ($result = $database->fetch_array($query)) {
+    foreach($database->fetch_array($query) as $result){
         $high = $result['high'];
         $low = $result['low'];
         $sa = "service_area_" . $result['service_area_id'] . ".json";

@@ -36,7 +36,7 @@ if (!$user_id && !$agency_id) {
 } else if (!$agency_id) {
     $s = "SELECT agency_id FROM users WHERE user_id = '{$user_id}'";
     $q = $database->query($s);
-    while ($r = $database->fetch_array($q)) {
+    foreach($database->fetch_array($q) as $r){
         $agency_id = $r['agency_id'];
     }
 }
@@ -65,7 +65,7 @@ $account_id = 0;
 if (!$user_id) {
     $s = "SELECT account_id, running_total FROM accounts WHERE agency_id = {$agency_id} AND user_id = 0 LIMIT 1";
     $q = $database->query($s);
-    while ($r = $database->fetch_array($q)) {
+    foreach($database->fetch_array($q) as $r){
         $account_id = $r['account_id'];
         $running_total = $r['running_total'];
     }
@@ -77,7 +77,7 @@ if (!$user_id) {
 } else {
     $s = "SELECT account_id, running_total FROM accounts WHERE agency_id = {$agency_id} AND user_id = {$user_id} LIMIT 1";
     $q = $database->query($s);
-    while ($r = $database->fetch_array($q)) {
+    foreach($database->fetch_array($q) as $r){
         $account_id = $r['account_id'];
         $running_total = $r['running_total'];
     }

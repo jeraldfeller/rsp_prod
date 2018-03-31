@@ -20,7 +20,7 @@ $query = $database->query("SELECT zip_4_first_break_start AS low, zip_4_second_b
 
 echo "[\n";
 $i=0;
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     if ($i>0) {
         echo ", \n";
     }

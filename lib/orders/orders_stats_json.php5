@@ -32,7 +32,7 @@ if ($mode == 'weekly') {
 
 echo "[\n";
 $i=0;
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     if ($i) {
         echo ",\n";
     }

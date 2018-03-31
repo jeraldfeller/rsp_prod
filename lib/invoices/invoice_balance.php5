@@ -46,17 +46,17 @@ $agents = array();
 $accounts = array();
 
 $query = $database->query($agency_sql);
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $agencies[] = $result;
 }
 
 $query = $database->query($agent_sql);
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $agents[] = $result;
 }
 
 $query = $database->query($account_sql);
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $accounts[$result['account_id']] = -1 * $result['running_total'];
 }
 

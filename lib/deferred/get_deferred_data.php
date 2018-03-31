@@ -44,7 +44,7 @@ switch(trim($data['type'])){
 }
 
 $item['data'] = array();
-while($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $item['data'][] = array(
         $result['firstname'] . ' ' . $result['lastname'],
         $result['reason'],

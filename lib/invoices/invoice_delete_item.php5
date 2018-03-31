@@ -20,7 +20,7 @@ $billing_method_id = 0;
 
 $s = "SELECT total, billing_method_id, account_id FROM account_items WHERE account_item_id = '{$account_item_id}' LIMIT 1";
 $q = $database->query($s);
-while ($r = $database->fetch_array($q)) {
+foreach($database->fetch_array($q) as $r){
     $difference = $r['total'];
     $account_id = $r['account_id'];
     $billing_method_id = $r['billing_method_id'];

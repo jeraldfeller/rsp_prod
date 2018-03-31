@@ -17,7 +17,7 @@ if($numberOfPost != '0'){
 
     $agents = array();
     $numberOfPostCounter = 1;
-    while ($result = $database->fetch_array($query)) {
+    foreach($database->fetch_array($query) as $result){
         $id = $result['equipment_item_id'];
 
         $orderQuery = $database->query("SELECT o.order_id, o.date_completed, o.user_id, o.address_id, ud.firstname, ud.lastname

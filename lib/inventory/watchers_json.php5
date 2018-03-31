@@ -58,7 +58,7 @@ if (is_object($save_watchers) && property_exists($save_watchers, "user_ids") && 
 $query = $database->query("SELECT iw.user_id, ud.firstname, ud.lastname, u.email_address FROM " . TABLE_INVENTORY_WATCHERS . " iw, " . TABLE_USERS . " u, " . TABLE_USERS_DESCRIPTION . " ud WHERE u.user_id = iw.user_id AND ud.user_id = u.user_id AND iw.equipment_id = '" . $equipment_id . "'");
 
 $watchers = array();
-while ($result = $database->fetch_array($query)) {
+foreach($database->fetch_array($query) as $result){
     $name = stripslashes($result['firstname']) . " " . stripslashes($result['lastname']) . (!empty($result['email_address']) ? " (" . $result['email_address'] . ")" : "");
     $watchers[] = "  {\"name\": " . json_encode($name) . ", \"user_id\":" . $result['user_id'] . "}";
 }
